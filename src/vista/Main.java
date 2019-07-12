@@ -16,7 +16,7 @@ import persistencia.validaJframeAbreUnaVez;
 public class Main extends javax.swing.JFrame {
 
     /**
-     * Creates new form Main
+     * Creates new form Main prueba
      */
     
     //GENERAR VARIABLE PARA QUE POSTERIORMENTE SEA UTILIZADO EL DESKTOPANEL
