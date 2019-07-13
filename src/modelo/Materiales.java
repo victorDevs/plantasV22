@@ -21,6 +21,7 @@ import persistencia.IconCellRenderer;
 import persistencia.MetodosGlobales;
 import vista.AgregarProveedorMaterial;
 import vista.CatalogoMateriales;
+import vista.ModificarProveedorMaterial;
 
 /**
  *
@@ -181,9 +182,9 @@ public class Materiales {
         }  
     }
     
-    public boolean ActualizarMaterialProveedor(JTable tabla){
+    public boolean ActualizarMaterialProveedor(JTable tabla, int idProveedor){
         int fila = tabla.getSelectedRow();
-        String sql = "update materialproveedor set idProveedor = "+tabla.getValueAt(fila, 1)+", tipo = '"+this.tipoProveedor+"',"
+        String sql = "update materialproveedor set idProveedor = "+idProveedor+", tipo = '"+this.tipoProveedor+"',"
                 + " descripcionProveedor='"+this.descripcionProveedor+"' where idMaterialProveedor = "+tabla.getValueAt(fila, 0);
         System.out.println("consulta: "+sql);
         if (BD.ejecutarSQL(sql)) {            
