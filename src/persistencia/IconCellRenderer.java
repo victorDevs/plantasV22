@@ -6,6 +6,7 @@
 package persistencia;
 
 import java.awt.Component;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -19,24 +20,26 @@ public class IconCellRenderer extends DefaultTableCellRenderer{
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
        
-        
-        if (value instanceof JLabel){
-            JLabel label  = (JLabel) value;
-            label.setOpaque(true);
-            fillColor(table, label, isSelected);
-            return label;
+     
+      if (value instanceof JButton){
+            JButton boton  = (JButton) value;
+            boton.setOpaque(true);
+            
+            //boton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+            fillColor(table, boton, isSelected);
+            return boton;
         }else{
              return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column); //To change body of generated methods, choose Tools | Templates...
         }
     }
     
-     public void fillColor(JTable t, JLabel l, boolean isSelected) {
+     public void fillColor(JTable t, JButton b, boolean isSelected) {
         if (isSelected) {
-        l.setBackground(t.getSelectionBackground());
-        l.setForeground(t.getSelectionForeground());
+        b.setBackground(t.getSelectionBackground());
+        b.setForeground(t.getSelectionForeground());
         } else {
-        l.setBackground(t.getBackground());
-        l.setForeground(t.getForeground());
+        b.setBackground(t.getBackground());
+        b.setForeground(t.getForeground());
         }
      }
     
