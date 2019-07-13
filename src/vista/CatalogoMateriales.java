@@ -7,6 +7,8 @@ package vista;
 
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -64,6 +66,28 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
 //        Object nuevo[] ={"","","","",btnModificar,btnEliminar};
 //        modelo.addRow(nuevo);
 //        }
+
+        jTxtRendimiento.addKeyListener(new KeyAdapter(){
+            public void keyTyped(KeyEvent e){
+                char c = e.getKeyChar();
+                //if(!Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE) || (c==KeyEvent.VK_DELETE)){
+                if(!Character.isDigit(c) || (c==KeyEvent.VK_BACK_SPACE)){
+                    getToolkit().beep();
+                    e.consume();
+                    //JOptionPane.showMessageDialog(rootPane, "Ingresa números");
+                }
+            }
+        });
+        
+        jTxtPrecio.addKeyListener(new KeyAdapter(){
+            public void keyTyped(KeyEvent e){
+                char c = e.getKeyChar();
+                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE) && (c != '.' || jTxtPrecio.getText().contains(".")) ) {
+                    getToolkit().beep();    
+                    e.consume();
+                }
+            }
+        });
     }
 
     /**
@@ -345,6 +369,7 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnAgregarMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAgregarMaterialActionPerformed
+
         
         if (jTxtNombreMaterial.getText().equals("") || jCBUnidad.getSelectedIndex()==0
                 || jTxtRendimiento.getText().equals("") || jTxtPrecio.getText().equals("") 
