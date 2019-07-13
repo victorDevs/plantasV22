@@ -167,26 +167,35 @@ public class ModificarProveedorMaterial extends javax.swing.JDialog {
                             validaPrimario = 1;
                         }
                     }
-
-                    if(validaPrimario==1){
-                        JOptionPane.showMessageDialog(rootPane, "Ya existe un proveedor primario",
-                            "Aviso",JOptionPane.WARNING_MESSAGE);
-                    }else{
-                            if(CatalogoMateriales.jTableProveedoresMaterial.getValueAt(filaMaterialProveedor, 0).equals("")){
+                            if(CatalogoMateriales.jTableProveedoresMaterial.getValueAt(filaMaterialProveedor, 0).equals("")){//VALIDA SI ES EDITADO SIN BD
                                 CatalogoMateriales.jTableProveedoresMaterial.setValueAt(id,filaMaterialProveedor, 1);
                                 CatalogoMateriales.jTableProveedoresMaterial.setValueAt(materiales.getNombreProveedor(),filaMaterialProveedor, 2);
-                                CatalogoMateriales.jTableProveedoresMaterial.setValueAt(materiales.getTipoProveedor(),filaMaterialProveedor, 3);
                                 CatalogoMateriales.jTableProveedoresMaterial.setValueAt(materiales.getDescripcionProveedor(),filaMaterialProveedor, 4);
+                            if(validaPrimario==1){
+                                JOptionPane.showMessageDialog(rootPane, "Ya existe un proveedor primario",
+                                    "Aviso",JOptionPane.WARNING_MESSAGE);
                             }else{
+                                CatalogoMateriales.jTableProveedoresMaterial.setValueAt(materiales.getTipoProveedor(),filaMaterialProveedor, 3);
+                               
+                            }
+                            }else{//SI LA EDICIÓN ES CON BD EN SEGUIDA DE ESTA ELSE SE EJECUTA
                                  try {
-                                    materiales.ActualizarMaterialProveedor(CatalogoMateriales.jTableProveedoresMaterial);
-
-            //                        ope.buscaUsuario();
+                                    if(validaPrimario==1){
+                                        JOptionPane.showMessageDialog(rootPane, "Ya existe un proveedor primario",
+                                    "Aviso",JOptionPane.WARNING_MESSAGE);
+                                        materiales.setTipoProveedor((String) CatalogoMateriales.jTableProveedoresMaterial.getValueAt(filaMaterialProveedor, 3));
+                                        materiales.ActualizarMaterialProveedor(CatalogoMateriales.jTableProveedoresMaterial,id);
+                                    }else{
+                                        materiales.ActualizarMaterialProveedor(CatalogoMateriales.jTableProveedoresMaterial,id);
+                                        
+                                     }
                                     JOptionPane.showMessageDialog(rootPane, "Actualización exitosa",
                                         "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                                    MetodosGlobales.LimpiaTabla(CatalogoMateriales.jTableProveedoresMaterial);
-                                    materiales.TablaConsultaProveedoresMateriales((int) CatalogoMateriales.jTableMateriales.getValueAt(filaMateriales, 0));
-                                    this.dispose();
+                                        MetodosGlobales.LimpiaTabla(CatalogoMateriales.jTableProveedoresMaterial);
+                                        materiales.TablaConsultaProveedoresMateriales((int) CatalogoMateriales.jTableMateriales.getValueAt(filaMateriales, 0));
+                                        this.dispose();
+                                    
+                                    
                                 } catch (Exception e) {
                                     JOptionPane.showMessageDialog(rootPane, "No se registro el operador",
                                         "Error",JOptionPane.ERROR_MESSAGE);
@@ -194,9 +203,6 @@ public class ModificarProveedorMaterial extends javax.swing.JDialog {
                                     BD.cerrarConexion();
                                 }
                             }
-                        
-                       
-                    }
 
                 }else{
                     JOptionPane.showMessageDialog(rootPane, "Seleccion si el Proveedor es Primario o Secundario",
