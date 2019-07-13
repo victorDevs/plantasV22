@@ -65,6 +65,7 @@ public class validaJframeAbreUnaVez {
             CatalogoMateriales.LimpiaCampos();
             MetodosGlobales.LimpiaTabla(CatalogoMateriales.jTableMateriales);
             materiales.TablaConsultaMateriales();
+            MetodosGlobales.LimpiaTabla(CatalogoMateriales.jTableProveedoresMaterial);
         }
     }
     
