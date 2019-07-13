@@ -8,12 +8,14 @@ package vista;
 import java.awt.Dimension;
 import java.awt.Frame;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Materiales;
 import persistencia.BD;
 import persistencia.IconCellRenderer;
+import persistencia.MaterialesPersistencia;
 import persistencia.MetodosGlobales;
 
 /**
@@ -28,8 +30,10 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
     private static CatalogoMateriales catalogoMateriales;
     
     
-    //ImageIcon icon1 = new ImageIcon(getClass().getResource("/imagenes/anadir.png"));
+//    ImageIcon iconModif = new ImageIcon(getClass().getResource("/imagenes/editar.png"));
+//    ImageIcon iconElimina = new ImageIcon(getClass().getResource("/imagenes/quitar.png"));
     
+    //CREA INTANCIA, PARA CUANDO SEA LLAMADA SE ABRÁ SOLAMENTE UNA VEZ
     public static CatalogoMateriales getInstancia(){
         if(catalogoMateriales == null){
             catalogoMateriales = new CatalogoMateriales();
@@ -44,16 +48,21 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
         jbtnModificarMaterial.setEnabled(false);
         
         MetodosGlobales.LimpiaTabla(jTableMateriales);
-        materiales.TablaConsultaMateriales();
-        
+        materiales.TablaConsultaMateriales();        
         
 //        DefaultTableModel modelo = (DefaultTableModel)jTableProveedoresMaterial.getModel();
 //        jTableProveedoresMaterial.setDefaultRenderer(Object.class, new IconCellRenderer());
-//        Object[] fila = new Object[2];
+//        JButton btnModificar = new JButton(iconModif);
+//        btnModificar.setName("modif");
+//        JButton btnEliminar = new JButton(iconElimina);
+//        btnEliminar.setName("elimi");
+// 
+//
+//        Object[] fila = new Object[5];
 //        for (int i = 0; i < 10; i++) {
-//        modelo.setValueAt(fila[0] = new JLabel(icon1), i, 0);
-//        modelo.setValueAt("Contenido", i, 1);
-//        modelo.setValueAt("Contenido", i, 2);
+//
+//        Object nuevo[] ={"","","","",btnModificar,btnEliminar};
+//        modelo.addRow(nuevo);
 //        }
     }
 
@@ -86,7 +95,6 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jBtnBuscarMaterial = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jTxtPrecio = new javax.swing.JTextField();
 
@@ -108,7 +116,7 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
@@ -129,7 +137,14 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTableMateriales);
         if (jTableMateriales.getColumnModel().getColumnCount() > 0) {
-            jTableMateriales.getColumnModel().getColumn(0).setMinWidth(10);
+            jTableMateriales.getColumnModel().getColumn(0).setMinWidth(30);
+            jTableMateriales.getColumnModel().getColumn(0).setMaxWidth(30);
+            jTableMateriales.getColumnModel().getColumn(2).setMinWidth(60);
+            jTableMateriales.getColumnModel().getColumn(2).setMaxWidth(60);
+            jTableMateriales.getColumnModel().getColumn(3).setMinWidth(90);
+            jTableMateriales.getColumnModel().getColumn(3).setMaxWidth(90);
+            jTableMateriales.getColumnModel().getColumn(5).setMinWidth(75);
+            jTableMateriales.getColumnModel().getColumn(5).setMaxWidth(75);
         }
 
         jbtnAgregarMaterial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar16.png"))); // NOI18N
@@ -187,18 +202,35 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Folio", "Proveedor", "Tipo Proveedor", "Descripción Proveedor", "Editar", "Eliminar"
+                "Folio", "Id Proveedor", "Proveedor", "Tipo Proveedor", "Descripción Proveedor", "Editar", "Eliminar"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        jTableProveedoresMaterial.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableProveedoresMaterialMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTableProveedoresMaterial);
+        if (jTableProveedoresMaterial.getColumnModel().getColumnCount() > 0) {
+            jTableProveedoresMaterial.getColumnModel().getColumn(0).setMinWidth(40);
+            jTableProveedoresMaterial.getColumnModel().getColumn(0).setMaxWidth(40);
+            jTableProveedoresMaterial.getColumnModel().getColumn(1).setMinWidth(85);
+            jTableProveedoresMaterial.getColumnModel().getColumn(1).setMaxWidth(85);
+            jTableProveedoresMaterial.getColumnModel().getColumn(3).setMinWidth(100);
+            jTableProveedoresMaterial.getColumnModel().getColumn(3).setMaxWidth(100);
+            jTableProveedoresMaterial.getColumnModel().getColumn(5).setMinWidth(50);
+            jTableProveedoresMaterial.getColumnModel().getColumn(5).setMaxWidth(50);
+            jTableProveedoresMaterial.getColumnModel().getColumn(6).setMinWidth(65);
+            jTableProveedoresMaterial.getColumnModel().getColumn(6).setMaxWidth(65);
+        }
 
         jLabel7.setText("Proveedores");
 
@@ -213,8 +245,6 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Materiales");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/eliminar.png"))); // NOI18N
-
         jLabel6.setText("Precio");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -225,11 +255,8 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 672, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 145, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 738, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jbtnAgregarMaterial)
@@ -310,10 +337,8 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
                 .addGap(39, 39, 39)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
@@ -350,6 +375,7 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
                             LimpiaCampos();
                             MetodosGlobales.LimpiaTabla(jTableMateriales);
                             materiales.TablaConsultaMateriales();
+                            MetodosGlobales.LimpiaTabla(jTableProveedoresMaterial);
                         } catch (Exception e) {
                             JOptionPane.showMessageDialog(rootPane, "No se registro el operador",
                                 "Error",JOptionPane.ERROR_MESSAGE);
@@ -391,6 +417,7 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
             jTxtDescripciónBM.setText(materiales.getDescripcionBM());
             //FIN DE LA VALIDACIÓN TELÉFONO 2
         }
+        
     }//GEN-LAST:event_jTableMaterialesMouseClicked
 
     private void jbtnModificarMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnModificarMaterialActionPerformed
@@ -446,6 +473,7 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
                     LimpiaCampos();
                     MetodosGlobales.LimpiaTabla(jTableMateriales);
                     materiales.TablaConsultaMateriales();
+                    MetodosGlobales.LimpiaTabla(jTableProveedoresMaterial);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(rootPane, "No se eliminó el material: "+e,
                         "Aviso",JOptionPane.WARNING_MESSAGE);
@@ -465,6 +493,10 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
         jbtnEliminarMaterial.setEnabled(false);
         jbtnModificarMaterial.setEnabled(false);
         
+        MetodosGlobales.LimpiaTabla(jTableMateriales);
+        materiales.TablaConsultaMateriales();
+        MetodosGlobales.LimpiaTabla(jTableProveedoresMaterial);
+        
     }//GEN-LAST:event_jbtnLimpiarMaterialActionPerformed
 
     private void jBtnBuscarMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarMaterialActionPerformed
@@ -475,6 +507,65 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
         buscaMaterial.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
         buscaMaterial.show();
     }//GEN-LAST:event_jBtnBuscarMaterialActionPerformed
+
+    private void jTableProveedoresMaterialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProveedoresMaterialMouseClicked
+        int column = jTableProveedoresMaterial.getColumnModel().getColumnIndexAtX(evt.getX());
+        int row = evt.getY()/jTableProveedoresMaterial.getRowHeight();
+        int fila = jTableProveedoresMaterial.getSelectedRow();
+        DefaultTableModel dtm = (DefaultTableModel)jTableProveedoresMaterial.getModel();
+        
+        if(row < jTableProveedoresMaterial.getRowCount() && row >=0 && column < jTableProveedoresMaterial.getColumnCount() && column >= 0){
+            Object value = jTableProveedoresMaterial.getValueAt(row, column);
+            if(value instanceof JButton){
+                ((JButton)value).doClick();
+                JButton boton = (JButton) value;
+                
+                if(boton.getName().equals("modif")){
+                    Frame frame = JOptionPane.getFrameForComponent(this);
+                    ModificarProveedorMaterial modificarProveedor = new ModificarProveedorMaterial(frame,true);
+                    Dimension desktopSize = Main.jDesktopMain.getSize();
+                    Dimension FrameSize = modificarProveedor.getSize();
+                    modificarProveedor.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+                    modificarProveedor.show();
+                }
+                if(boton.getName().equals("elimi")){
+                    if (JOptionPane.showConfirmDialog(rootPane, "Se eliminará el proveedor "+jTableProveedoresMaterial.getValueAt(fila, 1)+" ¿Desea continuar?",
+                        "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                        
+                        if(jTableProveedoresMaterial.getValueAt(fila, 0).equals("")){//SI LA COLUMNA FOLIO ESTA VACIA, PASA A ELIMINAR SOLAMENTE LA FILA SIN BD
+                            dtm.removeRow(jTableProveedoresMaterial.getSelectedRow());//SE LIMPIA LA TABLA MATERIALES PARA QUE DEJE DE ESTAR SELECCIONADA
+                            MetodosGlobales.LimpiaTabla(jTableMateriales);//SE ACTUALIZA LA TABLA PARA QUE VUELVA A MOSTRAR LOS DATOS
+                            materiales.TablaConsultaMateriales();
+                        }else{//SINO ENTONCES ELIMINA LA FILA CON BD
+                            if(BD.conectarBD()){
+                                try {
+                                    materiales.EliminaMaterialProveedorUnoenUno(jTableProveedoresMaterial);
+                                    JOptionPane.showMessageDialog(rootPane, "El proveedor se eliminó con éxito",
+                                        "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                                    dtm.removeRow(jTableProveedoresMaterial.getSelectedRow());//ELIMINA LA FILA SELECCIONADA DEL JTABLE
+                                    
+                                    MetodosGlobales.LimpiaTabla(jTableMateriales);//SE LIMPIA LA TABLA MATERIALES PARA QUE DEJE DE ESTAR SELECCIONADA
+                                    materiales.TablaConsultaMateriales();//SE ACTUALIZA LA TABLA PARA QUE VUELVA A MOSTRAR LOS DATOS
+                                    
+                                } catch (Exception e) {
+                                    JOptionPane.showMessageDialog(rootPane, "No se eliminó el Proveedor: "+e,
+                                        "Aviso",JOptionPane.WARNING_MESSAGE);
+                                    BD.cerrarConexion();
+                                }
+                            }else{
+                                JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                                        "Error",JOptionPane.ERROR_MESSAGE);
+                                BD.cerrarConexion();
+                            }
+                        }
+                    }
+                   
+                    
+                    
+                }
+            }
+        }
+    }//GEN-LAST:event_jTableProveedoresMaterialMouseClicked
 
 
      public static void LimpiaCampos(){
@@ -488,7 +579,6 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
      
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnBuscarMaterial;
-    private javax.swing.JButton jButton1;
     public static javax.swing.JComboBox<String> jCBUnidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

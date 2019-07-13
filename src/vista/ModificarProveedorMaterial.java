@@ -5,45 +5,36 @@
  */
 package vista;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.ButtonModel;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import modelo.Materiales;
 import modelo.Proveedores;
-import persistencia.IconCellRenderer;
+import persistencia.BD;
+import persistencia.MetodosGlobales;
 
 /**
  *
  * @author alber
  */
-public class AgregarProveedorMaterial extends javax.swing.JDialog {
+public class ModificarProveedorMaterial extends javax.swing.JDialog {
 
-    /**
-     * Creates new form AgregarProveedorMaterial
-     */
     Proveedores proveedores = new Proveedores();
+    Materiales materiales = new Materiales();
     
-    //VARIABLES PARA AGREGAR A LA TABLA PROVEEDORESMATERIALES
-     ImageIcon iconoEditar = new ImageIcon("src/imagenes/anadir.png");
-     JLabel labelIconEditar = new JLabel();
-    //PARA LOS BOTONES DE LA TABLA PROVEEDORESMATERIALES 
-    ImageIcon iconModif = new ImageIcon(getClass().getResource("/imagenes/editar.png"));
-    ImageIcon iconElimina = new ImageIcon(getClass().getResource("/imagenes/quitar.png"));
     
-    //CREAMOS ESTOS BOTONES PARA ANEXARLOS A LA TABLA DE PROVEEDORESMATERIALES
-     JButton btnModificar = new JButton(iconModif);
-     JButton btnEliminar = new JButton(iconElimina);
-     
-    public AgregarProveedorMaterial(java.awt.Frame parent, boolean modal) {
+    public ModificarProveedorMaterial(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-
-        proveedores.leerDatosLista(jListProveedores); 
         
-        String e = jListProveedores.getSelectedValue();
-        jTxtDescripcion.setText(e);
+        proveedores.leerDatosLista(jListProveedores);
+         int fila = CatalogoMateriales.jTableProveedoresMaterial.getSelectedRow();
+        jListProveedores.setSelectedValue(CatalogoMateriales.jTableProveedoresMaterial.getValueAt(fila, 2), true);
+        if(CatalogoMateriales.jTableProveedoresMaterial.getValueAt(fila, 3).equals("Primario")){
+            jRBPrimario.setSelected(true);
+        }else{
+            jRBSecundario.setSelected(true);
+        }
+        jTxtDescripcion.setText((String) CatalogoMateriales.jTableProveedoresMaterial.getValueAt(fila, 4));
     }
 
     /**
@@ -56,28 +47,23 @@ public class AgregarProveedorMaterial extends javax.swing.JDialog {
     private void initComponents() {
 
         buttonGroupSelecPrioridad = new javax.swing.ButtonGroup();
+        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListProveedores = new javax.swing.JList<>();
-        jTxtDescripcion = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jTxtDescripcion = new javax.swing.JTextField();
         jRBPrimario = new javax.swing.JRadioButton();
         jRBSecundario = new javax.swing.JRadioButton();
-        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Agregar descripción del Material por Proveedor");
+        setTitle("Modificar descripción del Material por Proveedor");
+        setResizable(false);
+
+        jLabel2.setText("Proveedores");
 
         jListProveedores.setToolTipText("");
         jScrollPane1.setViewportView(jListProveedores);
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ok.png"))); // NOI18N
-        jButton1.setText("Agregar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         jLabel1.setText("Descripción del Materaal por el proveedor");
 
@@ -87,7 +73,13 @@ public class AgregarProveedorMaterial extends javax.swing.JDialog {
         buttonGroupSelecPrioridad.add(jRBSecundario);
         jRBSecundario.setText("Secundario");
 
-        jLabel2.setText("Proveedores");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/girar.png"))); // NOI18N
+        jButton1.setText("Modificar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -142,63 +134,83 @@ public class AgregarProveedorMaterial extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       String nomProveedor = "";
-       int id=0;
-       String tipo = "";
-       String descripción = "";
-       int validaPrimario = 0;
-       String rbPrimario = "";
-               
-       if(jListProveedores.getSelectedIndex() >=0){
-           if(!jTxtDescripcion.getText().equals("")){
-               if(jRBPrimario.isSelected() || jRBSecundario.isSelected()){
-                   
-                   nomProveedor = jListProveedores.getSelectedValue();
-                   proveedores.optenerIdProveedor(nomProveedor);
-                   id= proveedores.getIdProveedor();
-                   descripción = jTxtDescripcion.getText();
-                   
-                   
-                   if(jRBPrimario.isSelected()){
+        String nomProveedor = "";
+        int id=0;
+        String tipo = "";
+        int validaPrimario = 0;
+        String rbPrimario = "";
+        int filaMaterialProveedor = CatalogoMateriales.jTableProveedoresMaterial.getSelectedRow();
+        int filaMateriales = CatalogoMateriales.jTableMateriales.getSelectedRow();
+
+        if(jListProveedores.getSelectedIndex() >=0){
+            if(!jTxtDescripcion.getText().equals("")){
+                if(jRBPrimario.isSelected() || jRBSecundario.isSelected()){
+
+                    nomProveedor = jListProveedores.getSelectedValue();
+                    proveedores.optenerIdProveedor(nomProveedor);
+                    id= proveedores.getIdProveedor();
+
+                    if(jRBPrimario.isSelected()){
                         tipo = "Primario";
                         rbPrimario = "Primario";
                     }
                     if(jRBSecundario.isSelected()){
-                       tipo = "Secundario";
+                        tipo = "Secundario";
                     }
+                    materiales.setTipoProveedor(tipo);
+                    materiales.setDescripcionProveedor(jTxtDescripcion.getText());
+                    materiales.setNombreProveedor(jListProveedores.getSelectedValue());
+                        
                     int filas =CatalogoMateriales.jTableProveedoresMaterial.getRowCount();
                     for(int i=0; i<filas; i++){
                         if(CatalogoMateriales.jTableProveedoresMaterial.getValueAt(i, 3).equals(rbPrimario) ){
                             validaPrimario = 1;
                         }
                     }
-                    
+
                     if(validaPrimario==1){
                         JOptionPane.showMessageDialog(rootPane, "Ya existe un proveedor primario",
-                                     "Aviso",JOptionPane.WARNING_MESSAGE);
+                            "Aviso",JOptionPane.WARNING_MESSAGE);
                     }else{
-                        DefaultTableModel dtm = (DefaultTableModel)CatalogoMateriales.jTableProveedoresMaterial.getModel();
-                        CatalogoMateriales.jTableProveedoresMaterial.setDefaultRenderer(Object.class, new IconCellRenderer());
-                        btnModificar.setName("modif");
-                        btnEliminar.setName("elimi");
+                            if(CatalogoMateriales.jTableProveedoresMaterial.getValueAt(filaMaterialProveedor, 0).equals("")){
+                                CatalogoMateriales.jTableProveedoresMaterial.setValueAt(id,filaMaterialProveedor, 1);
+                                CatalogoMateriales.jTableProveedoresMaterial.setValueAt(materiales.getNombreProveedor(),filaMaterialProveedor, 2);
+                                CatalogoMateriales.jTableProveedoresMaterial.setValueAt(materiales.getTipoProveedor(),filaMaterialProveedor, 3);
+                                CatalogoMateriales.jTableProveedoresMaterial.setValueAt(materiales.getDescripcionProveedor(),filaMaterialProveedor, 4);
+                            }else{
+                                 try {
+                                    materiales.ActualizarMaterialProveedor(CatalogoMateriales.jTableProveedoresMaterial);
+
+            //                        ope.buscaUsuario();
+                                    JOptionPane.showMessageDialog(rootPane, "Actualización exitosa",
+                                        "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                                    MetodosGlobales.LimpiaTabla(CatalogoMateriales.jTableProveedoresMaterial);
+                                    materiales.TablaConsultaProveedoresMateriales((int) CatalogoMateriales.jTableMateriales.getValueAt(filaMateriales, 0));
+                                    this.dispose();
+                                } catch (Exception e) {
+                                    JOptionPane.showMessageDialog(rootPane, "No se registro el operador",
+                                        "Error",JOptionPane.ERROR_MESSAGE);
+                                    System.out.println("Error al regiatrar un operador: "+e);
+                                    BD.cerrarConexion();
+                                }
+                            }
                         
-                        Object nuevo[] ={"",id,nomProveedor,tipo,descripción,btnModificar,btnEliminar};
-                        dtm.addRow(nuevo);
+                       
                     }
-                     
-               }else{
+
+                }else{
                     JOptionPane.showMessageDialog(rootPane, "Seleccion si el Proveedor es Primario o Secundario",
-                                     "Aviso",JOptionPane.WARNING_MESSAGE);
+                        "Aviso",JOptionPane.WARNING_MESSAGE);
                 }
-           }else{
+            }else{
                 JOptionPane.showMessageDialog(rootPane, "Imposible registrar. Descripción Vacía",
-                            "Aviso",JOptionPane.WARNING_MESSAGE);
-           }
-            
-       }else{
-           JOptionPane.showMessageDialog(rootPane, "Seleccion un Proveedor de la lista",
-                            "Aviso",JOptionPane.WARNING_MESSAGE);
-       }
+                    "Aviso",JOptionPane.WARNING_MESSAGE);
+            }
+
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Seleccion un Proveedor de la lista",
+                "Aviso",JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -218,20 +230,20 @@ public class AgregarProveedorMaterial extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AgregarProveedorMaterial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModificarProveedorMaterial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AgregarProveedorMaterial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModificarProveedorMaterial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AgregarProveedorMaterial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModificarProveedorMaterial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AgregarProveedorMaterial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModificarProveedorMaterial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AgregarProveedorMaterial dialog = new AgregarProveedorMaterial(new javax.swing.JFrame(), true);
+                ModificarProveedorMaterial dialog = new ModificarProveedorMaterial(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
