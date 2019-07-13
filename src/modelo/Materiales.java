@@ -11,11 +11,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import persistencia.BD;
+import persistencia.IconCellRenderer;
 import persistencia.MetodosGlobales;
+import vista.AgregarProveedorMaterial;
 import vista.CatalogoMateriales;
 
 /**
@@ -29,11 +33,21 @@ public class Materiales {
     String unidad;
     String rendimiento;
     double precio;
+   String tipoProveedor;
+   String descripcionProveedor;
+   String nombreProveedor;
    
     String descripcionBM;
     ResultSet rs;
     ResultSetMetaData rsm;
     DefaultTableModel dtm; 
+    
+    //PARA LOS BOTONES DE LA TABLA PROVEEDORESMATERIALES 
+    ImageIcon iconModif = new ImageIcon(getClass().getResource("/imagenes/editar.png"));
+    ImageIcon iconElimina = new ImageIcon(getClass().getResource("/imagenes/quitar.png"));
+    //CREAMOS ESTOS BOTONES PARA ANEXARLOS A LA TABLA DE PROVEEDORESMATERIALES
+     JButton btnModificar = new JButton(iconModif);
+     JButton btnEliminar = new JButton(iconElimina);
 
     public int getIdMaterial() {
         return idMaterial;
@@ -58,6 +72,20 @@ public class Materiales {
     public String getDescripcionBM() {
         return descripcionBM;
     }
+    
+    
+    public String getTipoProveedor() {
+        return tipoProveedor;
+    }
+    
+     public String getDescripcionProveedor() {
+        return descripcionProveedor;
+    }
+     
+    public String getNombreProveedor() {
+        return nombreProveedor;
+    }
+
 
     public void setIdMaterial(int idMaterial) {
         this.idMaterial = idMaterial;
@@ -81,6 +109,18 @@ public class Materiales {
 
     public void setDescripcionBM(String descripcionBM) {
         this.descripcionBM = descripcionBM;
+    }
+    
+    public void setTipoProveedor(String tipoProveedor) {
+        this.tipoProveedor = tipoProveedor;
+    }
+    
+    public void setDescripcionProveedor(String descipProveedor) {
+        this.descripcionProveedor = descipProveedor;
+    }
+    
+    public void setNombreProveedor(String nombreProveedor) {
+        this.nombreProveedor = nombreProveedor;
     }
     
     public int noRepetirMaterial(String nombre){
@@ -124,11 +164,13 @@ public class Materiales {
         }
     }
     
+    
+    
     public void registrarProveedoresMateriales(int materialId){
         for(int i=0; i<CatalogoMateriales.jTableProveedoresMaterial.getRowCount(); i++){
          String sql = "insert into materialproveedor (idMaterial,idProveedor,tipo,descripcionProveedor)"
-                +"values ("+materialId+","+CatalogoMateriales.jTableProveedoresMaterial.getValueAt(i, 0)+",'"+CatalogoMateriales.jTableProveedoresMaterial.getValueAt(i, 2)+"',"
-                +"'"+CatalogoMateriales.jTableProveedoresMaterial.getValueAt(i, 3)+"');";
+                +"values ("+materialId+","+CatalogoMateriales.jTableProveedoresMaterial.getValueAt(i, 1)+",'"+CatalogoMateriales.jTableProveedoresMaterial.getValueAt(i, 3)+"',"
+                +"'"+CatalogoMateriales.jTableProveedoresMaterial.getValueAt(i, 4)+"');";
          System.out.println("Registro de Proveedores de los Materiales: "+sql);
          if(BD.ejecutarSQL(sql)){
             //JOptionPane.showMessageDialog(null,"Se registro exitosamente el/los Proveedores", "Aviso",JOptionPane.INFORMATION_MESSAGE);
@@ -139,11 +181,22 @@ public class Materiales {
         }  
     }
     
+    public boolean ActualizarMaterialProveedor(JTable tabla){
+        int fila = tabla.getSelectedRow();
+        String sql = "update materialproveedor set idProveedor = "+tabla.getValueAt(fila, 1)+", tipo = '"+this.tipoProveedor+"',"
+                + " descripcionProveedor='"+this.descripcionProveedor+"' where idMaterialProveedor = "+tabla.getValueAt(fila, 0);
+        System.out.println("consulta: "+sql);
+        if (BD.ejecutarSQL(sql)) {            
+            return true;
+        } else {
+            return false;
+        }
+    }
      
      public void TablaConsultaMateriales(){
         try {
             if (BD.conectarBD()) {
-                String sql = "select * from materiales";
+                String sql = "select idMateriales,nombre,unidad,rendimiento,descripcionBM,CONCAT('$ ', round(precio,2)) from materiales";
                 rs = BD.ejecutarSQLSelect(sql);
                 rsm = rs.getMetaData();
                 List<Object[]> datos = new ArrayList<Object[]>();
@@ -172,24 +225,22 @@ public class Materiales {
     
     public void TablaConsultaProveedoresMateriales(int materialId){
         try {
+            dtm = (DefaultTableModel)CatalogoMateriales.jTableProveedoresMaterial.getModel();
+            CatalogoMateriales.jTableProveedoresMaterial.setDefaultRenderer(Object.class, new IconCellRenderer());
+            btnModificar.setName("modif");
+            btnEliminar.setName("elimi");
+                        
             if (BD.conectarBD()) {
-                String sql = "select materialproveedor.idMaterialProveedor, proveedores.nombre, materialproveedor.tipo, materialproveedor.descripcionProveedor "+
-                        "from materialproveedor inner join proveedores on materialproveedor.idProveedor=proveedores.idProveedor where idMaterial ="+materialId;
+                String sql = "select materialproveedor.idMaterialProveedor,materialproveedor.idProveedor, proveedores.nombre, materialproveedor.tipo, materialproveedor.descripcionProveedor"+
+                        " from materialproveedor inner join materiales on materialproveedor.idMaterial=materiales.idMateriales"+
+                        " left join proveedores on materialproveedor.idProveedor=proveedores.idProveedor where materialproveedor.idMaterial ="+materialId;
                 rs = BD.ejecutarSQLSelect(sql);
                 rsm = rs.getMetaData();
-                List<Object[]> datos = new ArrayList<Object[]>();
+
                 while (rs.next()) {                
-                    Object[] filas = new Object[rsm.getColumnCount()];
-                    for (int i = 0; i < filas.length; i++) {
-                        filas[i] = rs.getObject(i+1);
-                    }
-                    datos.add(filas);
+                    Object  nuev[] ={rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),btnModificar,btnEliminar}; 
+                    dtm.addRow(nuev);
                 }
-                dtm = (DefaultTableModel)CatalogoMateriales.jTableProveedoresMaterial.getModel();
-                for (int i = 0; i < datos.size(); i++) {
-                    dtm.addRow(datos.get(i));
-                }
-                
                 if(CatalogoMateriales.jTableProveedoresMaterial.getRowCount()<=0){
                     JOptionPane.showMessageDialog(null,"Este Material no cuenta con algún Proveedor ", 
                     "Aviso",JOptionPane.WARNING_MESSAGE);
@@ -244,8 +295,35 @@ public class Materiales {
       
     public boolean EliminaMaterial(JTable tabla){
         int fila = tabla.getSelectedRow();
-        
         String sql = "delete from materiales where idMateriales = '"+tabla.getValueAt(fila, 0)+"'";
+        if (BD.ejecutarSQL(sql)) { 
+            try {
+                EliminaMaterialProveedorTodo(tabla);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"Error al eliminar todo los proveedores que le pertenecen al idMaterial: "+tabla.getValueAt(fila, 0)+"", 
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            }
+            
+            return true;
+            
+        } else {
+            return false;
+        }
+    }
+    public boolean EliminaMaterialProveedorTodo(JTable tabla){
+        int fila = tabla.getSelectedRow();
+        
+        String sql = "delete from materialproveedor where idMaterial = "+tabla.getValueAt(fila, 0)+"";
+        if (BD.ejecutarSQL(sql)) { 
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public boolean EliminaMaterialProveedorUnoenUno(JTable tabla){
+        int fila = tabla.getSelectedRow();
+        
+        String sql = "delete from materialproveedor where idMaterialProveedor = '"+tabla.getValueAt(fila, 0)+"'";
         if (BD.ejecutarSQL(sql)) { 
             return true;
         } else {
