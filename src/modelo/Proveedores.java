@@ -184,6 +184,24 @@ public class Proveedores {
         }
     }
     
+    public int validaProveedorMaterial(JTable tabla){
+       int proveedorOcupado=0;
+        try {
+            BD.conectarBD();
+            int fila = tabla.getSelectedRow();
+            String sql = "SELECT idProveedor FROM materialproveedor WHERE idProveedor = '"+tabla.getValueAt(fila, 0)+"'";
+            rs = BD.ejecutarSQLSelect(sql);
+            rsm = rs.getMetaData();
+            while (rs.next()) {                
+                proveedorOcupado = 1;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"No se pudo consultar con exito el proveedor para saber si esta ligado algún material"+e, 
+                    "Aviso",JOptionPane.WARNING_MESSAGE);
+        }
+        return proveedorOcupado;
+    }
+    
      public void buscarProveedor(String tipoBuqueda,String busqueda){
         try {
             if (BD.conectarBD()) {

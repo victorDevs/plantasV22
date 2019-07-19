@@ -134,7 +134,7 @@ public class Materiales {
                     existeMaterial = 1;
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,"No se pudo buscar el proveedor para saber si exite en la BD. CONSULTE AL DESARROLLADOR "+e, 
+                JOptionPane.showMessageDialog(null,"No se pudo buscar el material para saber si exite en la BD. CONSULTE AL DESARROLLADOR "+e, 
                         "Aviso",JOptionPane.WARNING_MESSAGE);
             }
         return existeMaterial;
@@ -176,7 +176,7 @@ public class Materiales {
          if(BD.ejecutarSQL(sql)){
             //JOptionPane.showMessageDialog(null,"Se registro exitosamente el/los Proveedores", "Aviso",JOptionPane.INFORMATION_MESSAGE);
          }else{
-            JOptionPane.showMessageDialog(null,"No se pudo registrar el Proveedor"+CatalogoMateriales.jTableProveedoresMaterial.getValueAt(i, 1), 
+            JOptionPane.showMessageDialog(null,"No se pudo registrar el Proveedor"+CatalogoMateriales.jTableProveedoresMaterial.getValueAt(i, 2), 
                         "Aviso",JOptionPane.WARNING_MESSAGE);
          }
         }  
@@ -301,7 +301,7 @@ public class Materiales {
             try {
                 EliminaMaterialProveedorTodo(tabla);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,"Error al eliminar todo los proveedores que le pertenecen al idMaterial: "+tabla.getValueAt(fila, 0)+"", 
+                JOptionPane.showMessageDialog(null,"Error al eliminar todos los proveedores que le pertenecen al idMaterial: "+tabla.getValueAt(fila, 1)+"", 
                     "Error",JOptionPane.ERROR_MESSAGE);
             }
             

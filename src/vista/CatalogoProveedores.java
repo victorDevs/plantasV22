@@ -424,27 +424,31 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
 
     private void btnElimianrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElimianrActionPerformed
         // TODO add your handling code here:
-        if (JOptionPane.showConfirmDialog(rootPane, "Se eliminará el proveedor, ¿Desea continuar?",
-            "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){    
-            btnModifyProveedor.setEnabled(false);
-            btnElimianr.setEnabled(false);
-            btnAddProveedor.setEnabled(true);
-            if(BD.conectarBD()){
-                try {
-                    prov.EliminaProveedor(jTableProveedores);
-                    JOptionPane.showMessageDialog(rootPane, "El proveedor se eliminó con éxito",
-                        "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                    LimpiaCampos();
-                    LimpiaTablaProveedores();
-                    prov.TablaConsultaProveedores();
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(rootPane, "No se eliminó el proveedor: "+e,
+        if(prov.validaProveedorMaterial(jTableProveedores) == 1){
+            JOptionPane.showMessageDialog(rootPane, "No es posible eliminar el proveedor.\n Este proveedor esta ligado a uno o más materiales.",
                         "Aviso",JOptionPane.WARNING_MESSAGE);
-                    BD.cerrarConexion();
+            BD.cerrarConexion();
+        }else{
+            if (JOptionPane.showConfirmDialog(rootPane, "Se eliminará el proveedor, ¿Desea continuar?",
+                "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){    
+                btnModifyProveedor.setEnabled(false);
+                btnElimianr.setEnabled(false);
+                btnAddProveedor.setEnabled(true);
+                if(BD.conectarBD()){
+                    try {
+                        prov.EliminaProveedor(jTableProveedores);
+                        JOptionPane.showMessageDialog(rootPane, "El proveedor se eliminó con éxito",
+                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                        LimpiaCampos();
+                        LimpiaTablaProveedores();
+                        prov.TablaConsultaProveedores();
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(rootPane, "No se eliminó el proveedor: "+e,
+                        "Aviso",JOptionPane.WARNING_MESSAGE);
+                        BD.cerrarConexion();
+                    }
                 }
             }else{
-                JOptionPane.showMessageDialog(rootPane, "Error de conexión",
-                        "Error",JOptionPane.ERROR_MESSAGE);
                 BD.cerrarConexion();
             }
         }
