@@ -7,6 +7,9 @@ package vista;
 
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Graphics;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,6 +26,9 @@ import modelo.Clientes;
 import modelo.Personal;
 import modelo.Procesos;
 import modelo.Proveedores;
+import net.sourceforge.barbecue.Barcode;
+import net.sourceforge.barbecue.BarcodeFactory;
+import net.sourceforge.barbecue.BarcodeImageHandler;
 import vista.BuscaProveedor;
 import persistencia.BD;
 
@@ -35,12 +41,34 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
 
     Personal per = new Personal();
     Procesos pro = new Procesos();
+    
+    String strFileName = "";
 
     /**
      * Creates new form CatalogoMateriales
      */
      
      private static CatalogoPersonal catalogoProveedores;
+     
+     public class Imagen extends javax.swing.JPanel {
+        public Imagen() {
+            this.setSize(250, 150); //se selecciona el tamaño del panel
+        }
+        
+        //Se crea un método cuyo parámetro debe ser un objeto Graphics
+        public void paint(Graphics grafico) {
+            Dimension height = getSize();
+
+            //Se selecciona la imagen que tenemos en el paquete de la //ruta del programa
+            ImageIcon Img = new ImageIcon(getClass().getResource("/codes/BarCode_0987654321.JPEG")); 
+
+            //se dibuja la imagen que tenemos en el paquete Images //dentro de un panel
+            grafico.drawImage(Img.getImage(), 10, 20, height.width, height.height, null);
+
+            setOpaque(false);
+            super.paintComponent(grafico);
+        }
+    }
      
      public static CatalogoPersonal getInstancia(){
          if (catalogoProveedores == null) {
@@ -57,6 +85,9 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
         LimpiaTablaPersonal();
         per.TablaConsultaPersonal();
         pro.buscaPersonal(jCbProceso);
+        Imagen Imagen = new Imagen();
+        jPanelCodeBarras.add(Imagen);
+        jPanelCodeBarras.repaint();
         
     }
 
@@ -92,6 +123,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         jCbProceso = new javax.swing.JComboBox<>();
         jDCFechaNacimiento = new com.toedter.calendar.JDateChooser();
+        jPanelCodeBarras = new javax.swing.JPanel();
 
         setClosable(true);
         setTitle("Catálogo de Personal");
@@ -199,6 +231,19 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
 
         jCbProceso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jPanelCodeBarras.setBorder(javax.swing.BorderFactory.createTitledBorder("Código de Barras"));
+
+        javax.swing.GroupLayout jPanelCodeBarrasLayout = new javax.swing.GroupLayout(jPanelCodeBarras);
+        jPanelCodeBarras.setLayout(jPanelCodeBarrasLayout);
+        jPanelCodeBarrasLayout.setHorizontalGroup(
+            jPanelCodeBarrasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 233, Short.MAX_VALUE)
+        );
+        jPanelCodeBarrasLayout.setVerticalGroup(
+            jPanelCodeBarrasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 127, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -214,51 +259,52 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCbProceso, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jDCFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jDCFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTxtDomicilio))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTxtAptPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTxtAptPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTxtAptMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(112, 112, 112)
-                                        .addComponent(btnAddPersonal)
-                                        .addGap(42, 42, 42)
-                                        .addComponent(btnModifyPersonal)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnEliminar)
-                                        .addGap(53, 53, 53)
-                                        .addComponent(btnLimpiar))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTxtCorreo)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel8)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCbProceso, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 47, Short.MAX_VALUE)))
+                                .addComponent(jTxtAptMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanelCodeBarras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(183, 183, 183)
+                .addComponent(btnAddPersonal)
+                .addGap(18, 18, 18)
+                .addComponent(btnModifyPersonal)
+                .addGap(18, 18, 18)
+                .addComponent(btnEliminar)
+                .addGap(18, 18, 18)
+                .addComponent(btnLimpiar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,20 +312,22 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
                 .addGap(8, 8, 8)
                 .addComponent(jBuscar)
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTxtAptPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTxtAptMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel5)
-                            .addComponent(jTxtDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1)
+                            .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(jTxtAptPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(jTxtAptMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel5)
+                                .addComponent(jTxtDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jDCFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
@@ -287,16 +335,18 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
                             .addComponent(jLabel7)
                             .addComponent(jTxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8)
-                            .addComponent(jCbProceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jDCFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(58, 58, 58)
+                            .addComponent(jCbProceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(79, 79, 79))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanelCodeBarras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
                     .addComponent(btnLimpiar)
                     .addComponent(btnModifyPersonal)
                     .addComponent(btnAddPersonal))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
         );
 
@@ -327,19 +377,59 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
                     per.setTelefono(jTxtTelefono.getText());
                     per.setCorreo(jTxtCorreo.getText());
                     per.setProceso(proceso);
-                    try {
-                        per.RegistraPersonal();
+                    if(per.RegistraPersonal()){
+                        Barcode barcode = null;
+                        String strCode = "0987654321";
+                        try {
+                            barcode = BarcodeFactory.createCode39(strCode, true);
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, "El código de barras para el trabajador no se creó correctamente: "+e, 
+                                    "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }
+                        barcode.setDrawingText(true);
+                        barcode.setBarWidth(2);
+                        barcode.setBarHeight(60);
+
+                        try {
+                            strFileName = "C:\\Users\\vikto\\OneDrive\\Documentos\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
+                            File file = new File(strFileName);
+                            file.setExecutable(true);
+                            file.setReadable(true);
+                            file.setWritable(true);
+                            FileOutputStream fos = new FileOutputStream(file);
+                            BarcodeImageHandler.writeJPEG(barcode, fos);
+                            System.out.println("Archivo creado: "+strFileName);
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, "La imagen del código de barras no se guardo como imagen correctamente"+e, 
+                                    "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }
+//                        Imagen Imagen = new Imagen();
+//                        jPanelCodeBarras.add(Imagen);
+//                        jPanelCodeBarras.repaint();
                         JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
                             "Aviso",JOptionPane.INFORMATION_MESSAGE);
                         LimpiaCampos();
                         LimpiaTablaPersonal();
                         per.TablaConsultaPersonal();
-                    } catch (Exception e) {
+                    }else{
                         JOptionPane.showMessageDialog(rootPane, "No se registro el personal",
                             "Error",JOptionPane.ERROR_MESSAGE);
-//                        System.out.println("Error al registrar un cliente: "+e);
                         BD.cerrarConexion();
                     }
+//                    try {
+//                        
+//                        per.RegistraPersonal();
+//                        JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
+//                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
+//                        LimpiaCampos();
+//                        LimpiaTablaPersonal();
+//                        per.TablaConsultaPersonal();
+//                    } catch (Exception e) {
+//                        JOptionPane.showMessageDialog(rootPane, "No se registro el personal",
+//                            "Error",JOptionPane.ERROR_MESSAGE);
+////                        System.out.println("Error al registrar un cliente: "+e);
+//                        BD.cerrarConexion();
+//                    }
                 }else{
                     JOptionPane.showMessageDialog(rootPane, "Error de conexión",
                             "Error",JOptionPane.ERROR_MESSAGE);
@@ -515,6 +605,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanelCodeBarras;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTablePersonal;
     public static javax.swing.JTextField jTxtAptMaterno;
