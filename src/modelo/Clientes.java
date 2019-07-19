@@ -164,10 +164,40 @@ public class Clientes {
         }
     }
     
+//    public void buscarCliente(String tipoBuqueda,String busqueda){
+//        try {
+//            if (BD.conectarBD()) {
+//                String sql = "select idCliente,nombre,domicilio,tel,contacto,correo from clientes where "+tipoBuqueda+" like '"+busqueda+"%'";
+//                rs = BD.ejecutarSQLSelect(sql);
+//                rsm = rs.getMetaData();
+//                List<Object[]> datos = new ArrayList<Object[]>();
+//                while (rs.next()) {                
+//                    Object[] filas = new Object[rsm.getColumnCount()];
+//                    for (int i = 0; i < filas.length; i++) {
+//                        filas[i] = rs.getObject(i+1);
+//                    }
+//                    datos.add(filas);
+//                }
+//                dtm = (DefaultTableModel)CatalogoClientes.jTableClientes.getModel();
+//                for (int i = 0; i < datos.size(); i++) {
+//                    dtm.addRow(datos.get(i));
+//                }
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos plantasbd",
+//                        "Error de conexión",JOptionPane.ERROR_MESSAGE);
+//                BD.cerrarConexion();
+//            }            
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null,"Error al mostrar lo datos en la tabla Clientes: "+e, 
+//                    "Error",JOptionPane.ERROR_MESSAGE);
+//            BD.cerrarConexion();
+//        }
+//    }
+    
     public void buscarCliente(String tipoBuqueda,String busqueda){
         try {
             if (BD.conectarBD()) {
-                String sql = "select idCliente,nombre,domicilio,tel,contacto,correo from clientes where "+tipoBuqueda+" like '"+busqueda+"%'";
+                String sql = "select * from clientes where "+tipoBuqueda+" like '%"+busqueda+"%'";
                 rs = BD.ejecutarSQLSelect(sql);
                 rsm = rs.getMetaData();
                 List<Object[]> datos = new ArrayList<Object[]>();
@@ -188,7 +218,7 @@ public class Clientes {
                 BD.cerrarConexion();
             }            
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error al mostrar lo datos en la tabla Clientes: "+e, 
+            JOptionPane.showMessageDialog(null,"Error al mostrar lo datos en la tabla proveedores: "+e, 
                     "Error",JOptionPane.ERROR_MESSAGE);
             BD.cerrarConexion();
         }

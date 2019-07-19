@@ -410,11 +410,11 @@ public class CatalogoClientes extends javax.swing.JInternalFrame {
 //        buscarProveedor.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
 //        buscarProveedor.show();
         Frame frame = JOptionPane.getFrameForComponent(this);
-        BuscaProveedor buscaProveedor = new BuscaProveedor(frame,true);
+        BuscaCliente buscaCliente = new BuscaCliente(frame,true);
         Dimension desktopSize = Main.jDesktopMain.getSize();
-        Dimension FrameSize = buscaProveedor.getSize();
-        buscaProveedor.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
-        buscaProveedor.show();
+        Dimension FrameSize = buscaCliente.getSize();
+        buscaCliente.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+        buscaCliente.show();
     }//GEN-LAST:event_jBuscarActionPerformed
 
     public void LimpiaTablaClientes(){
