@@ -114,7 +114,7 @@ public class validaJframeAbreUnaVez {
             
             //LIMPIAR CAMPOS AL VOLVER ABRIR LA VENTANA
             //CatalogoPersonal.LimpiaCampos();
-            personal.TablaConsultaPersonal();
+//            personal.TablaConsultaPersonal();
         }
     }
 }
