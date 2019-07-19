@@ -408,7 +408,7 @@ public class CatalogoClientes extends javax.swing.JInternalFrame {
 //        Dimension desktopSize = Main.jDesktopMain.getSize();
 //        Dimension FrameSize = buscarProveedor.getSize();
 //        buscarProveedor.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
-//        buscarProveedor.show();
+//        buscarProveedor.show();//
         Frame frame = JOptionPane.getFrameForComponent(this);
         BuscaCliente buscaCliente = new BuscaCliente(frame,true);
         Dimension desktopSize = Main.jDesktopMain.getSize();

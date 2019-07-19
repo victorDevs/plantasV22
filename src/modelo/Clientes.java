@@ -191,7 +191,7 @@ public class Clientes {
 //            JOptionPane.showMessageDialog(null,"Error al mostrar lo datos en la tabla Clientes: "+e, 
 //                    "Error",JOptionPane.ERROR_MESSAGE);
 //            BD.cerrarConexion();
-//        }
+//        }/
 //    }
     
     public void buscarCliente(String tipoBuqueda,String busqueda){

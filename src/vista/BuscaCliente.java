@@ -147,6 +147,7 @@ public class BuscaCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
    public void LimpiaTablaProveedores(){
+       //
         try {
             DefaultTableModel modelo = (DefaultTableModel)jTableClientes.getModel();
             int filas = jTableClientes.getRowCount();
