@@ -332,10 +332,12 @@ public class Materiales {
         }
     }
        
-    public void buscarProveedor(String tipoBuqueda,String busqueda){
+    public void buscarMaterial(String tipoBuqueda,String busqueda){
         try {
             if (BD.conectarBD()) {
-                String sql = "select * from materiales where "+tipoBuqueda+" like '%"+busqueda+"%'";
+                String sql = "select materiales.idMateriales,materiales.nombre,materiales.unidad,materiales.rendimiento,materiales.descripcionBM,materiales.precio "+
+                        "from materiales inner join materialproveedor on materiales.idMateriales=materialproveedor.idMaterial left join proveedores on "+
+                        "materialproveedor.idProveedor = proveedores.idProveedor where "+tipoBuqueda+" like '%"+busqueda+"%'";
                 rs = BD.ejecutarSQLSelect(sql);
                 rsm = rs.getMetaData();
                 List<Object[]> datos = new ArrayList<Object[]>();

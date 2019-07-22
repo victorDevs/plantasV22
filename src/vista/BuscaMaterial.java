@@ -102,16 +102,16 @@ public class BuscaMaterial extends javax.swing.JDialog {
         String convertir="";//variaable para convertir el combobox a columnas de la base de datos
         //INICIA EL CONVERSOR DE LOS CAMPOS PARA LA BD
         if(jCBBuscadorMaterial.getSelectedIndex()==1){
-            convertir = "nombre";
+            convertir = "materiales.nombre";
         }
         if(jCBBuscadorMaterial.getSelectedIndex()==2){
-            convertir = "descripcionBM";
+            convertir = "materiales.descripcionBM";
         }
         if(jCBBuscadorMaterial.getSelectedIndex()==3){
-            convertir = "descripcionProveedor";
+            convertir = "materialproveedor.descripcionProveedor";
         }
         if(jCBBuscadorMaterial.getSelectedIndex()==4){
-            convertir = "proveedor";
+            convertir = "proveedores.nombre";
         }
          //FIN DE CONVERSOR
 
@@ -129,7 +129,7 @@ public class BuscaMaterial extends javax.swing.JDialog {
                 if(BD.conectarBD()){
                     try {
                         MetodosGlobales.LimpiaTabla(CatalogoMateriales.jTableMateriales);
-                        materiales.buscarProveedor(convertir, jTxtBuscadorMaterial.getText().trim());
+                        materiales.buscarMaterial(convertir, jTxtBuscadorMaterial.getText().trim());
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(rootPane, "No se consultó  correctamente la tabla de proveedores: "+e,
                             "Aviso",JOptionPane.WARNING_MESSAGE);
