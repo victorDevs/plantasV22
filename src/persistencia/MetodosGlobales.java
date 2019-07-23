@@ -28,4 +28,8 @@ public class MetodosGlobales {
                     "Tabla "+table,JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    public static String aceptarComillaSimple(String dato){
+        return dato.replaceAll("'", "''");
+    }
 }

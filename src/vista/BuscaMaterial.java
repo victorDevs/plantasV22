@@ -129,7 +129,7 @@ public class BuscaMaterial extends javax.swing.JDialog {
                 if(BD.conectarBD()){
                     try {
                         MetodosGlobales.LimpiaTabla(CatalogoMateriales.jTableMateriales);
-                        materiales.buscarMaterial(convertir, jTxtBuscadorMaterial.getText().trim());
+                        materiales.buscarMaterial(convertir, MetodosGlobales.aceptarComillaSimple(jTxtBuscadorMaterial.getText().trim()));
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(rootPane, "No se consultó  correctamente la tabla de proveedores: "+e,
                             "Aviso",JOptionPane.WARNING_MESSAGE);

@@ -176,14 +176,16 @@ public class ModificarProveedorMaterial extends javax.swing.JDialog {
                                     "Aviso",JOptionPane.WARNING_MESSAGE);
                             }else{
                                 CatalogoMateriales.jTableProveedoresMaterial.setValueAt(materiales.getTipoProveedor(),filaMaterialProveedor, 3);
-                               
                             }
-                            }else{//SI LA EDICIÓN ES CON BD EN SEGUIDA DE ESTA ELSE SE EJECUTA
+                            JOptionPane.showMessageDialog(rootPane, "Actualización exitosa",
+                                        "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                            this.dispose();
+                            }else{//SI LA EDICIÓN ES CON BD EN SEGUIDA DE ESTE ELSE SE EJECUTA
                                  try {
                                     if(validaPrimario==1){
                                         JOptionPane.showMessageDialog(rootPane, "Ya existe un proveedor primario. \n Solamente los demas datos se actualizarán",
                                     "Aviso",JOptionPane.WARNING_MESSAGE);
-                                        materiales.setTipoProveedor((String) CatalogoMateriales.jTableProveedoresMaterial.getValueAt(filaMaterialProveedor, 3));
+                                        materiales.setTipoProveedor((String) CatalogoMateriales.jTableProveedoresMaterial.getValueAt(filaMaterialProveedor, 3));//se agrega nuevamente el dato para que haya más de un proveedor primario
                                         materiales.ActualizarMaterialProveedor(CatalogoMateriales.jTableProveedoresMaterial,id);
                                     }else{
                                         materiales.ActualizarMaterialProveedor(CatalogoMateriales.jTableProveedoresMaterial,id);

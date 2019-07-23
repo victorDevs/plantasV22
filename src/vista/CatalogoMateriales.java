@@ -470,6 +470,7 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
                         LimpiaCampos();
                         MetodosGlobales.LimpiaTabla(jTableMateriales);
                         materiales.TablaConsultaMateriales();
+                        MetodosGlobales.LimpiaTabla(jTableProveedoresMaterial);
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(rootPane, "No se actualizó el material: "+e,
                             "Error",JOptionPane.ERROR_MESSAGE);
