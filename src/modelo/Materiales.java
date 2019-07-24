@@ -128,7 +128,7 @@ public class Materiales {
         int existeMaterial = 0;
         try {
                 BD.conectarBD();
-                String sql = "select nombre from materiales where nombre='"+nombre+"'";
+                String sql = "select nombre from materiales where nombre='"+MetodosGlobales.aceptarComillaSimple(nombre)+"'";
                 rs = BD.ejecutarSQLSelect(sql);
                 while (rs.next()) {                
                     existeMaterial = 1;
@@ -142,8 +142,9 @@ public class Materiales {
     
     public boolean registrarMaterial(){
         int idMaterialMax=0;
+        
         String sql = "insert into materiales (nombre,unidad,rendimiento,descripcionBM,precio) "
-                + "values ('"+this.nombre+"', '"+this.unidad+"','"+this.rendimiento+"','"+this.descripcionBM+"',"+this.precio+");";
+                + "values ('"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', '"+this.unidad+"','"+this.rendimiento+"','"+MetodosGlobales.aceptarComillaSimple(this.descripcionBM)+"',"+this.precio+");";
         System.out.println("Registro de material: "+sql);
         
         if (BD.ejecutarSQL(sql)) {
@@ -168,24 +169,28 @@ public class Materiales {
     
     
     public void registrarProveedoresMateriales(int materialId){
+        String sql = "";
         for(int i=0; i<CatalogoMateriales.jTableProveedoresMaterial.getRowCount(); i++){
-         String sql = "insert into materialproveedor (idMaterial,idProveedor,tipo,descripcionProveedor)"
+            if(CatalogoMateriales.jTableProveedoresMaterial.getValueAt(i, 0).equals("")){
+                sql = "insert into materialproveedor (idMaterial,idProveedor,tipo,descripcionProveedor)"
                 +"values ("+materialId+","+CatalogoMateriales.jTableProveedoresMaterial.getValueAt(i, 1)+",'"+CatalogoMateriales.jTableProveedoresMaterial.getValueAt(i, 3)+"',"
-                +"'"+CatalogoMateriales.jTableProveedoresMaterial.getValueAt(i, 4)+"');";
-         System.out.println("Registro de Proveedores de los Materiales: "+sql);
-         if(BD.ejecutarSQL(sql)){
-            //JOptionPane.showMessageDialog(null,"Se registro exitosamente el/los Proveedores", "Aviso",JOptionPane.INFORMATION_MESSAGE);
-         }else{
-            JOptionPane.showMessageDialog(null,"No se pudo registrar el Proveedor"+CatalogoMateriales.jTableProveedoresMaterial.getValueAt(i, 2), 
-                        "Aviso",JOptionPane.WARNING_MESSAGE);
-         }
+                +"'"+MetodosGlobales.aceptarComillaSimple((String) CatalogoMateriales.jTableProveedoresMaterial.getValueAt(i, 4))+"');";
+                System.out.println("Registro de Proveedores de los Materiales: "+sql);
+                if(BD.ejecutarSQL(sql)){
+                   //JOptionPane.showMessageDialog(null,"Se registro exitosamente el/los Proveedores", "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                   JOptionPane.showMessageDialog(null,"No se pudo registrar el Proveedor"+CatalogoMateriales.jTableProveedoresMaterial.getValueAt(i, 2), 
+                               "Aviso",JOptionPane.WARNING_MESSAGE);
+                }
+            }
+            
         }  
     }
-    
+
     public boolean ActualizarMaterialProveedor(JTable tabla, int idProveedor){
         int fila = tabla.getSelectedRow();
         String sql = "update materialproveedor set idProveedor = "+idProveedor+", tipo = '"+this.tipoProveedor+"',"
-                + " descripcionProveedor='"+this.descripcionProveedor+"' where idMaterialProveedor = "+tabla.getValueAt(fila, 0);
+                + " descripcionProveedor='"+MetodosGlobales.aceptarComillaSimple(this.descripcionProveedor)+"' where idMaterialProveedor = "+tabla.getValueAt(fila, 0);
         System.out.println("consulta: "+sql);
         if (BD.ejecutarSQL(sql)) {            
             return true;
@@ -283,11 +288,24 @@ public class Materiales {
      
       public boolean ActualizarProveedor(JTable tabla){
         int fila = tabla.getSelectedRow();
+        int materialId = 0;
         String sql = "update materiales set nombre = '"+this.nombre+"', unidad = '"+this.unidad+"',"
                 + " rendimiento='"+this.rendimiento+"', descripcionBM='"+this.descripcionBM+"', precio="+this.precio
                 + "where idMateriales = "+tabla.getValueAt(fila, 0);
         System.out.println("consulta: "+sql);
-        if (BD.ejecutarSQL(sql)) {            
+        if (BD.ejecutarSQL(sql)) {   
+            try {
+                BD.conectarBD();
+                String sqlMax = "select idMateriales from materiales where idMateriales = "+tabla.getValueAt(fila, 0);
+                rs = BD.ejecutarSQLSelect(sqlMax);
+                while (rs.next()) {                
+                    materialId = rs.getInt(1);
+                    registrarProveedoresMateriales(materialId);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"No se pudo mostrar el ultimo id del Material, puede ser que no se registro el/los proveedores.\n CONSULTE AL DESARROLLADOR "+e, 
+                        "Aviso",JOptionPane.WARNING_MESSAGE);
+            }
             return true;
         } else {
             return false;
