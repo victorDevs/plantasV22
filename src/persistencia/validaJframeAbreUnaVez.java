@@ -96,8 +96,8 @@ public class validaJframeAbreUnaVez {
             Dimension FrameSize = jInternalFrame.getSize();
             jInternalFrame.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
             jInternalFrame.show();
-            Proveedores proveedores = new Proveedores();
-            proveedores.TablaConsultaProveedores();
+//            Proveedores proveedores = new Proveedores();
+//            proveedores.TablaConsultaProveedores();
         }
     }
     
