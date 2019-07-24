@@ -19,7 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Clientes;
-import modelo.Proveedores;
+//import modelo.Proveedores;
 import persistencia.BD;
 
 
@@ -40,13 +40,13 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
      * Creates new form CatalogoMateriales
      */
      
-     private static CatalogoPedidos catalogoProveedores;
+     private static CatalogoPedidos catalogoPedidos;
      
      public static CatalogoPedidos getInstancia(){
-         if (catalogoProveedores == null) {
-             catalogoProveedores = new CatalogoPedidos();
+         if (catalogoPedidos == null) {
+             catalogoPedidos = new CatalogoPedidos();
          }
-         return catalogoProveedores;
+         return catalogoPedidos;
      }
      
     public CatalogoPedidos() {
