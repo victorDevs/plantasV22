@@ -26,6 +26,7 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         //MANDA DESKTOPPANEL DEL MAIN A LA CLASE validaJFrameAbreUnaVez
         this.validajFraAbreUnaVez = new validaJframeAbreUnaVez(jDesktopMain);
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
@@ -45,6 +46,7 @@ public class Main extends javax.swing.JFrame {
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,11 +54,11 @@ public class Main extends javax.swing.JFrame {
         jDesktopMain.setLayout(jDesktopMainLayout);
         jDesktopMainLayout.setHorizontalGroup(
             jDesktopMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 953, Short.MAX_VALUE)
+            .addGap(0, 1150, Short.MAX_VALUE)
         );
         jDesktopMainLayout.setVerticalGroup(
             jDesktopMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 531, Short.MAX_VALUE)
+            .addGap(0, 541, Short.MAX_VALUE)
         );
 
         jMenu1.setText("File");
@@ -104,6 +106,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jCheckBoxMenuItem3);
+
+        jMenuItem1.setText("jMenuItem1");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem1);
 
         jMenuBar1.add(jMenu2);
 
@@ -159,6 +169,11 @@ public class Main extends javax.swing.JFrame {
         validajFraAbreUnaVez.abrirInternalFramePersonal(CatalogoPersonal.getInstancia());
     }//GEN-LAST:event_jCheckBoxMenuItem3ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        System.out.println("Pedidos!");
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -202,6 +217,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JCheckBoxMenuItem subMenuCatMateriales;
     // End of variables declaration//GEN-END:variables
 }
