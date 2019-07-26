@@ -115,16 +115,16 @@ public class BuscaPersonal extends javax.swing.JDialog {
         if(jCBBuscadorPersonal.getSelectedIndex()==4){
             convertir = "fechaNacimiento";
         }
-        if(jCBBuscadorPersonal.getSelectedIndex()==4){
+        if(jCBBuscadorPersonal.getSelectedIndex()==5){
             convertir = "domicilio";
         }
-        if(jCBBuscadorPersonal.getSelectedIndex()==4){
+        if(jCBBuscadorPersonal.getSelectedIndex()==6){
             convertir = "telefono";
         }
-        if(jCBBuscadorPersonal.getSelectedIndex()==4){
+        if(jCBBuscadorPersonal.getSelectedIndex()==7){
             convertir = "correo";
         }
-        if(jCBBuscadorPersonal.getSelectedIndex()==4){
+        if(jCBBuscadorPersonal.getSelectedIndex()==8){
             convertir = "proceso";
         }
         //FIN DE CONVERSOR

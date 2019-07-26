@@ -186,7 +186,7 @@ public class Personal {
                 this.nombre = rs.getString(1);
                 this.apellidoPaterno = rs.getString(2);
                 this.apellidoMaterno = rs.getString(3);
-                //this.fechaNacimiento = rs.getString(4);
+                this.fechaNacimiento = rs.getString(4);
                 this.Domicilio = rs.getString(5);
                 this.telefono = rs.getString(6);
                 this.correo = rs.getString(7);

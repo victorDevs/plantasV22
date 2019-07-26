@@ -34,10 +34,10 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
     ProveedoresPersistencia proveePersi = new ProveedoresPersistencia();
     MetodosGlobales metodosGlobales = new MetodosGlobales();
     
-     int clics=0;//para habiitar y deshabilitar el teléfono2
+     static int clics=0;//para habiitar y deshabilitar el teléfono2
      //VARIABLES PARA CAMBIAR LA IMAGEN DEL BOTÓN QUITAR O AGREGAR TELÉFONO 2
-     ImageIcon iconoBtnAnadir = new ImageIcon("src/imagenes/anadir.png");     
-     ImageIcon iconoBtnQuitar = new ImageIcon("src/imagenes/quitar.png");
+     static ImageIcon iconoBtnAnadir = new ImageIcon("src/imagenes/anadir.png");     
+     static ImageIcon iconoBtnQuitar = new ImageIcon("src/imagenes/quitar16px.png");
 
     /**
      * Creates new form CatalogoMateriales
@@ -64,6 +64,8 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
         jLabel6.setEnabled(false);
         
         proveePersi.ajustarTabla(jTableProveedores);
+        
+        jTxtNombreProveedor.requestFocusInWindow();//PARA QUE EL PUNTERO SIEMPRE APUNTE AL TEXTBOX DEL NOMBRE DEL PROVEEDOR
         
     }
 
@@ -422,10 +424,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
         btnElimianr.setEnabled(false);
         btnModifyProveedor.setEnabled(false);
         
-        jTxtTel2.setEnabled(false);
-        jLabel6.setEnabled(false);
-        btnAgregarTel.setIcon(iconoBtnAnadir);
-        clics = 0;//sifnifica que no ha dado un clic
+        
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnElimianrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElimianrActionPerformed
@@ -467,6 +466,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
             jLabel6.setEnabled(true);
             btnAgregarTel.setIcon(iconoBtnQuitar);
             clics = 1;
+            jTxtTel2.requestFocusInWindow();//PARA QUE EL PUNTERO SIEMPRE APUNTE AL TEXTBOX DEL TEL2
         }else{
             if(clics == 1){
                 jTxtTel2.setEnabled(false);
@@ -528,11 +528,18 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
         jTxtContacto.setText(null);
         jTxtCorreo.setText(null);
         jTxtTel2.setText(null);
+        
+        jTxtTel2.setEnabled(false);
+        jLabel6.setEnabled(false);
+        btnAgregarTel.setIcon(iconoBtnAnadir);
+        clics = 0;//sifnifica que no ha dado un clic
+        
+        jTxtNombreProveedor.requestFocusInWindow();//PARA QUE EL PUNTERO SIEMPRE APUNTE AL TEXTBOX DEL NOMBRE DEL PROVEEDOR
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddProveedor;
-    private javax.swing.JButton btnAgregarTel;
+    public static javax.swing.JButton btnAgregarTel;
     private javax.swing.JButton btnElimianr;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModifyProveedor;
@@ -542,7 +549,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    public static javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTableProveedores;
     public static javax.swing.JTextField jTxtContacto;

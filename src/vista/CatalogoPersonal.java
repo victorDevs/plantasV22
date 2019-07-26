@@ -362,7 +362,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
         Date date = jDCFechaNacimiento.getDate();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         if(jTxtNombre.getText().equals("") || jTxtAptPaterno.getText().equals("")
-                || jTxtAptMaterno.getText().equals("") || jTxtDomicilio.equals("") 
+                || jTxtAptMaterno.getText().equals("") || jTxtDomicilio.getText().equals("") 
                 || jTxtTelefono.equals("") || jTxtCorreo.equals("") || proceso.equals(" - Proceso - ")) {
             JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
                                 "Aviso",JOptionPane.WARNING_MESSAGE);
@@ -528,6 +528,8 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
         btnAddPersonal.setEnabled(true);
         btnEliminar.setEnabled(false);
         btnModifyPersonal.setEnabled(false);
+        MetodosGlobales.LimpiaTabla(jTablePersonal);
+        per.TablaConsultaPersonal();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed

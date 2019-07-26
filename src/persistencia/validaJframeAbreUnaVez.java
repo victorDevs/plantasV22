@@ -27,6 +27,7 @@ public class validaJframeAbreUnaVez {
     Materiales materiales = new Materiales();
     Clientes clientes = new Clientes();
     Personal personal =  new Personal();
+    CatalogoPersonal catPersonal = new CatalogoPersonal();
             
     public validaJframeAbreUnaVez(JDesktopPane jDesktopPane){
         validaJframeAbreUnaVez.jDesktopPane = jDesktopPane;
@@ -102,8 +103,7 @@ public class validaJframeAbreUnaVez {
     }
     
     public void abrirInternalFramePersonal(JInternalFrame jInternalFrame){
-        CatalogoPersonal catPersonal = new CatalogoPersonal();
-        
+                
         if(jInternalFrame.isVisible()){
             jInternalFrame.toFront();
             jInternalFrame.requestFocus();
