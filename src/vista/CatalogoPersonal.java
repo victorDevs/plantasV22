@@ -31,6 +31,7 @@ import net.sourceforge.barbecue.BarcodeFactory;
 import net.sourceforge.barbecue.BarcodeImageHandler;
 import vista.BuscaProveedor;
 import persistencia.BD;
+import persistencia.MetodosGlobales;
 
 
 /**
@@ -44,9 +45,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
     
     String strFileName = "";
 
-    /**
-     * Creates new form CatalogoMateriales
-     */
+    MetodosGlobales metodosGlobales = new MetodosGlobales();
      
      private static CatalogoPersonal catalogoProveedores;
      
@@ -363,11 +362,15 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
         Date date = jDCFechaNacimiento.getDate();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         if(jTxtNombre.getText().equals("") || jTxtAptPaterno.getText().equals("")
-                || jTxtAptMaterno.getText().equals("") || sdf.format(date).equals("") 
-             || jTxtDomicilio.equals("") || jTxtTelefono.equals("") || jTxtCorreo.equals("") || proceso.equals(" - Proceso - ")) {
+                || jTxtAptMaterno.getText().equals("") || jTxtDomicilio.equals("") 
+                || jTxtTelefono.equals("") || jTxtCorreo.equals("") || proceso.equals(" - Proceso - ")) {
             JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
                                 "Aviso",JOptionPane.WARNING_MESSAGE);
         } else {
+            if(metodosGlobales.validaFecha(jDCFechaNacimiento)==null){
+                JOptionPane.showMessageDialog(rootPane, "Campo de fecha vacío o formato incorrecto",
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+            }else{
                 if(BD.conectarBD()){
                     per.setNombre(jTxtNombre.getText());
                     per.setApellidoPaterno(jTxtAptPaterno.getText());
@@ -392,6 +395,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
 
                         try {
                             strFileName = "C:\\Users\\vikto\\OneDrive\\Documentos\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
+                            //strFileName = "C:\\Users\\alber\\Documents\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
                             File file = new File(strFileName);
                             file.setExecutable(true);
                             file.setReadable(true);
@@ -435,6 +439,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
                             "Error",JOptionPane.ERROR_MESSAGE);
                     BD.cerrarConexion();
                 }
+            }
         }
     }//GEN-LAST:event_btnAddPersonalActionPerformed
 
@@ -557,11 +562,11 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
 //        miVentanaBuscar.setVisible(true);
 
         Frame frame = JOptionPane.getFrameForComponent(this);
-        BuscaProveedor buscaPro = new BuscaProveedor(frame,true);
+        BuscaPersonal buscaPer = new BuscaPersonal(frame,true);
         Dimension desktopSize = Main.jDesktopMain.getSize();
-        Dimension FrameSize = buscaPro.getSize();
-        buscaPro.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
-        buscaPro.show();
+        Dimension FrameSize = buscaPer.getSize();
+        buscaPer.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+        buscaPer.show();
     }//GEN-LAST:event_jBuscarActionPerformed
 
     public void LimpiaTablaPersonal(){

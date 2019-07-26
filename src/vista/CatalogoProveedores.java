@@ -32,6 +32,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
 
     Proveedores prov = new Proveedores();
     ProveedoresPersistencia proveePersi = new ProveedoresPersistencia();
+    MetodosGlobales metodosGlobales = new MetodosGlobales();
     
      int clics=0;//para habiitar y deshabilitar el teléfono2
      //VARIABLES PARA CAMBIAR LA IMAGEN DEL BOTÓN QUITAR O AGREGAR TELÉFONO 2
@@ -307,6 +308,10 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
                                 "Aviso",JOptionPane.WARNING_MESSAGE);
         } else {
+            if(metodosGlobales.validaCorreo(jTxtCorreo.getText())==false){
+                JOptionPane.showMessageDialog(rootPane, "El correo es incorrecto",
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+            }else{
                 if(BD.conectarBD()){
                     prov.setNombre(jTxtNombreProveedor.getText());
                     prov.setDomicilio(jTxtDomicilio.getText());
@@ -333,6 +338,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
                             "Error",JOptionPane.ERROR_MESSAGE);
                     BD.cerrarConexion();
                 }
+            }
         }
     }//GEN-LAST:event_btnAddProveedorActionPerformed
 

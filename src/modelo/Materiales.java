@@ -376,7 +376,7 @@ public class Materiales {
                 BD.cerrarConexion();
             }            
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error al mostrar lo datos en la tabla proveedores: "+e, 
+            JOptionPane.showMessageDialog(null,"Error al mostrar lo datos en la tabla Material: "+e, 
                     "Error",JOptionPane.ERROR_MESSAGE);
             BD.cerrarConexion();
         }

@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.Clientes;
 import modelo.Proveedores;
 import persistencia.BD;
+import persistencia.MetodosGlobales;
 
 
 /**
@@ -30,6 +31,7 @@ import persistencia.BD;
 public class CatalogoClientes extends javax.swing.JInternalFrame {
 
     Clientes cli = new Clientes();
+    MetodosGlobales metodosGlobales = new MetodosGlobales();
     
      int clics=0;//para habiitar y deshabilitar el teléfono2
      //VARIABLES PARA CAMBIAR LA IMAGEN DEL BOTÓN QUITAR O AGREGAR TELÉFONO 2
@@ -275,6 +277,11 @@ public class CatalogoClientes extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
                                 "Aviso",JOptionPane.WARNING_MESSAGE);
         } else {
+            if(metodosGlobales.validaCorreo(jTxtCorreo.getText())== false){
+                JOptionPane.showMessageDialog(rootPane, "El correo es incorrecto",
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+                jTxtCorreo.requestFocusInWindow();
+            }else{
                 if(BD.conectarBD()){
                     cli.setNombre(jTxtNombreCliente.getText());
                     cli.setDomicilio(jTxtDomicilio.getText());
@@ -299,6 +306,7 @@ public class CatalogoClientes extends javax.swing.JInternalFrame {
                             "Error",JOptionPane.ERROR_MESSAGE);
                     BD.cerrarConexion();
                 }
+            }
         }
     }//GEN-LAST:event_btnAddClienteActionPerformed
 
@@ -367,6 +375,9 @@ public class CatalogoClientes extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(false);
         btnModifyCliente.setEnabled(false);
         clics = 0;//sifnifica que no ha dado un clic
+        
+        MetodosGlobales.LimpiaTabla(jTableClientes);
+        cli.TablaConsultaClientes();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed

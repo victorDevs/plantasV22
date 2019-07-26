@@ -5,9 +5,8 @@
  */
 package vista;
 
-
 import javax.swing.JOptionPane;
-import modelo.Materiales;
+import modelo.Personal;
 import persistencia.BD;
 import persistencia.MetodosGlobales;
 
@@ -15,15 +14,11 @@ import persistencia.MetodosGlobales;
  *
  * @author alber
  */
-public class BuscaMaterial extends javax.swing.JDialog {
+public class BuscaPersonal extends javax.swing.JDialog {
 
-    /**
-     * Creates new form BuscaMaterial
-     */
+    Personal personal = new Personal();
     
-    Materiales materiales = new Materiales();
-    
-    public BuscaMaterial(java.awt.Frame parent, boolean modal) {
+    public BuscaPersonal(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -37,25 +32,17 @@ public class BuscaMaterial extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jTxtBuscadorMaterial = new javax.swing.JTextField();
-        jCBBuscadorMaterial = new javax.swing.JComboBox<>();
+        jCBBuscadorPersonal = new javax.swing.JComboBox<>();
+        jTxtBuscadorPersonal = new javax.swing.JTextField();
         btnLimpiar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Buscar Material");
+        setTitle("Buscar Personal");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
-        jButton1.setText("Buscar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jCBBuscadorMaterial.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona Opción", "Nombre", "Descripción BM", "Descripción Proveedor", "Proveedor" }));
-        jCBBuscadorMaterial.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jCBBuscadorMaterial.setFocusable(false);
+        jCBBuscadorPersonal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona Opción", "Nombre", "A. Paterno", "A. Materno", "Fecha Nacimiento", "Domicilio", "Teléfono", "Correo", "Proceso" }));
+        jCBBuscadorPersonal.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jCBBuscadorPersonal.setFocusable(false);
 
         btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/borrar16.png"))); // NOI18N
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -64,22 +51,30 @@ public class BuscaMaterial extends javax.swing.JDialog {
             }
         });
 
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/buscar.png"))); // NOI18N
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(layout.createSequentialGroup()
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnBuscar)
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jCBBuscadorMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jCBBuscadorPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTxtBuscadorMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTxtBuscadorPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 28, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,51 +82,71 @@ public class BuscaMaterial extends javax.swing.JDialog {
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTxtBuscadorMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jCBBuscadorMaterial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTxtBuscadorPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jCBBuscadorPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnLimpiar))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(btnBuscar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        MetodosGlobales.LimpiaTabla(CatalogoPersonal.jTablePersonal);
+        personal.TablaConsultaPersonal();
+        jTxtBuscadorPersonal.requestFocusInWindow();
+        jTxtBuscadorPersonal.setText("");
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         String convertir="";//variaable para convertir el combobox a columnas de la base de datos
         //INICIA EL CONVERSOR DE LOS CAMPOS PARA LA BD
-        if(jCBBuscadorMaterial.getSelectedIndex()==1){
-            convertir = "materiales.nombre";
+        if(jCBBuscadorPersonal.getSelectedIndex()==1){
+            convertir = "nombre";
         }
-        if(jCBBuscadorMaterial.getSelectedIndex()==2){
-            convertir = "materiales.descripcionBM";
+        if(jCBBuscadorPersonal.getSelectedIndex()==2){
+            convertir = "apellidoPaterno";
         }
-        if(jCBBuscadorMaterial.getSelectedIndex()==3){
-            convertir = "materialproveedor.descripcionProveedor";
+        if(jCBBuscadorPersonal.getSelectedIndex()==3){
+            convertir = "apellidoMaterno";
         }
-        if(jCBBuscadorMaterial.getSelectedIndex()==4){
-            convertir = "proveedores.nombre";
+        if(jCBBuscadorPersonal.getSelectedIndex()==4){
+            convertir = "fechaNacimiento";
         }
-         //FIN DE CONVERSOR
+        if(jCBBuscadorPersonal.getSelectedIndex()==4){
+            convertir = "domicilio";
+        }
+        if(jCBBuscadorPersonal.getSelectedIndex()==4){
+            convertir = "telefono";
+        }
+        if(jCBBuscadorPersonal.getSelectedIndex()==4){
+            convertir = "correo";
+        }
+        if(jCBBuscadorPersonal.getSelectedIndex()==4){
+            convertir = "proceso";
+        }
+        //FIN DE CONVERSOR
 
-        if(jTxtBuscadorMaterial.getText().equals("")){
+        if(jTxtBuscadorPersonal.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Campo de texto vacío",
                 "Aviso",JOptionPane.WARNING_MESSAGE);
-            MetodosGlobales.LimpiaTabla(CatalogoMateriales.jTableMateriales);
-            materiales.TablaConsultaMateriales();
-            jTxtBuscadorMaterial.requestFocusInWindow();
+            MetodosGlobales.LimpiaTabla(CatalogoPersonal.jTablePersonal);
+            personal.TablaConsultaPersonal();
+            jTxtBuscadorPersonal.requestFocusInWindow();
         }else{
-            if (jCBBuscadorMaterial.getSelectedIndex()==0) {
+            if (jCBBuscadorPersonal.getSelectedIndex()==0) {
                 JOptionPane.showMessageDialog(null, "Selecciona una opcicón de busqueda",
                     "Aviso",JOptionPane.WARNING_MESSAGE);
             }else{
                 if(BD.conectarBD()){
                     try {
-                        MetodosGlobales.LimpiaTabla(CatalogoMateriales.jTableMateriales);
-                        materiales.buscarMaterial(convertir, MetodosGlobales.aceptarComillaSimple(jTxtBuscadorMaterial.getText().trim()));
+                          
+                        MetodosGlobales.LimpiaTabla(CatalogoPersonal.jTablePersonal);
+                        personal.buscarPersonal(convertir, MetodosGlobales.aceptarComillaSimple(jTxtBuscadorPersonal.getText().trim()));
                     } catch (Exception e) {
-                        JOptionPane.showMessageDialog(rootPane, "No se consultó  correctamente la tabla de Materiales: "+e,
+                        JOptionPane.showMessageDialog(rootPane, "No se consultó  correctamente la tabla de personal: "+e,
                             "Aviso",JOptionPane.WARNING_MESSAGE);
                         BD.cerrarConexion();
                     }
@@ -142,15 +157,7 @@ public class BuscaMaterial extends javax.swing.JDialog {
                 }
             }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        MetodosGlobales.LimpiaTabla(CatalogoMateriales.jTableMateriales);
-        MetodosGlobales.LimpiaTabla(CatalogoMateriales.jTableProveedoresMaterial);
-        materiales.TablaConsultaMateriales();
-        jTxtBuscadorMaterial.requestFocusInWindow();
-        jTxtBuscadorMaterial.setText("");
-    }//GEN-LAST:event_btnLimpiarActionPerformed
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,20 +176,20 @@ public class BuscaMaterial extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BuscaMaterial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscaPersonal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BuscaMaterial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscaPersonal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BuscaMaterial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscaPersonal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BuscaMaterial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BuscaPersonal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                BuscaMaterial dialog = new BuscaMaterial(new javax.swing.JFrame(), true);
+                BuscaPersonal dialog = new BuscaPersonal(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -195,9 +202,9 @@ public class BuscaMaterial extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jCBBuscadorMaterial;
-    private javax.swing.JTextField jTxtBuscadorMaterial;
+    private javax.swing.JComboBox<String> jCBBuscadorPersonal;
+    private javax.swing.JTextField jTxtBuscadorPersonal;
     // End of variables declaration//GEN-END:variables
 }

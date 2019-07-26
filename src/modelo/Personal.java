@@ -186,7 +186,7 @@ public class Personal {
                 this.nombre = rs.getString(1);
                 this.apellidoPaterno = rs.getString(2);
                 this.apellidoMaterno = rs.getString(3);
-                this.fechaNacimiento = rs.getString(4);
+                //this.fechaNacimiento = rs.getString(4);
                 this.Domicilio = rs.getString(5);
                 this.telefono = rs.getString(6);
                 this.correo = rs.getString(7);
@@ -196,6 +196,36 @@ public class Personal {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"No se pudo mostrar este personal, vuelve a intentarlo: "+e, 
                     "Aviso",JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+     public void buscarPersonal(String tipoBuqueda,String busqueda){
+        try {
+            if (BD.conectarBD()) {
+                String sql = "select idPersonal,nombre,apellidoPaterno,apellidoMaterno,proceso from personal where "+tipoBuqueda+" like '%"+busqueda+"%'";
+                rs = BD.ejecutarSQLSelect(sql);
+                rsm = rs.getMetaData();
+                List<Object[]> datos = new ArrayList<Object[]>();
+                while (rs.next()) {                
+                    Object[] filas = new Object[rsm.getColumnCount()];
+                    for (int i = 0; i < filas.length; i++) {
+                        filas[i] = rs.getObject(i+1);
+                    }
+                    datos.add(filas);
+                }
+                dtm = (DefaultTableModel)CatalogoPersonal.jTablePersonal.getModel();
+                for (int i = 0; i < datos.size(); i++) {
+                    dtm.addRow(datos.get(i));
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos plantasbd",
+                        "Error de conexión",JOptionPane.ERROR_MESSAGE);
+                BD.cerrarConexion();
+            }            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error al mostrar lo datos en la tabla Personal: "+e, 
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            BD.cerrarConexion();
         }
     }
 }

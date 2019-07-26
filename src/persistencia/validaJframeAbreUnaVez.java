@@ -82,7 +82,7 @@ public class validaJframeAbreUnaVez {
             
             //LIMPIAR CAMPOS AL VOLVER ABRIR LA VENTANA
             CatalogoClientes.LimpiaCampos();
-            clientes.TablaConsultaClientes();
+            //clientes.TablaConsultaClientes();
         }
     }
     
@@ -102,6 +102,8 @@ public class validaJframeAbreUnaVez {
     }
     
     public void abrirInternalFramePersonal(JInternalFrame jInternalFrame){
+        CatalogoPersonal catPersonal = new CatalogoPersonal();
+        
         if(jInternalFrame.isVisible()){
             jInternalFrame.toFront();
             jInternalFrame.requestFocus();
@@ -113,8 +115,8 @@ public class validaJframeAbreUnaVez {
             jInternalFrame.show();
             
             //LIMPIAR CAMPOS AL VOLVER ABRIR LA VENTANA
-            //CatalogoPersonal.LimpiaCampos();
-//            personal.TablaConsultaPersonal();
+            //catPersonal.LimpiaCampos();
+            //personal.TablaConsultaPersonal();
         }
     }
 }
