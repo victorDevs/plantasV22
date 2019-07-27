@@ -7,6 +7,7 @@ package modelo;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +15,14 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import persistencia.BD;
 import persistencia.IconCellRenderer;
 import persistencia.MetodosGlobales;
 import vista.AgregarProveedorMaterial;
+import vista.CatalogoEstilos;
 import vista.CatalogoMateriales;
 import vista.ModificarProveedorMaterial;
 
@@ -73,8 +76,7 @@ public class Materiales {
     public String getDescripcionBM() {
         return descripcionBM;
     }
-    
-    
+        
     public String getTipoProveedor() {
         return tipoProveedor;
     }
@@ -86,7 +88,6 @@ public class Materiales {
     public String getNombreProveedor() {
         return nombreProveedor;
     }
-
 
     public void setIdMaterial(int idMaterial) {
         this.idMaterial = idMaterial;
@@ -165,9 +166,7 @@ public class Materiales {
             return false;
         }
     }
-    
-    
-    
+   
     public void registrarProveedoresMateriales(int materialId){
         String sql = "";
         for(int i=0; i<CatalogoMateriales.jTableProveedoresMaterial.getRowCount(); i++){
@@ -286,7 +285,7 @@ public class Materiales {
         }
     }
      
-      public boolean ActualizarProveedor(JTable tabla){
+    public boolean ActualizarProveedor(JTable tabla){
         int fila = tabla.getSelectedRow();
         int materialId = 0;
         String sql = "update materiales set nombre = '"+this.nombre+"', unidad = '"+this.unidad+"',"
@@ -381,4 +380,43 @@ public class Materiales {
             BD.cerrarConexion();
         }
     }
+    
+    public void llenaPanelMateriales(){
+        try {
+            if (BD.conectarBD()) {
+                String sql = "select idMateriales,nombre from materiales";
+                rs = BD.ejecutarSQLSelect(sql);
+                rsm = rs.getMetaData();
+                JRadioButton  radio = null;
+                while (rs.next()) { 
+                    radio = new JRadioButton(rs.getString("nombre"));
+                    CatalogoEstilos.panelMateriales.add(radio);
+                    CatalogoEstilos.radiosMateriales.add(radio);
+                    CatalogoEstilos.panelMateriales.updateUI();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos plantasbd",
+                        "Error de conexión",JOptionPane.ERROR_MESSAGE);
+                BD.cerrarConexion();
+            }            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error al intentar llenar el panel de materiales en el Catálogo de Estilos: "+e, 
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            BD.cerrarConexion();
+        }
+    }
+    
+//    public boolean llenaPanelMateriales(){
+//        String sql = "select idMateriales,nombre from materiales ";
+//        System.out.println("String SQL: "+sql);
+//        ResultSet rs = new BD().ejecutarSQLSelect(sql);
+//        if (rs.next()) {
+//            this.idMaterial = Integer.parseInt(rs.getString("idMateriales"));
+//            this.nombre = rs.getString("nombre");
+//            System.out.println("Material: "+this.nombre);
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 }
