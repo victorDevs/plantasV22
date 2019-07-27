@@ -47,11 +47,12 @@ import persistencia.MetodosGlobales;
  */
 public class CatalogoEstilos extends javax.swing.JInternalFrame {
 
-    private List<JRadioButton> botones;
-    private int indice;
+    public static List<JRadioButton> radiosMateriales;
+    public static List<JRadioButton> radiosProcesos;
     
 //    Estilos est = new Estilos();
     Procesos pro = new Procesos();
+    Materiales mat = new Materiales();
     
     String strFileName = "";
 
@@ -87,9 +88,11 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
      }
      
     public CatalogoEstilos() {
-        botones = new ArrayList<>();
-        indice = 0;
+        radiosMateriales = new ArrayList<>();
+        radiosProcesos = new ArrayList<>();
         initComponents();
+        mat.llenaPanelMateriales();
+        pro.llenaPanelProcesos();
 //        est.consultaMateriales();
 //        btnEliminar.setEnabled(false);
 //        btnModifyPersonal.setEnabled(false);
@@ -125,10 +128,10 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
         jTablePersonal1 = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTablePersonal2 = new javax.swing.JTable();
-        jPanelCodeBarras2 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        panel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        panelMateriales = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        panelProcesos = new javax.swing.JPanel();
 
         setClosable(true);
         setTitle("Catálogo de Estilos");
@@ -288,29 +291,11 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
             jTablePersonal2.getColumnModel().getColumn(0).setMaxWidth(40);
         }
 
-        jPanelCodeBarras2.setBorder(javax.swing.BorderFactory.createTitledBorder("Procesos"));
-        jPanelCodeBarras2.setPreferredSize(new java.awt.Dimension(510, 150));
+        panelMateriales.setLayout(new java.awt.GridLayout(0, 3));
+        jScrollPane4.setViewportView(panelMateriales);
 
-        javax.swing.GroupLayout jPanelCodeBarras2Layout = new javax.swing.GroupLayout(jPanelCodeBarras2);
-        jPanelCodeBarras2.setLayout(jPanelCodeBarras2Layout);
-        jPanelCodeBarras2Layout.setHorizontalGroup(
-            jPanelCodeBarras2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 438, Short.MAX_VALUE)
-        );
-        jPanelCodeBarras2Layout.setVerticalGroup(
-            jPanelCodeBarras2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
-        );
-
-        panel.setLayout(new java.awt.GridLayout(0, 3));
-        jScrollPane4.setViewportView(panel);
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        panelProcesos.setLayout(new java.awt.GridLayout(1, 3));
+        jScrollPane5.setViewportView(panelProcesos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -322,7 +307,7 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
                         .addContainerGap(954, Short.MAX_VALUE)
                         .addComponent(jBuscar))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(29, 29, 29)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -336,14 +321,11 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton1)
-                                        .addGap(0, 0, Short.MAX_VALUE))
+                                        .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jPanelCodeBarras2, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addGap(64, 64, 64)
+                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -362,16 +344,15 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(8, 8, 8)
                 .addComponent(jBuscar)
-                .addGap(29, 29, 29)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanelCodeBarras2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnEliminar)
                             .addComponent(btnLimpiar)
@@ -391,6 +372,12 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
 
     private void btnAddPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPersonalActionPerformed
         // TODO add your handling code here:
+        System.out.println("Numero de radioMateriales: "+radiosMateriales.size());
+        for (int i = 0; i < radiosMateriales.size(); i++) {
+            if(radiosMateriales.get(i).isSelected()){
+                System.out.println(radiosMateriales.get(i).getText());
+            }
+        }
 //        String proceso = (String) jCbProceso.getSelectedItem();
 //        Date date = jDCFechaNacimiento.getDate();
 //        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -610,11 +597,6 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTablePersonal2MouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        llenaPanelMateriales();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     public void LimpiaTablaPersonal(){
         try {
             DefaultTableModel modelo = (DefaultTableModel)jTablePersonal.getModel();
@@ -641,11 +623,10 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
     }
     
     private void llenaPanelMateriales(){
-        JRadioButton  boton = new JRadioButton("Botón "+indice);
-        panel.add(boton);
-        botones.add(boton);
-        indice++;
-        panel.updateUI();
+        JRadioButton  boton = new JRadioButton("Radio");
+        panelMateriales.add(boton);
+        radiosMateriales.add(boton);
+        panelMateriales.updateUI();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -654,17 +635,17 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModifyPersonal;
     private javax.swing.JButton jBuscar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanelCodeBarras2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     public static javax.swing.JTable jTablePersonal;
     public static javax.swing.JTable jTablePersonal1;
     public static javax.swing.JTable jTablePersonal2;
     public static javax.swing.JTextField jTxtNombre;
-    private javax.swing.JPanel panel;
+    public static javax.swing.JPanel panelMateriales;
+    public static javax.swing.JPanel panelProcesos;
     // End of variables declaration//GEN-END:variables
 }
