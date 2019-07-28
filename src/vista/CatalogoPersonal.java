@@ -8,6 +8,8 @@ package vista;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.DateFormat;
@@ -87,6 +89,21 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
         Imagen Imagen = new Imagen();
         jPanelCodeBarras.add(Imagen);
         jPanelCodeBarras.repaint();
+        
+        jTxtTelefono.addKeyListener(new KeyAdapter(){
+            public void keyTyped(KeyEvent e){
+                char c = e.getKeyChar();
+                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE) && (c != '-') ) {
+                    getToolkit().beep();    
+                    e.consume();
+                }
+                
+                if(jTxtTelefono.getText().length() == 13){
+                    getToolkit().beep();
+                    e.consume(); 
+                }
+            }
+        });
         
     }
 
@@ -371,73 +388,78 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(rootPane, "Campo de fecha vacío o formato incorrecto",
                                 "Aviso",JOptionPane.WARNING_MESSAGE);
             }else{
-                if(BD.conectarBD()){
-                    per.setNombre(jTxtNombre.getText());
-                    per.setApellidoPaterno(jTxtAptPaterno.getText());
-                    per.setApellidoMaterno(jTxtAptMaterno.getText());
-                    per.setFechaNacimiento(sdf.format(date));
-                    per.setDomicilio(jTxtDomicilio.getText());
-                    per.setTelefono(jTxtTelefono.getText());
-                    per.setCorreo(jTxtCorreo.getText());
-                    per.setProceso(proceso);
-                    if(per.RegistraPersonal()){
-                        Barcode barcode = null;
-                        String strCode = "0987654321";
-                        try {
-                            barcode = BarcodeFactory.createCode39(strCode, true);
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(null, "El código de barras para el trabajador no se creó correctamente: "+e, 
-                                    "Aviso", JOptionPane.WARNING_MESSAGE);
-                        }
-                        barcode.setDrawingText(true);
-                        barcode.setBarWidth(2);
-                        barcode.setBarHeight(60);
+                if(metodosGlobales.validaCorreo(jTxtCorreo.getText().trim())==false){
+                    JOptionPane.showMessageDialog(rootPane, "El correo es incorrecto",
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+                }else{
+                    if(BD.conectarBD()){
+                        per.setNombre(jTxtNombre.getText());
+                        per.setApellidoPaterno(jTxtAptPaterno.getText());
+                        per.setApellidoMaterno(jTxtAptMaterno.getText());
+                        per.setFechaNacimiento(sdf.format(date));
+                        per.setDomicilio(jTxtDomicilio.getText());
+                        per.setTelefono(jTxtTelefono.getText());
+                        per.setCorreo(jTxtCorreo.getText());
+                        per.setProceso(proceso);
+                        if(per.RegistraPersonal()){
+                            Barcode barcode = null;
+                            String strCode = "0987654321";
+                            try {
+                                barcode = BarcodeFactory.createCode39(strCode, true);
+                            } catch (Exception e) {
+                                JOptionPane.showMessageDialog(null, "El código de barras para el trabajador no se creó correctamente: "+e, 
+                                        "Aviso", JOptionPane.WARNING_MESSAGE);
+                            }
+                            barcode.setDrawingText(true);
+                            barcode.setBarWidth(2);
+                            barcode.setBarHeight(60);
 
-                        try {
-                            strFileName = "C:\\Users\\vikto\\OneDrive\\Documentos\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
-                            //strFileName = "C:\\Users\\alber\\Documents\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
-                            File file = new File(strFileName);
-                            file.setExecutable(true);
-                            file.setReadable(true);
-                            file.setWritable(true);
-                            FileOutputStream fos = new FileOutputStream(file);
-                            BarcodeImageHandler.writeJPEG(barcode, fos);
-                            System.out.println("Archivo creado: "+strFileName);
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(null, "La imagen del código de barras no se guardo como imagen correctamente"+e, 
-                                    "Aviso", JOptionPane.WARNING_MESSAGE);
+                            try {
+                                strFileName = "C:\\Users\\vikto\\OneDrive\\Documentos\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
+                                //strFileName = "C:\\Users\\alber\\Documents\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
+                                File file = new File(strFileName);
+                                file.setExecutable(true);
+                                file.setReadable(true);
+                                file.setWritable(true);
+                                FileOutputStream fos = new FileOutputStream(file);
+                                BarcodeImageHandler.writeJPEG(barcode, fos);
+                                System.out.println("Archivo creado: "+strFileName);
+                            } catch (Exception e) {
+                                JOptionPane.showMessageDialog(null, "La imagen del código de barras no se guardo como imagen correctamente"+e, 
+                                        "Aviso", JOptionPane.WARNING_MESSAGE);
+                            }
+    //                        Imagen Imagen = new Imagen();
+    //                        jPanelCodeBarras.add(Imagen);
+    //                        jPanelCodeBarras.repaint();
+                            JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
+                                "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                            LimpiaCampos();
+                            LimpiaTablaPersonal();
+                            per.TablaConsultaPersonal();
+                        }else{
+                            JOptionPane.showMessageDialog(rootPane, "No se registro el personal",
+                                "Error",JOptionPane.ERROR_MESSAGE);
+                            BD.cerrarConexion();
                         }
-//                        Imagen Imagen = new Imagen();
-//                        jPanelCodeBarras.add(Imagen);
-//                        jPanelCodeBarras.repaint();
-                        JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
-                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                        LimpiaCampos();
-                        LimpiaTablaPersonal();
-                        per.TablaConsultaPersonal();
+    //                    try {
+    //                        
+    //                        per.RegistraPersonal();
+    //                        JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
+    //                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
+    //                        LimpiaCampos();
+    //                        LimpiaTablaPersonal();
+    //                        per.TablaConsultaPersonal();
+    //                    } catch (Exception e) {
+    //                        JOptionPane.showMessageDialog(rootPane, "No se registro el personal",
+    //                            "Error",JOptionPane.ERROR_MESSAGE);
+    ////                        System.out.println("Error al registrar un cliente: "+e);
+    //                        BD.cerrarConexion();
+    //                    }
                     }else{
-                        JOptionPane.showMessageDialog(rootPane, "No se registro el personal",
-                            "Error",JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                                "Error",JOptionPane.ERROR_MESSAGE);
                         BD.cerrarConexion();
                     }
-//                    try {
-//                        
-//                        per.RegistraPersonal();
-//                        JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
-//                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
-//                        LimpiaCampos();
-//                        LimpiaTablaPersonal();
-//                        per.TablaConsultaPersonal();
-//                    } catch (Exception e) {
-//                        JOptionPane.showMessageDialog(rootPane, "No se registro el personal",
-//                            "Error",JOptionPane.ERROR_MESSAGE);
-////                        System.out.println("Error al registrar un cliente: "+e);
-//                        BD.cerrarConexion();
-//                    }
-                }else{
-                    JOptionPane.showMessageDialog(rootPane, "Error de conexión",
-                            "Error",JOptionPane.ERROR_MESSAGE);
-                    BD.cerrarConexion();
                 }
             }
         }
@@ -479,44 +501,54 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
     private void btnModifyPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyPersonalActionPerformed
         // TODO add your handling code here:
         String proceso = (String) jCbProceso.getSelectedItem();
-        if (JOptionPane.showConfirmDialog(rootPane, "Se modificará el personal, ¿Desea continuar?",
-            "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-            Date date = jDCFechaNacimiento.getDate();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            btnModifyPersonal.setEnabled(false);
-            btnEliminar.setEnabled(false);
-            btnAddPersonal.setEnabled(true);
-         if(jTxtNombre.getText().equals("") || jTxtAptPaterno.getText().equals("")
-            || jTxtAptMaterno.getText().equals("") || sdf.format(date).equals("") 
-            || jTxtDomicilio.equals("") || jTxtTelefono.equals("") || jTxtCorreo.equals("") || proceso.equals(" - Proceso - ")) {
-                JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
-                                    "Aviso",JOptionPane.WARNING_MESSAGE);
-            } else {
-                if(BD.conectarBD()){
-                    per.setNombre(jTxtNombre.getText());
-                    per.setApellidoPaterno(jTxtAptPaterno.getText());
-                    per.setApellidoMaterno(jTxtAptMaterno.getText());
-                    per.setFechaNacimiento(sdf.format(date));
-                    per.setDomicilio(jTxtDomicilio.getText());
-                    per.setTelefono(jTxtTelefono.getText());
-                    per.setCorreo(jTxtCorreo.getText());
-                    per.setProceso(proceso);                             
-                    try {
-                        per.ActualizarPersonal(jTablePersonal);
-                        JOptionPane.showMessageDialog(rootPane, "Actualización exitosa",
-                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                        LimpiaCampos();
-                        LimpiaTablaPersonal();
-                        per.TablaConsultaPersonal();
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(rootPane, "No se actualizó el personal: "+e,
-                            "Error",JOptionPane.ERROR_MESSAGE);
-                        BD.cerrarConexion();
+        if(metodosGlobales.validaCorreo(jTxtCorreo.getText().trim())==false){
+            JOptionPane.showMessageDialog(rootPane, "El correo es incorrecto",
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+        }else{
+            if(metodosGlobales.validaFecha(jDCFechaNacimiento)==null){
+                    JOptionPane.showMessageDialog(rootPane, "Campo de fecha vacío o formato incorrecto",
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+            }else{
+                if (JOptionPane.showConfirmDialog(rootPane, "Se modificará el personal, ¿Desea continuar?",
+                    "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                    Date date = jDCFechaNacimiento.getDate();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    btnModifyPersonal.setEnabled(false);
+                    btnEliminar.setEnabled(false);
+                    btnAddPersonal.setEnabled(true);
+                    if(jTxtNombre.getText().equals("") || jTxtAptPaterno.getText().equals("")
+                        || jTxtAptMaterno.getText().equals("") || sdf.format(date).equals("") 
+                        || jTxtDomicilio.equals("") || jTxtTelefono.equals("") || jTxtCorreo.equals("") || proceso.equals(" - Proceso - ")) {
+                            JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
+                                                "Aviso",JOptionPane.WARNING_MESSAGE);
+                    }else{
+                        if(BD.conectarBD()){
+                            per.setNombre(jTxtNombre.getText());
+                            per.setApellidoPaterno(jTxtAptPaterno.getText());
+                            per.setApellidoMaterno(jTxtAptMaterno.getText());
+                            per.setFechaNacimiento(sdf.format(date));
+                            per.setDomicilio(jTxtDomicilio.getText());
+                            per.setTelefono(jTxtTelefono.getText());
+                            per.setCorreo(jTxtCorreo.getText());
+                            per.setProceso(proceso);                             
+                            try {
+                                per.ActualizarPersonal(jTablePersonal);
+                                JOptionPane.showMessageDialog(rootPane, "Actualización exitosa",
+                                    "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                                LimpiaCampos();
+                                LimpiaTablaPersonal();
+                                per.TablaConsultaPersonal();
+                            } catch (Exception e) {
+                                JOptionPane.showMessageDialog(rootPane, "No se actualizó el personal: "+e,
+                                    "Error",JOptionPane.ERROR_MESSAGE);
+                                BD.cerrarConexion();
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                                    "Error",JOptionPane.ERROR_MESSAGE);
+                            BD.cerrarConexion();
+                        }
                     }
-                }else{
-                    JOptionPane.showMessageDialog(rootPane, "Error de conexión",
-                            "Error",JOptionPane.ERROR_MESSAGE);
-                    BD.cerrarConexion();
                 }
             }
         }
@@ -525,9 +557,8 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
         LimpiaCampos();
-        btnAddPersonal.setEnabled(true);
-        btnEliminar.setEnabled(false);
-        btnModifyPersonal.setEnabled(false);
+        jTxtNombre.requestFocusInWindow();
+        
         MetodosGlobales.LimpiaTabla(jTablePersonal);
         per.TablaConsultaPersonal();
     }//GEN-LAST:event_btnLimpiarActionPerformed
@@ -585,7 +616,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
         }
     }
     
-    public void LimpiaCampos(){
+    public  void LimpiaCampos(){
         jTxtNombre.setText(null);
         jTxtAptPaterno.setText(null);
         jTxtAptMaterno.setText(null);
@@ -594,13 +625,17 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
         jTxtTelefono.setText(null);
         jTxtCorreo.setText(null);
         pro.buscaPersonal(jCbProceso);
+        
+        btnAddPersonal.setEnabled(true);
+        btnEliminar.setEnabled(false);
+        btnModifyPersonal.setEnabled(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddPersonal;
-    private javax.swing.JButton btnEliminar;
+    public static javax.swing.JButton btnAddPersonal;
+    public static javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnModifyPersonal;
+    public static javax.swing.JButton btnModifyPersonal;
     private javax.swing.JButton jBuscar;
     public static javax.swing.JComboBox<String> jCbProceso;
     public static com.toedter.calendar.JDateChooser jDCFechaNacimiento;

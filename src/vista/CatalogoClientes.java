@@ -7,6 +7,8 @@ package vista;
 
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,11 +34,6 @@ public class CatalogoClientes extends javax.swing.JInternalFrame {
 
     Clientes cli = new Clientes();
     MetodosGlobales metodosGlobales = new MetodosGlobales();
-    
-     int clics=0;//para habiitar y deshabilitar el teléfono2
-     //VARIABLES PARA CAMBIAR LA IMAGEN DEL BOTÓN QUITAR O AGREGAR TELÉFONO 2
-     ImageIcon iconoBtnAnadir = new ImageIcon("src/imagenes/anadir.png");     
-     ImageIcon iconoBtnQuitar = new ImageIcon("src/imagenes/quitar.png");
 
     /**
      * Creates new form CatalogoMateriales
@@ -57,6 +54,21 @@ public class CatalogoClientes extends javax.swing.JInternalFrame {
         btnModifyCliente.setEnabled(false);
         LimpiaTablaClientes();
         cli.TablaConsultaClientes();
+        
+        jTxtTel.addKeyListener(new KeyAdapter(){
+            public void keyTyped(KeyEvent e){
+                char c = e.getKeyChar();
+                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE) && (c != '-') ) {
+                    getToolkit().beep();    
+                    e.consume();
+                }
+                
+                if(jTxtTel.getText().length() == 13){
+                    getToolkit().beep();
+                    e.consume(); 
+                }
+            }
+        });
         
     }
 
@@ -331,53 +343,56 @@ public class CatalogoClientes extends javax.swing.JInternalFrame {
 
     private void btnModifyClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyClienteActionPerformed
         // TODO add your handling code here:
-        if (JOptionPane.showConfirmDialog(rootPane, "Se modificará el cliente, ¿Desea continuar?",
-            "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){ 
-            btnModifyCliente.setEnabled(false);
-            btnEliminar.setEnabled(false);
-            btnAddCliente.setEnabled(true);
-            if (jTxtNombreCliente.getText().equals("") || jTxtDomicilio.getText().equals("")
-                    || jTxtContacto.getText().equals("") || jTxtTel.getText().equals("") || jTxtCorreo.equals("")) {
-                JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
-                                    "Aviso",JOptionPane.WARNING_MESSAGE);
-            } else {
-                if(BD.conectarBD()){
-                    cli.setNombre(jTxtNombreCliente.getText());
-                    cli.setDomicilio(jTxtDomicilio.getText());
-                    cli.setTelefono(jTxtTel.getText());
-                    cli.setContacto(jTxtContacto.getText());
-                    cli.setCorreo(jTxtCorreo.getText());                              
-                    try {
-                        cli.ActualizarCliente(jTableClientes);
-                        JOptionPane.showMessageDialog(rootPane, "Actualización exitosa",
-                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                        LimpiaCampos();
-                        LimpiaTablaClientes();
-                        cli.TablaConsultaClientes();
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(rootPane, "No se actualizó el cliente: "+e,
-                            "Error",JOptionPane.ERROR_MESSAGE);
+        if(metodosGlobales.validaCorreo(jTxtCorreo.getText().trim())==false){
+            JOptionPane.showMessageDialog(rootPane, "El correo es incorrecto",
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+        }else{
+            if (JOptionPane.showConfirmDialog(rootPane, "Se modificará el cliente, ¿Desea continuar?",
+                    "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){ 
+                btnModifyCliente.setEnabled(false);
+                btnEliminar.setEnabled(false);
+                btnAddCliente.setEnabled(true);
+                if (jTxtNombreCliente.getText().equals("") || jTxtDomicilio.getText().equals("")
+                        || jTxtContacto.getText().equals("") || jTxtTel.getText().equals("") || jTxtCorreo.equals("")) {
+                    JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
+                                        "Aviso",JOptionPane.WARNING_MESSAGE);
+                } else {
+                    if(BD.conectarBD()){
+                        cli.setNombre(jTxtNombreCliente.getText());
+                        cli.setDomicilio(jTxtDomicilio.getText());
+                        cli.setTelefono(jTxtTel.getText());
+                        cli.setContacto(jTxtContacto.getText());
+                        cli.setCorreo(jTxtCorreo.getText());                              
+                        try {
+                            cli.ActualizarCliente(jTableClientes);
+                            JOptionPane.showMessageDialog(rootPane, "Actualización exitosa",
+                                "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                            LimpiaCampos();
+                            LimpiaTablaClientes();
+                            cli.TablaConsultaClientes();
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(rootPane, "No se actualizó el cliente: "+e,
+                                "Error",JOptionPane.ERROR_MESSAGE);
+                            BD.cerrarConexion();
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                                "Error",JOptionPane.ERROR_MESSAGE);
                         BD.cerrarConexion();
                     }
-                }else{
-                    JOptionPane.showMessageDialog(rootPane, "Error de conexión",
-                            "Error",JOptionPane.ERROR_MESSAGE);
-                    BD.cerrarConexion();
                 }
             }
         }
+        
     }//GEN-LAST:event_btnModifyClienteActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
         LimpiaCampos();
-        btnAddCliente.setEnabled(true);
-        btnEliminar.setEnabled(false);
-        btnModifyCliente.setEnabled(false);
-        clics = 0;//sifnifica que no ha dado un clic
         
         MetodosGlobales.LimpiaTabla(jTableClientes);
         cli.TablaConsultaClientes();
+        jTxtNombreCliente.requestFocusInWindow();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -448,13 +463,17 @@ public class CatalogoClientes extends javax.swing.JInternalFrame {
         jTxtTel.setText(null);
         jTxtContacto.setText(null);
         jTxtCorreo.setText(null);
+        
+        btnAddCliente.setEnabled(true);
+        btnEliminar.setEnabled(false);
+        btnModifyCliente.setEnabled(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddCliente;
-    private javax.swing.JButton btnEliminar;
+    public static javax.swing.JButton btnAddCliente;
+    public static javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnModifyCliente;
+    public static javax.swing.JButton btnModifyCliente;
     private javax.swing.JButton jBuscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

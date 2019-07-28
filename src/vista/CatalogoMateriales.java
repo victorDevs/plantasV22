@@ -515,13 +515,12 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
 
     private void jbtnLimpiarMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLimpiarMaterialActionPerformed
         LimpiaCampos();
-        jbtnAgregarMaterial.setEnabled(true);
-        jbtnEliminarMaterial.setEnabled(false);
-        jbtnModificarMaterial.setEnabled(false);
+        jTxtNombreMaterial.requestFocusInWindow();
         
         MetodosGlobales.LimpiaTabla(jTableMateriales);
         materiales.TablaConsultaMateriales();
         MetodosGlobales.LimpiaTabla(jTableProveedoresMaterial);
+        
         
     }//GEN-LAST:event_jbtnLimpiarMaterialActionPerformed
 
@@ -600,6 +599,10 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
         jTxtRendimiento.setText(null);
         jTxtPrecio.setText(null);
         jTxtDescripciónBM.setText(null);
+        
+        jbtnAgregarMaterial.setEnabled(true);
+        jbtnEliminarMaterial.setEnabled(false);
+        jbtnModificarMaterial.setEnabled(false);
     }
         
      
@@ -621,10 +624,10 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
     public static javax.swing.JTextField jTxtNombreMaterial;
     public static javax.swing.JTextField jTxtPrecio;
     public static javax.swing.JTextField jTxtRendimiento;
-    private javax.swing.JButton jbtnAgregarMaterial;
+    public static javax.swing.JButton jbtnAgregarMaterial;
     private javax.swing.JButton jbtnAgregarProveedorMaterial;
-    private javax.swing.JButton jbtnEliminarMaterial;
+    public static javax.swing.JButton jbtnEliminarMaterial;
     private javax.swing.JButton jbtnLimpiarMaterial;
-    private javax.swing.JButton jbtnModificarMaterial;
+    public static javax.swing.JButton jbtnModificarMaterial;
     // End of variables declaration//GEN-END:variables
 }

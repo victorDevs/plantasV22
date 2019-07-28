@@ -55,6 +55,7 @@ public class Main extends javax.swing.JFrame {
         jDesktopMain = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        subMenuSalir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         subMenuCatMateriales = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
@@ -64,6 +65,7 @@ public class Main extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         javax.swing.GroupLayout jDesktopMainLayout = new javax.swing.GroupLayout(jDesktopMain);
         jDesktopMain.setLayout(jDesktopMainLayout);
@@ -76,7 +78,16 @@ public class Main extends javax.swing.JFrame {
             .addGap(0, 541, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("File");
+        jMenu1.setText("Archivo");
+
+        subMenuSalir.setText("Salir");
+        subMenuSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuSalirActionPerformed(evt);
+            }
+        });
+        jMenu1.add(subMenuSalir);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Catalogos");
@@ -202,6 +213,14 @@ public class Main extends javax.swing.JFrame {
         validajFraAbreUnaVez.abrirInternalFramePedidos(CatalogoPedidos.getInstancia());
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void subMenuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuSalirActionPerformed
+        if (JOptionPane.showConfirmDialog(rootPane, "Esta seguro de salir",
+                    "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+            this.dispose();
+        } 
+        
+    }//GEN-LAST:event_subMenuSalirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -248,5 +267,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JCheckBoxMenuItem subMenuCatMateriales;
+    private javax.swing.JMenuItem subMenuSalir;
     // End of variables declaration//GEN-END:variables
 }

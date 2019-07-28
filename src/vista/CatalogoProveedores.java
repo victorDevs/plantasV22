@@ -7,6 +7,8 @@ package vista;
 
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -66,6 +68,36 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
         proveePersi.ajustarTabla(jTableProveedores);
         
         jTxtNombreProveedor.requestFocusInWindow();//PARA QUE EL PUNTERO SIEMPRE APUNTE AL TEXTBOX DEL NOMBRE DEL PROVEEDOR
+        
+        jTxtTel.addKeyListener(new KeyAdapter(){
+            public void keyTyped(KeyEvent e){
+                char c = e.getKeyChar();
+                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE) && (c != '-') ) {
+                    getToolkit().beep();    
+                    e.consume();
+                }
+                
+                if(jTxtTel.getText().length() == 13){
+                    getToolkit().beep();
+                    e.consume(); 
+                }
+            }
+        });
+        
+        jTxtTel2.addKeyListener(new KeyAdapter(){
+            public void keyTyped(KeyEvent e){
+                char c = e.getKeyChar();
+                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE) && (c != '-') ) {
+                    getToolkit().beep();    
+                    e.consume();
+                }
+                
+                if(jTxtTel2.getText().length() == 13){
+                    getToolkit().beep();
+                    e.consume(); 
+                }
+            }
+        });
         
     }
 
@@ -379,39 +411,44 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
 
     private void btnModifyProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyProveedorActionPerformed
         // TODO add your handling code here:
-        if (JOptionPane.showConfirmDialog(rootPane, "Se modificará el proveedor, ¿Desea continuar?",
-            "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){ 
-            btnModifyProveedor.setEnabled(false);
-            btnElimianr.setEnabled(false);
-            btnAddProveedor.setEnabled(true);
-            if (jTxtNombreProveedor.getText().equals("") || jTxtDomicilio.getText().equals("")
-                    || jTxtContacto.getText().equals("") || jTxtTel.getText().equals("") || jTxtCorreo.equals("")) {
-                JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
-                                    "Aviso",JOptionPane.WARNING_MESSAGE);
-            } else {
-                if(BD.conectarBD()){
-                    prov.setNombre(jTxtNombreProveedor.getText());
-                    prov.setDomicilio(jTxtDomicilio.getText());
-                    prov.setTel(jTxtTel.getText());
-                    prov.setTel2(jTxtTel2.getText());
-                    prov.setContacto(jTxtContacto.getText());
-                    prov.setCorreo(jTxtCorreo.getText());                              
-                    try {
-                        prov.ActualizarProveedor(jTableProveedores);
-                        JOptionPane.showMessageDialog(rootPane, "Actualización exitosa",
-                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                        LimpiaCampos();
-                        LimpiaTablaProveedores();
-                        prov.TablaConsultaProveedores();
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(rootPane, "No se actualizó el proveedor: "+e,
-                            "Error",JOptionPane.ERROR_MESSAGE);
+        if(metodosGlobales.validaCorreo(jTxtCorreo.getText())==false){
+                JOptionPane.showMessageDialog(rootPane, "El correo es incorrecto",
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+        }else{
+            if (JOptionPane.showConfirmDialog(rootPane, "Se modificará el proveedor, ¿Desea continuar?",
+                "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){ 
+                btnModifyProveedor.setEnabled(false);
+                btnElimianr.setEnabled(false);
+                btnAddProveedor.setEnabled(true);
+                if (jTxtNombreProveedor.getText().equals("") || jTxtDomicilio.getText().equals("")
+                        || jTxtContacto.getText().equals("") || jTxtTel.getText().equals("") || jTxtCorreo.equals("")) {
+                    JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
+                                        "Aviso",JOptionPane.WARNING_MESSAGE);
+                } else {
+                    if(BD.conectarBD()){
+                        prov.setNombre(jTxtNombreProveedor.getText());
+                        prov.setDomicilio(jTxtDomicilio.getText());
+                        prov.setTel(jTxtTel.getText());
+                        prov.setTel2(jTxtTel2.getText());
+                        prov.setContacto(jTxtContacto.getText());
+                        prov.setCorreo(jTxtCorreo.getText());                              
+                        try {
+                            prov.ActualizarProveedor(jTableProveedores);
+                            JOptionPane.showMessageDialog(rootPane, "Actualización exitosa",
+                                "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                            LimpiaCampos();
+                            LimpiaTablaProveedores();
+                            prov.TablaConsultaProveedores();
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(rootPane, "No se actualizó el proveedor: "+e,
+                                "Error",JOptionPane.ERROR_MESSAGE);
+                            BD.cerrarConexion();
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                                "Error",JOptionPane.ERROR_MESSAGE);
                         BD.cerrarConexion();
                     }
-                }else{
-                    JOptionPane.showMessageDialog(rootPane, "Error de conexión",
-                            "Error",JOptionPane.ERROR_MESSAGE);
-                    BD.cerrarConexion();
                 }
             }
         }
@@ -420,10 +457,6 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
         LimpiaCampos();
-        btnAddProveedor.setEnabled(true);
-        btnElimianr.setEnabled(false);
-        btnModifyProveedor.setEnabled(false);
-        
         
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
@@ -535,14 +568,18 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
         clics = 0;//sifnifica que no ha dado un clic
         
         jTxtNombreProveedor.requestFocusInWindow();//PARA QUE EL PUNTERO SIEMPRE APUNTE AL TEXTBOX DEL NOMBRE DEL PROVEEDOR
+        
+        btnAddProveedor.setEnabled(true);
+        btnElimianr.setEnabled(false);
+        btnModifyProveedor.setEnabled(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddProveedor;
+    public static javax.swing.JButton btnAddProveedor;
     public static javax.swing.JButton btnAgregarTel;
-    private javax.swing.JButton btnElimianr;
+    public static javax.swing.JButton btnElimianr;
     private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton btnModifyProveedor;
+    public static javax.swing.JButton btnModifyProveedor;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
