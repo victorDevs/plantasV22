@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -50,7 +51,7 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
     public static List<JRadioButton> radiosMateriales;
     public static List<JRadioButton> radiosProcesos;
     
-//    Estilos est = new Estilos();
+    Estilos est = new Estilos();
     Procesos pro = new Procesos();
     Materiales mat = new Materiales();
     
@@ -116,7 +117,7 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTxtNombre = new javax.swing.JTextField();
+        txtEstilo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablePersonal = new javax.swing.JTable();
         btnAddPersonal = new javax.swing.JButton();
@@ -321,7 +322,7 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtEstilo, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(64, 64, 64)
@@ -347,7 +348,7 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEstilo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -372,74 +373,100 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
 
     private void btnAddPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPersonalActionPerformed
         // TODO add your handling code here:
-        System.out.println("Numero de radioMateriales: "+radiosMateriales.size());
+        List<JRadioButton> radiosSelectedMateriales = null;
+        ArrayList radioTxtMateriales = new ArrayList();
+        ArrayList radioTxtProcesos = new ArrayList();
+        int cont = 0;
         for (int i = 0; i < radiosMateriales.size(); i++) {
             if(radiosMateriales.get(i).isSelected()){
-                System.out.println(radiosMateriales.get(i).getText());
+                radioTxtMateriales.add(cont,radiosMateriales.get(i).getText());
+                cont++;
             }
         }
-//        String proceso = (String) jCbProceso.getSelectedItem();
-//        Date date = jDCFechaNacimiento.getDate();
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//        if(jTxtNombre.getText().equals("") || jTxtAptPaterno.getText().equals("")
-//                || jTxtAptMaterno.getText().equals("") || jTxtDomicilio.equals("") 
-//                || jTxtTelefono.equals("") || jTxtCorreo.equals("") || proceso.equals(" - Proceso - ")) {
-//            JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
-//                                "Aviso",JOptionPane.WARNING_MESSAGE);
-//        } else {
-//            if(metodosGlobales.validaFecha(jDCFechaNacimiento)==null){
-//                JOptionPane.showMessageDialog(rootPane, "Campo de fecha vacío o formato incorrecto",
-//                                "Aviso",JOptionPane.WARNING_MESSAGE);
-//            }else{
-//                if(BD.conectarBD()){
-//                    per.setNombre(jTxtNombre.getText());
-//                    per.setApellidoPaterno(jTxtAptPaterno.getText());
-//                    per.setApellidoMaterno(jTxtAptMaterno.getText());
-//                    per.setFechaNacimiento(sdf.format(date));
-//                    per.setDomicilio(jTxtDomicilio.getText());
-//                    per.setTelefono(jTxtTelefono.getText());
-//                    per.setCorreo(jTxtCorreo.getText());
-//                    per.setProceso(proceso);
-//                    if(per.RegistraPersonal()){
-//                        Barcode barcode = null;
-//                        String strCode = "0987654321";
-//                        try {
-//                            barcode = BarcodeFactory.createCode39(strCode, true);
-//                        } catch (Exception e) {
-//                            JOptionPane.showMessageDialog(null, "El código de barras para el trabajador no se creó correctamente: "+e, 
-//                                    "Aviso", JOptionPane.WARNING_MESSAGE);
-//                        }
-//                        barcode.setDrawingText(true);
-//                        barcode.setBarWidth(2);
-//                        barcode.setBarHeight(60);
+        cont = 0;
+        for (int i = 0; i < radiosProcesos.size(); i++) {
+            if(radiosProcesos.get(i).isSelected()){
+                radioTxtProcesos.add(cont,radiosProcesos.get(i).getText());
+                cont++;
+            }
+        }
+        
+//        for (int i = 0; i < radioTxtProcesos.size(); i++) {
+//            System.out.println("item radio: "+radioTxtProcesos.get(i));
+//        }
+        if(radioTxtMateriales.size() == 0 && radioTxtProcesos.size() == 0 && txtEstilo.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Escriba un nombre, enseguida seleccione algunos materiales y procesos para el estilo.",
+                            "Aviso",JOptionPane.WARNING_MESSAGE);
+        }else if(radioTxtMateriales.size() == 0 && radioTxtProcesos.size() == 0 && !txtEstilo.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Seleccione algunos materiales y procesos para el estilo.",
+                            "Aviso",JOptionPane.WARNING_MESSAGE);
+        }else if(radioTxtMateriales.size() == 0 && radioTxtProcesos.size() > 0 && txtEstilo.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Escriba un nombre y seleccione algunos materiales para el estilo.",
+                            "Aviso",JOptionPane.WARNING_MESSAGE);
+        }else if(radioTxtMateriales.size() > 0 && radioTxtProcesos.size() == 0 && txtEstilo.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Escriba un nombre y seleccione algunos procesos para el estilo.",
+                            "Aviso",JOptionPane.WARNING_MESSAGE);
+        }else if(radioTxtMateriales.size() > 0 && radioTxtProcesos.size() > 0 && txtEstilo.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Escriba un nombre para el estilo.",
+                            "Aviso",JOptionPane.WARNING_MESSAGE);
+        }else if(radioTxtMateriales.size() > 0 && radioTxtProcesos.size() == 0 && !txtEstilo.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Seleccione algunos procesos para el estilo.",
+                            "Aviso",JOptionPane.WARNING_MESSAGE);
+        }else if(radioTxtMateriales.size() == 0 && radioTxtProcesos.size() > 0 && !txtEstilo.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Seleccione algunos materiales para el estilo.",
+                            "Aviso",JOptionPane.WARNING_MESSAGE);
+        } else {
+            System.out.println("Jupy!!!");
+            if(BD.conectarBD()){
+                est.setEstilo(txtEstilo.getText());
+//                est. quitar idMateriales y poner materiales como String, se hace lo mismo con procesos
+//                per.setApellidoPaterno(jTxtAptPaterno.getText());
+//                per.setApellidoMaterno(jTxtAptMaterno.getText());
+//                per.setFechaNacimiento(sdf.format(date));
+//                per.setDomicilio(jTxtDomicilio.getText());
+//                per.setTelefono(jTxtTelefono.getText());
+//                per.setCorreo(jTxtCorreo.getText());
+//                per.setProceso(proceso);
+//                if(per.RegistraPersonal()){
+//                    Barcode barcode = null;
+//                    String strCode = "0987654321";
+//                    try {
+//                        barcode = BarcodeFactory.createCode39(strCode, true);
+//                    } catch (Exception e) {
+//                        JOptionPane.showMessageDialog(null, "El código de barras para el trabajador no se creó correctamente: "+e, 
+//                                "Aviso", JOptionPane.WARNING_MESSAGE);
+//                    }
+//                    barcode.setDrawingText(true);
+//                    barcode.setBarWidth(2);
+//                    barcode.setBarHeight(60);
 //
-//                        try {
-//                            strFileName = "C:\\Users\\vikto\\OneDrive\\Documentos\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
-//                            //strFileName = "C:\\Users\\alber\\Documents\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
-//                            File file = new File(strFileName);
-//                            file.setExecutable(true);
-//                            file.setReadable(true);
-//                            file.setWritable(true);
-//                            FileOutputStream fos = new FileOutputStream(file);
-//                            BarcodeImageHandler.writeJPEG(barcode, fos);
-//                            System.out.println("Archivo creado: "+strFileName);
-//                        } catch (Exception e) {
-//                            JOptionPane.showMessageDialog(null, "La imagen del código de barras no se guardo como imagen correctamente"+e, 
-//                                    "Aviso", JOptionPane.WARNING_MESSAGE);
-//                        }
+//                    try {
+//                        strFileName = "C:\\Users\\vikto\\OneDrive\\Documentos\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
+//                        //strFileName = "C:\\Users\\alber\\Documents\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
+//                        File file = new File(strFileName);
+//                        file.setExecutable(true);
+//                        file.setReadable(true);
+//                        file.setWritable(true);
+//                        FileOutputStream fos = new FileOutputStream(file);
+//                        BarcodeImageHandler.writeJPEG(barcode, fos);
+//                        System.out.println("Archivo creado: "+strFileName);
+//                    } catch (Exception e) {
+//                        JOptionPane.showMessageDialog(null, "La imagen del código de barras no se guardo como imagen correctamente"+e, 
+//                                "Aviso", JOptionPane.WARNING_MESSAGE);
+//                    }
 ////                        Imagen Imagen = new Imagen();
 ////                        jPanelCodeBarras.add(Imagen);
 ////                        jPanelCodeBarras.repaint();
-//                        JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
-//                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
-//                        LimpiaCampos();
-//                        LimpiaTablaPersonal();
-//                        per.TablaConsultaPersonal();
-//                    }else{
-//                        JOptionPane.showMessageDialog(rootPane, "No se registro el personal",
-//                            "Error",JOptionPane.ERROR_MESSAGE);
-//                        BD.cerrarConexion();
-//                    }
+//                    JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
+//                        "Aviso",JOptionPane.INFORMATION_MESSAGE);
+//                    LimpiaCampos();
+//                    LimpiaTablaPersonal();
+//                    per.TablaConsultaPersonal();
+//                }else{
+//                    JOptionPane.showMessageDialog(rootPane, "No se registro el personal",
+//                        "Error",JOptionPane.ERROR_MESSAGE);
+//                    BD.cerrarConexion();
+//                }
 ////                    try {
 ////                        
 ////                        per.RegistraPersonal();
@@ -454,13 +481,12 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
 //////                        System.out.println("Error al registrar un cliente: "+e);
 ////                        BD.cerrarConexion();
 ////                    }
-//                }else{
-//                    JOptionPane.showMessageDialog(rootPane, "Error de conexión",
-//                            "Error",JOptionPane.ERROR_MESSAGE);
-//                    BD.cerrarConexion();
-//                }
-//            }
-//        }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                        "Error",JOptionPane.ERROR_MESSAGE);
+                BD.cerrarConexion();
+            }
+        }
     }//GEN-LAST:event_btnAddPersonalActionPerformed
 
     private void jTablePersonalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePersonalMouseClicked
@@ -644,8 +670,8 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
     public static javax.swing.JTable jTablePersonal;
     public static javax.swing.JTable jTablePersonal1;
     public static javax.swing.JTable jTablePersonal2;
-    public static javax.swing.JTextField jTxtNombre;
     public static javax.swing.JPanel panelMateriales;
     public static javax.swing.JPanel panelProcesos;
+    public static javax.swing.JTextField txtEstilo;
     // End of variables declaration//GEN-END:variables
 }
