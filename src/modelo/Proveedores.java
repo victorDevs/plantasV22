@@ -17,6 +17,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import persistencia.BD;
 import static persistencia.BD.conexion;
+import persistencia.MetodosGlobales;
 import vista.CatalogoProveedores;
 
 /**
@@ -98,8 +99,8 @@ public class Proveedores {
     
     public boolean RegistraProveedor(){
         String sql = "insert into proveedores (nombre,domicilio,tel,tel2,contacto,correo) "
-                + "values ('"+this.nombre+"', '"+this.domicilio+"','"+this.tel+"','"+this.tel2+"','"+this.contacto+"', "
-                + "'"+this.correo+"');";
+                + "values ('"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', '"+MetodosGlobales.aceptarComillaSimple(this.domicilio)+"','"+this.tel+"','"+this.tel2+"','"
+                +MetodosGlobales.aceptarComillaSimple(this.contacto)+"', '"+this.correo+"');";
         System.out.println("Registro de proveedor: "+sql);
         if (BD.ejecutarSQL(sql)) {
             return true;
@@ -163,8 +164,8 @@ public class Proveedores {
     
     public boolean ActualizarProveedor(JTable tabla){
         int fila = tabla.getSelectedRow();
-        String sql = "update proveedores set nombre = '"+this.nombre+"', domicilio = '"+this.domicilio+"',"
-                + " contacto='"+this.contacto+"', tel='"+this.tel+"', tel2='"+this.tel2+"', correo='"+this.correo+"' "
+        String sql = "update proveedores set nombre = '"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', domicilio = '"+MetodosGlobales.aceptarComillaSimple(this.domicilio)+"',"
+                + " contacto='"+MetodosGlobales.aceptarComillaSimple(this.contacto)+"', tel='"+this.tel+"', tel2='"+this.tel2+"', correo='"+this.correo+"' "
                 + "where idProveedor = "+tabla.getValueAt(fila, 0);
         System.out.println("consulta: "+sql);
         if (BD.ejecutarSQL(sql)) {            

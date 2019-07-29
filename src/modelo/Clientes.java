@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import persistencia.BD;
+import persistencia.MetodosGlobales;
 import vista.CatalogoClientes;
 
 /**
@@ -80,7 +81,7 @@ public class Clientes {
     
     public boolean RegistraCliente(){
         String sql = "insert into clientes (nombre,domicilio,tel,contacto,correo) "
-                + "values ('"+this.nombre+"', '"+this.domicilio+"','"+this.telefono+"','"+this.contacto+"', "
+                + "values ('"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', '"+MetodosGlobales.aceptarComillaSimple(this.domicilio)+"','"+this.telefono+"','"+MetodosGlobales.aceptarComillaSimple(this.contacto)+"', "
                 + "'"+this.correo+"');";
         System.out.println("Registro de cliente: "+sql);
         if (BD.ejecutarSQL(sql)) {
@@ -143,8 +144,8 @@ public class Clientes {
     
     public boolean ActualizarCliente(JTable tabla){
         int fila = tabla.getSelectedRow();
-        String sql = "update clientes set nombre = '"+this.nombre+"', domicilio = '"+this.domicilio+"',"
-                + " contacto='"+this.contacto+"', tel='"+this.telefono+"', correo='"+this.correo+"' "
+        String sql = "update clientes set nombre = '"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', domicilio = '"+MetodosGlobales.aceptarComillaSimple(this.domicilio)+"',"
+                + " contacto='"+MetodosGlobales.aceptarComillaSimple(this.contacto)+"', tel='"+this.telefono+"', correo='"+this.correo+"' "
                 + "where idCliente = "+tabla.getValueAt(fila, 0);
 //        System.out.println("consulta: "+sql);
         if (BD.ejecutarSQL(sql)) {            

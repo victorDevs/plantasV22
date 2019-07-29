@@ -288,8 +288,8 @@ public class Materiales {
     public boolean ActualizarProveedor(JTable tabla){
         int fila = tabla.getSelectedRow();
         int materialId = 0;
-        String sql = "update materiales set nombre = '"+this.nombre+"', unidad = '"+this.unidad+"',"
-                + " rendimiento='"+this.rendimiento+"', descripcionBM='"+this.descripcionBM+"', precio="+this.precio
+        String sql = "update materiales set nombre = '"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', unidad = '"+this.unidad+"',"
+                + " rendimiento='"+this.rendimiento+"', descripcionBM='"+MetodosGlobales.aceptarComillaSimple(this.descripcionBM)+"', precio="+this.precio
                 + "where idMateriales = "+tabla.getValueAt(fila, 0);
         System.out.println("consulta: "+sql);
         if (BD.ejecutarSQL(sql)) {   

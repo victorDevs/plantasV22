@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import persistencia.BD;
+import persistencia.MetodosGlobales;
 import vista.CatalogoPersonal;
 
 /**
@@ -109,8 +110,8 @@ public class Personal {
     
     public boolean RegistraPersonal(){
         String sql = "insert into personal (nombre,apellidoPaterno,apellidoMaterno,fechaNacimiento,domicilio,telefono,correo,proceso) "
-                + "values ('"+this.nombre+"', '"+this.apellidoPaterno+"','"+this.apellidoMaterno+"','"
-                +this.fechaNacimiento+"','"+this.Domicilio+"','"+this.telefono+"','"+this.correo+"','"
+                + "values ('"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', '"+MetodosGlobales.aceptarComillaSimple(this.apellidoPaterno)+"','"+MetodosGlobales.aceptarComillaSimple(this.apellidoMaterno)+"','"
+                +this.fechaNacimiento+"','"+MetodosGlobales.aceptarComillaSimple(this.Domicilio)+"','"+this.telefono+"','"+this.correo+"','"
                 +this.proceso+"');";
         System.out.println("Registro de personal: "+sql);
         if (BD.ejecutarSQL(sql)) {
@@ -152,9 +153,9 @@ public class Personal {
     
     public boolean ActualizarPersonal(JTable tabla){
         int fila = tabla.getSelectedRow();
-        String sql = "update personal set nombre = '"+this.nombre+"', apellidoPaterno = '"+this.apellidoPaterno+"',"
-                + " apellidoMaterno='"+this.apellidoMaterno+"', fechaNacimiento='"+this.fechaNacimiento+"', domicilio='"+this.Domicilio+"', telefono='"+this.correo+"', "
-                + " correo='"+this.correo+"', proceso='"+this.proceso+"' "
+        String sql = "update personal set nombre = '"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', apellidoPaterno = '"+MetodosGlobales.aceptarComillaSimple(this.apellidoPaterno)+"',"
+                + " apellidoMaterno='"+MetodosGlobales.aceptarComillaSimple(this.apellidoMaterno)+"', fechaNacimiento='"+this.fechaNacimiento+"', domicilio='"+MetodosGlobales.aceptarComillaSimple(this.Domicilio)+"',"+
+                "telefono='"+this.correo+"', correo='"+this.correo+"', proceso='"+this.proceso+"' "
                 + "where idPersonal = "+tabla.getValueAt(fila, 0);
 //        System.out.println("consulta: "+sql);
         if (BD.ejecutarSQL(sql)) {            

@@ -83,7 +83,8 @@ public class validaJframeAbreUnaVez {
             
             //LIMPIAR CAMPOS AL VOLVER ABRIR LA VENTANA
             CatalogoClientes.LimpiaCampos();
-            //clientes.TablaConsultaClientes();
+            MetodosGlobales.LimpiaTabla(CatalogoClientes.jTableClientes);
+            clientes.TablaConsultaClientes();
         }
     }
     
@@ -115,8 +116,9 @@ public class validaJframeAbreUnaVez {
             jInternalFrame.show();
             
             //LIMPIAR CAMPOS AL VOLVER ABRIR LA VENTANA
-            //catPersonal.LimpiaCampos();
-            //personal.TablaConsultaPersonal();
+           catPersonal.LimpiaCampos();
+            MetodosGlobales.LimpiaTabla(CatalogoPersonal.jTablePersonal);
+            personal.TablaConsultaPersonal();
         }
     }
 }
