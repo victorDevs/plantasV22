@@ -34,7 +34,7 @@ public class BD {
         //Establecer la conexión con la Base de Datos
         try {
 //            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/plantasbd","root","10240498");
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/plantasbd","root","SqAdmin01");
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/plantasbd","root","");
         } catch (SQLException ex) {
             System.out.println("Error al establecer conexión a la base de datos:" + ex);
             return false;

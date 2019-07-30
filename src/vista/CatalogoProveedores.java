@@ -458,6 +458,8 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         LimpiaCampos();
         
+        MetodosGlobales.LimpiaTabla(jTableProveedores);
+        prov.TablaConsultaProveedores();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnElimianrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElimianrActionPerformed

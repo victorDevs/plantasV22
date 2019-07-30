@@ -7,6 +7,7 @@ package vista;
 
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
+import modelo.LoginModel;
 import modelo.Proveedores;
 import persistencia.validaJframeAbreUnaVez;
 
@@ -23,12 +24,16 @@ public class Main extends javax.swing.JFrame {
     //GENERAR VARIABLE PARA QUE POSTERIORMENTE SEA UTILIZADO EL DESKTOPANEL
     validaJframeAbreUnaVez validajFraAbreUnaVez;
     
+
+    
     public Main() {
         initComponents();
         //MANDA DESKTOPPANEL DEL MAIN A LA CLASE validaJFrameAbreUnaVez
         this.validajFraAbreUnaVez = new validaJframeAbreUnaVez(jDesktopMain);
         this.setExtendedState(MAXIMIZED_BOTH);
 //        setTimeout(() -> validajFraAbreUnaVez.abrirInternalFramePersonal(CatalogoEstilos.getInstancia()), 500);
+
+       
     }
     
     public static void setTimeout(Runnable runnable, int delay){
@@ -54,6 +59,8 @@ public class Main extends javax.swing.JFrame {
 
         jDesktopMain = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
+        menuNomUsuario = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         subMenuSalir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -65,18 +72,25 @@ public class Main extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
+        setResizable(false);
 
         javax.swing.GroupLayout jDesktopMainLayout = new javax.swing.GroupLayout(jDesktopMain);
         jDesktopMain.setLayout(jDesktopMainLayout);
         jDesktopMainLayout.setHorizontalGroup(
             jDesktopMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1150, Short.MAX_VALUE)
+            .addGap(0, 1149, Short.MAX_VALUE)
         );
         jDesktopMainLayout.setVerticalGroup(
             jDesktopMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 541, Short.MAX_VALUE)
+            .addGap(0, 542, Short.MAX_VALUE)
         );
+
+        menuNomUsuario.setText("Usuario");
+
+        jMenuItem3.setText("Mi Perfil");
+        menuNomUsuario.add(jMenuItem3);
+
+        jMenuBar1.add(menuNomUsuario);
 
         jMenu1.setText("Archivo");
 
@@ -97,7 +111,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        subMenuCatMateriales.setSelected(true);
         subMenuCatMateriales.setText("Materiales");
         subMenuCatMateriales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,7 +119,6 @@ public class Main extends javax.swing.JFrame {
         });
         jMenu2.add(subMenuCatMateriales);
 
-        jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("Proveedores");
         jCheckBoxMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,7 +127,6 @@ public class Main extends javax.swing.JFrame {
         });
         jMenu2.add(jCheckBoxMenuItem1);
 
-        jCheckBoxMenuItem2.setSelected(true);
         jCheckBoxMenuItem2.setText("Clientes");
         jCheckBoxMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,7 +135,6 @@ public class Main extends javax.swing.JFrame {
         });
         jMenu2.add(jCheckBoxMenuItem2);
 
-        jCheckBoxMenuItem3.setSelected(true);
         jCheckBoxMenuItem3.setText("Personal");
         jCheckBoxMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -266,6 +276,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    public static javax.swing.JMenu menuNomUsuario;
     private javax.swing.JCheckBoxMenuItem subMenuCatMateriales;
     private javax.swing.JMenuItem subMenuSalir;
     // End of variables declaration//GEN-END:variables
