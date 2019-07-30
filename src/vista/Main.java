@@ -5,8 +5,11 @@
  */
 package vista;
 
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
+import javax.swing.Box;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import modelo.LoginModel;
 import modelo.Proveedores;
 import persistencia.validaJframeAbreUnaVez;
@@ -18,11 +21,13 @@ import persistencia.validaJframeAbreUnaVez;
 public class Main extends javax.swing.JFrame {
 
     /**
-     * Creates new form Main prueba
+     * Creates new form Main 
      */
     
     //GENERAR VARIABLE PARA QUE POSTERIORMENTE SEA UTILIZADO EL DESKTOPANEL
     validaJframeAbreUnaVez validajFraAbreUnaVez;
+    
+    
     
 
     
@@ -32,8 +37,15 @@ public class Main extends javax.swing.JFrame {
         this.validajFraAbreUnaVez = new validaJframeAbreUnaVez(jDesktopMain);
         this.setExtendedState(MAXIMIZED_BOTH);
 //        setTimeout(() -> validajFraAbreUnaVez.abrirInternalFramePersonal(CatalogoEstilos.getInstancia()), 500);
-
-       
+        
+        
+        
+        //validajFraAbreUnaVez.abrirInternalFrameLogin(LoginInternal.getInstancia());
+        jMenuBar1.addComponentListener(new java.awt.event.ComponentAdapter() {
+	public void componentResized(java.awt.event.ComponentEvent evt) {
+		menuNomUsuarioComponentResized(evt);
+	}
+        });
     }
     
     public static void setTimeout(Runnable runnable, int delay){
@@ -59,8 +71,6 @@ public class Main extends javax.swing.JFrame {
 
         jDesktopMain = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
-        menuNomUsuario = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         subMenuSalir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -70,6 +80,7 @@ public class Main extends javax.swing.JFrame {
         jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        menuNomUsuario = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -84,13 +95,6 @@ public class Main extends javax.swing.JFrame {
             jDesktopMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 542, Short.MAX_VALUE)
         );
-
-        menuNomUsuario.setText("Usuario");
-
-        jMenuItem3.setText("Mi Perfil");
-        menuNomUsuario.add(jMenuItem3);
-
-        jMenuBar1.add(menuNomUsuario);
 
         jMenu1.setText("Archivo");
 
@@ -160,6 +164,24 @@ public class Main extends javax.swing.JFrame {
         jMenu2.add(jMenuItem2);
 
         jMenuBar1.add(jMenu2);
+
+        menuNomUsuario.setText("IniciarSesión");
+        menuNomUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuNomUsuarioMouseClicked(evt);
+            }
+        });
+        menuNomUsuario.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                menuNomUsuarioComponentResized(evt);
+            }
+        });
+        menuNomUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuNomUsuarioActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(menuNomUsuario);
 
         setJMenuBar(jMenuBar1);
 
@@ -231,6 +253,18 @@ public class Main extends javax.swing.JFrame {
         
     }//GEN-LAST:event_subMenuSalirActionPerformed
 
+    private void menuNomUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNomUsuarioActionPerformed
+         
+    }//GEN-LAST:event_menuNomUsuarioActionPerformed
+
+    private void menuNomUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuNomUsuarioMouseClicked
+        validajFraAbreUnaVez.abrirInternalFrameLogin(LoginInternal.getInstancia());
+    }//GEN-LAST:event_menuNomUsuarioMouseClicked
+
+    private void menuNomUsuarioComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_menuNomUsuarioComponentResized
+       menuNomUsuario.setLocation(jMenuBar1.getSize().width - menuNomUsuario.getSize().width - jMenuBar1.getBorder().getBorderInsets(jMenuBar1).right,menuNomUsuario.getY());
+    }//GEN-LAST:event_menuNomUsuarioComponentResized
+
     /**
      * @param args the command line arguments
      */
@@ -276,7 +310,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     public static javax.swing.JMenu menuNomUsuario;
     private javax.swing.JCheckBoxMenuItem subMenuCatMateriales;
     private javax.swing.JMenuItem subMenuSalir;

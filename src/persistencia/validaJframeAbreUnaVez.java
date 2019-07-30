@@ -121,4 +121,22 @@ public class validaJframeAbreUnaVez {
             personal.TablaConsultaPersonal();
         }
     }
+    
+     public void abrirInternalFrameLogin(JInternalFrame jInternalFrame){
+        if(jInternalFrame.isVisible()){
+            jInternalFrame.toFront();
+            jInternalFrame.requestFocus();
+        }else{
+            jDesktopPane.add(jInternalFrame);
+            Dimension desktopSize = jDesktopPane.getSize();
+            Dimension FrameSize = jInternalFrame.getSize();
+            jInternalFrame.setLocation((desktopSize.width - FrameSize.width)/1, (desktopSize.height- FrameSize.height)/10);
+            jInternalFrame.show();
+            
+            //LIMPIAR CAMPOS AL VOLVER ABRIR LA VENTANA
+            //CatalogoClientes.LimpiaCampos();
+            //MetodosGlobales.LimpiaTabla(CatalogoClientes.jTableClientes);
+            //clientes.TablaConsultaClientes();
+        }
+    }
 }
