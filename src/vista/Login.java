@@ -131,6 +131,7 @@ public class Login extends javax.swing.JFrame {
                }
             }
         }
+        //esto es prueba
     }//GEN-LAST:event_jbtnIniciarActionPerformed
 
     /**
