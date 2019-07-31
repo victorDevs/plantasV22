@@ -33,6 +33,13 @@ public class Main extends javax.swing.JFrame {
     
     public Main() {
         initComponents();
+        
+        jMenuBar1.addComponentListener(new java.awt.event.ComponentAdapter() {
+	public void componentResized(java.awt.event.ComponentEvent evt) {
+		menuNomUsuarioComponentResized(evt);
+	}
+        });
+        
         //MANDA DESKTOPPANEL DEL MAIN A LA CLASE validaJFrameAbreUnaVez
         this.validajFraAbreUnaVez = new validaJframeAbreUnaVez(jDesktopMain);
         this.setExtendedState(MAXIMIZED_BOTH);
@@ -41,11 +48,10 @@ public class Main extends javax.swing.JFrame {
         
         
         //validajFraAbreUnaVez.abrirInternalFrameLogin(LoginInternal.getInstancia());
-        jMenuBar1.addComponentListener(new java.awt.event.ComponentAdapter() {
-	public void componentResized(java.awt.event.ComponentEvent evt) {
-		menuNomUsuarioComponentResized(evt);
-	}
-        });
+        
+        menuCatalogos.setVisible(false);
+        subMenuUsuarios.setVisible(false);
+       
     }
     
     public static void setTimeout(Runnable runnable, int delay){
@@ -72,8 +78,9 @@ public class Main extends javax.swing.JFrame {
         jDesktopMain = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        subMenuUsuarios = new javax.swing.JMenuItem();
         subMenuSalir = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        menuCatalogos = new javax.swing.JMenu();
         subMenuCatMateriales = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
@@ -98,6 +105,14 @@ public class Main extends javax.swing.JFrame {
 
         jMenu1.setText("Archivo");
 
+        subMenuUsuarios.setText("Gestor de Usuarios");
+        subMenuUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuUsuariosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(subMenuUsuarios);
+
         subMenuSalir.setText("Salir");
         subMenuSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,10 +123,10 @@ public class Main extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Catalogos");
-        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+        menuCatalogos.setText("Catalogos");
+        menuCatalogos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu2ActionPerformed(evt);
+                menuCatalogosActionPerformed(evt);
             }
         });
 
@@ -121,7 +136,7 @@ public class Main extends javax.swing.JFrame {
                 subMenuCatMaterialesActionPerformed(evt);
             }
         });
-        jMenu2.add(subMenuCatMateriales);
+        menuCatalogos.add(subMenuCatMateriales);
 
         jCheckBoxMenuItem1.setText("Proveedores");
         jCheckBoxMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -129,7 +144,7 @@ public class Main extends javax.swing.JFrame {
                 jCheckBoxMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu2.add(jCheckBoxMenuItem1);
+        menuCatalogos.add(jCheckBoxMenuItem1);
 
         jCheckBoxMenuItem2.setText("Clientes");
         jCheckBoxMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -137,7 +152,7 @@ public class Main extends javax.swing.JFrame {
                 jCheckBoxMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu2.add(jCheckBoxMenuItem2);
+        menuCatalogos.add(jCheckBoxMenuItem2);
 
         jCheckBoxMenuItem3.setText("Personal");
         jCheckBoxMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -145,7 +160,7 @@ public class Main extends javax.swing.JFrame {
                 jCheckBoxMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu2.add(jCheckBoxMenuItem3);
+        menuCatalogos.add(jCheckBoxMenuItem3);
 
         jMenuItem1.setText("Estilos");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -153,7 +168,7 @@ public class Main extends javax.swing.JFrame {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem1);
+        menuCatalogos.add(jMenuItem1);
 
         jMenuItem2.setText("Pedidos");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -161,9 +176,9 @@ public class Main extends javax.swing.JFrame {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
+        menuCatalogos.add(jMenuItem2);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(menuCatalogos);
 
         menuNomUsuario.setText("IniciarSesión");
         menuNomUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -209,7 +224,7 @@ public class Main extends javax.swing.JFrame {
         validajFraAbreUnaVez.abrirInternalFrameMateriales(CatalogoMateriales.getInstancia());
     }//GEN-LAST:event_subMenuCatMaterialesActionPerformed
 
-    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+    private void menuCatalogosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCatalogosActionPerformed
         // TODO add your handling code here:
         CatalogoProveedores catProveedores = new CatalogoProveedores();
         if(catProveedores.isVisible() == false){
@@ -218,7 +233,7 @@ public class Main extends javax.swing.JFrame {
             catProveedores.show();
         }
         
-    }//GEN-LAST:event_jMenu2ActionPerformed
+    }//GEN-LAST:event_menuCatalogosActionPerformed
 
     private void jCheckBoxMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem1ActionPerformed
         // TODO add your handling code here:
@@ -265,6 +280,10 @@ public class Main extends javax.swing.JFrame {
        menuNomUsuario.setLocation(jMenuBar1.getSize().width - menuNomUsuario.getSize().width - jMenuBar1.getBorder().getBorderInsets(jMenuBar1).right,menuNomUsuario.getY());
     }//GEN-LAST:event_menuNomUsuarioComponentResized
 
+    private void subMenuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuUsuariosActionPerformed
+        validajFraAbreUnaVez.abrirInternalFrameUsuarios(CatalogoUsuarios.getInstancia());
+    }//GEN-LAST:event_subMenuUsuariosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -306,12 +325,13 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
     public static javax.swing.JDesktopPane jDesktopMain;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    public static javax.swing.JMenu menuCatalogos;
     public static javax.swing.JMenu menuNomUsuario;
     private javax.swing.JCheckBoxMenuItem subMenuCatMateriales;
     private javax.swing.JMenuItem subMenuSalir;
+    public static javax.swing.JMenuItem subMenuUsuarios;
     // End of variables declaration//GEN-END:variables
 }
