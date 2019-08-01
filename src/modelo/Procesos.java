@@ -8,6 +8,7 @@ package modelo;
 import javax.swing.DefaultComboBoxModel;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -46,12 +47,17 @@ public class Procesos {
         DefaultComboBoxModel comboProceso = new DefaultComboBoxModel();
         try {
             BD.conectarBD();
-            String sql = "select idProceso,nombre from procesos";
+            String sql = "select idProceso,nombre,area from procesos";
             rs = BD.ejecutarSQLSelect(sql);
             rsm = rs.getMetaData();
-            comboProceso.addElement(" - Proceso - ");
             combo.setModel(comboProceso);
+            ArrayList flagArea = new ArrayList();
             while (rs.next()) {
+                if(flagArea.indexOf(rs.getString("area")) < 0){
+                    comboProceso.addElement(" ***** AREA "+rs.getString("area")+" ***** ");
+                    flagArea.add(rs.getString("area"));
+                }
+                flagArea.add(rs.getString("area"));
                 this.idProceso = Integer.parseInt(rs.getString("idProceso"));
                 this.nombre = rs.getString("nombre");
                 comboProceso.addElement(rs.getObject("nombre"));
