@@ -44,6 +44,7 @@ public class Main extends javax.swing.JFrame {
         this.validajFraAbreUnaVez = new validaJframeAbreUnaVez(jDesktopMain);
         this.setExtendedState(MAXIMIZED_BOTH);
 //        setTimeout(() -> validajFraAbreUnaVez.abrirInternalFramePersonal(CatalogoEstilos.getInstancia()), 500);
+//        setTimeout(() -> validajFraAbreUnaVez.abrirInternalFramePersonal(CatalogoPersonal.getInstancia()), 500);
         
         
         
