@@ -80,6 +80,7 @@ public class Main extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         subMenuUsuarios = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         subMenuSalir = new javax.swing.JMenuItem();
         menuCatalogos = new javax.swing.JMenu();
         subMenuCatMateriales = new javax.swing.JCheckBoxMenuItem();
@@ -113,6 +114,9 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jMenu1.add(subMenuUsuarios);
+
+        jMenuItem3.setText("Gestor de Perfiles");
+        jMenu1.add(jMenuItem3);
 
         subMenuSalir.setText("Salir");
         subMenuSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -329,6 +333,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     public static javax.swing.JMenu menuCatalogos;
     public static javax.swing.JMenu menuNomUsuario;
     private javax.swing.JCheckBoxMenuItem subMenuCatMateriales;

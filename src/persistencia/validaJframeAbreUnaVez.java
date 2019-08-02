@@ -130,7 +130,7 @@ public class validaJframeAbreUnaVez {
             jDesktopPane.add(jInternalFrame);
             Dimension desktopSize = jDesktopPane.getSize();
             Dimension FrameSize = jInternalFrame.getSize();
-            jInternalFrame.setLocation((desktopSize.width - FrameSize.width)/1, (desktopSize.height- FrameSize.height)/10);
+            jInternalFrame.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
             jInternalFrame.show();
             
             //LIMPIAR CAMPOS AL VOLVER ABRIR LA VENTANA
