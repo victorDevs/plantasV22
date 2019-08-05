@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import persistencia.BD;
@@ -20,6 +22,8 @@ import vista.CatalogoUsuarios;
  */
 public class Usuarios {
     int idUsuario;
+    int idPerfil;
+  
     String nombre;
     String perfil;
     String Usuario;
@@ -35,10 +39,18 @@ public class Usuarios {
         return idUsuario;
     }
 
+      public int getIdPerfil() {
+        return idPerfil;
+    }
+
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
-
+    
+    public void setIdPerfil(int idPerfil) {
+        this.idPerfil = idPerfil;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -162,6 +174,30 @@ public class Usuarios {
             }            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error al mostrar lo datos en la tabla usuarios: "+e, 
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            BD.cerrarConexion();
+        }
+    }
+   
+   public void ListadoComboPerfil(JComboBox combo){
+        DefaultComboBoxModel comboPerfil = new DefaultComboBoxModel();
+        try {
+            BD.conectarBD();
+            String sql = "select idPerfil,nombre from perfiles";
+            rs = BD.ejecutarSQLSelect(sql);
+            rsm = rs.getMetaData();
+            combo.setModel(comboPerfil);
+            ArrayList flagArea = new ArrayList();
+            while (rs.next()) {
+                this.idPerfil = Integer.parseInt(rs.getString("idPerfil"));
+                this.perfil = rs.getString("nombre");
+                comboPerfil.addElement(rs.getObject("nombre"));
+                combo.setModel(comboPerfil);
+            }
+            BD.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Excepción: "+e);
+            JOptionPane.showMessageDialog(null, "Error al mostrar el listado de procesos",
                     "Error",JOptionPane.ERROR_MESSAGE);
             BD.cerrarConexion();
         }

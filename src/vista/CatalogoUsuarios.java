@@ -31,8 +31,12 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
     
     public CatalogoUsuarios() {
         initComponents();
-        LimpiaTablaUsuarios();
-        usuarios.TablaConsultaUsuarios();
+        LimpiaTablaUsuarios();//LIMPIAR TABLA USUARIOS
+        usuarios.TablaConsultaUsuarios();//CONSULTAR TABLA USUARIOS
+        
+        //LLAMAR COMBO PARA MOSTRAR EL LISTADO DEL PERFIL PARA EL USUARIO
+        usuarios.ListadoComboPerfil(jCBPerfil);
+        
     }
 
     /**
