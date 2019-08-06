@@ -12,6 +12,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -265,14 +266,16 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jBuscar))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -308,19 +311,17 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTxtAptMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addComponent(jPanelCodeBarras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(183, 183, 183)
-                .addComponent(btnAddPersonal)
-                .addGap(18, 18, 18)
-                .addComponent(btnModifyPersonal)
-                .addGap(18, 18, 18)
-                .addComponent(btnEliminar)
-                .addGap(18, 18, 18)
-                .addComponent(btnLimpiar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanelCodeBarras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(183, 183, 183)
+                        .addComponent(btnAddPersonal)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnModifyPersonal)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimpiar)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -380,7 +381,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         if(jTxtNombre.getText().equals("") || jTxtAptPaterno.getText().equals("")
                 || jTxtAptMaterno.getText().equals("") || jTxtDomicilio.getText().equals("") 
-                || jTxtTelefono.equals("") || jTxtCorreo.equals("") || proceso.equals(" - Proceso - ")) {
+                || jTxtTelefono.equals("") || jTxtCorreo.equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
                                 "Aviso",JOptionPane.WARNING_MESSAGE);
         } else {
@@ -392,73 +393,76 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(rootPane, "El correo es incorrecto",
                                 "Aviso",JOptionPane.WARNING_MESSAGE);
                 }else{
-                    if(BD.conectarBD()){
-                        per.setNombre(jTxtNombre.getText());
-                        per.setApellidoPaterno(jTxtAptPaterno.getText());
-                        per.setApellidoMaterno(jTxtAptMaterno.getText());
-                        per.setFechaNacimiento(sdf.format(date));
-                        per.setDomicilio(jTxtDomicilio.getText());
-                        per.setTelefono(jTxtTelefono.getText());
-                        per.setCorreo(jTxtCorreo.getText());
-                        per.setProceso(proceso);
-                        if(per.RegistraPersonal()){
-                            Barcode barcode = null;
-                            String strCode = "0987654321";
+                    if(proceso.equals(" ***** AREA 1 ***** ") || proceso.equals(" ***** AREA 2 ***** ") || proceso.equals(" ***** AREA 3 ***** ")){
+                        JOptionPane.showMessageDialog(rootPane, "Seleccione un proceso válido",
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+                    }else{
+                        if(BD.conectarBD()){
+                            per.setNombre(jTxtNombre.getText());
+                            per.setApellidoPaterno(jTxtAptPaterno.getText());
+                            per.setApellidoMaterno(jTxtAptMaterno.getText());
+                            per.setFechaNacimiento(sdf.format(date));
+                            per.setDomicilio(jTxtDomicilio.getText());
+                            per.setTelefono(jTxtTelefono.getText());
+                            per.setCorreo(jTxtCorreo.getText());
+                            per.setProceso(proceso);
                             try {
-                                barcode = BarcodeFactory.createCode39(strCode, true);
-                            } catch (Exception e) {
-                                JOptionPane.showMessageDialog(null, "El código de barras para el trabajador no se creó correctamente: "+e, 
-                                        "Aviso", JOptionPane.WARNING_MESSAGE);
+                                if(per.RegistraPersonal()){
+                                    String procesoString = per.getProceso();
+                                    String[] procesoSplit = procesoString.split(" ");
+                                    System.out.println(procesoSplit[0]);
+                                    if(procesoSplit[0].equals("Calidad")){
+                                        Barcode barcode = null;
+                                        String strCode = per.getIdPersonal()+"";
+                                        System.out.println("strCode: "+strCode);
+                                        try {
+                                            barcode = BarcodeFactory.createCode39(strCode, true);
+                                        } catch (Exception e) {
+                                            JOptionPane.showMessageDialog(null, "El código de barras para el trabajador no se creó correctamente: "+e,
+                                                    "Aviso", JOptionPane.WARNING_MESSAGE);
+                                        }
+                                        barcode.setDrawingText(true);
+                                        barcode.setBarWidth(2);
+                                        barcode.setBarHeight(60);
+                                        
+                                        try {
+//                                            strFileName = "C:\\Users\\vikto\\OneDrive\\Documentos\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
+                                            strFileName = "C:\\Users\\alber\\Documents\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
+                                            File file = new File(strFileName);
+                                            file.setExecutable(true);
+                                            file.setReadable(true);
+                                            file.setWritable(true);
+                                            FileOutputStream fos = new FileOutputStream(file);
+                                            BarcodeImageHandler.writeJPEG(barcode, fos);
+                                            System.out.println("Archivo creado: "+strFileName);
+                                        } catch (Exception e) {
+                                            JOptionPane.showMessageDialog(null, "La imagen del código de barras no se guardo como imagen correctamente"+e,
+                                                    "Aviso", JOptionPane.WARNING_MESSAGE);
+                                        }
+                                        //                        Imagen Imagen = new Imagen();
+                                        //                        jPanelCodeBarras.add(Imagen);
+                                        //                        jPanelCodeBarras.repaint();
+                                    }
+                                    JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
+                                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                                    LimpiaCampos();
+                                    LimpiaTablaPersonal();
+                                    per.TablaConsultaPersonal();
+                                }else{
+                                    JOptionPane.showMessageDialog(rootPane, "No se registro el personal",
+                                            "Error",JOptionPane.ERROR_MESSAGE);
+                                    BD.cerrarConexion();
+                                }
+                            } catch (SQLException ex) {
+                                JOptionPane.showMessageDialog(rootPane, "No se registro el personal.",
+                                            "Error",JOptionPane.ERROR_MESSAGE);
+                                    BD.cerrarConexion();
                             }
-                            barcode.setDrawingText(true);
-                            barcode.setBarWidth(2);
-                            barcode.setBarHeight(60);
-
-                            try {
-                                strFileName = "C:\\Users\\vikto\\OneDrive\\Documentos\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
-                                //strFileName = "C:\\Users\\alber\\Documents\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
-                                File file = new File(strFileName);
-                                file.setExecutable(true);
-                                file.setReadable(true);
-                                file.setWritable(true);
-                                FileOutputStream fos = new FileOutputStream(file);
-                                BarcodeImageHandler.writeJPEG(barcode, fos);
-                                System.out.println("Archivo creado: "+strFileName);
-                            } catch (Exception e) {
-                                JOptionPane.showMessageDialog(null, "La imagen del código de barras no se guardo como imagen correctamente"+e, 
-                                        "Aviso", JOptionPane.WARNING_MESSAGE);
-                            }
-    //                        Imagen Imagen = new Imagen();
-    //                        jPanelCodeBarras.add(Imagen);
-    //                        jPanelCodeBarras.repaint();
-                            JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
-                                "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                            LimpiaCampos();
-                            LimpiaTablaPersonal();
-                            per.TablaConsultaPersonal();
                         }else{
-                            JOptionPane.showMessageDialog(rootPane, "No se registro el personal",
-                                "Error",JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                                    "Error",JOptionPane.ERROR_MESSAGE);
                             BD.cerrarConexion();
                         }
-    //                    try {
-    //                        
-    //                        per.RegistraPersonal();
-    //                        JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
-    //                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
-    //                        LimpiaCampos();
-    //                        LimpiaTablaPersonal();
-    //                        per.TablaConsultaPersonal();
-    //                    } catch (Exception e) {
-    //                        JOptionPane.showMessageDialog(rootPane, "No se registro el personal",
-    //                            "Error",JOptionPane.ERROR_MESSAGE);
-    ////                        System.out.println("Error al registrar un cliente: "+e);
-    //                        BD.cerrarConexion();
-    //                    }
-                    }else{
-                        JOptionPane.showMessageDialog(rootPane, "Error de conexión",
-                                "Error",JOptionPane.ERROR_MESSAGE);
-                        BD.cerrarConexion();
                     }
                 }
             }
