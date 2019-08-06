@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -108,13 +109,20 @@ public class Personal {
         this.proceso = proceso;
     }
     
-    public boolean RegistraPersonal(){
+    public boolean RegistraPersonal() throws SQLException{
         String sql = "insert into personal (nombre,apellidoPaterno,apellidoMaterno,fechaNacimiento,domicilio,telefono,correo,proceso) "
                 + "values ('"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', '"+MetodosGlobales.aceptarComillaSimple(this.apellidoPaterno)+"','"+MetodosGlobales.aceptarComillaSimple(this.apellidoMaterno)+"','"
                 +this.fechaNacimiento+"','"+MetodosGlobales.aceptarComillaSimple(this.Domicilio)+"','"+this.telefono+"','"+this.correo+"','"
                 +this.proceso+"');";
         System.out.println("Registro de personal: "+sql);
         if (BD.ejecutarSQL(sql)) {
+//            sql = "SELECT LAST_INSERT_ID();";
+//            rs = BD.ejecutarSQLSelect(sql);
+//            System.out.println("idPersnal MODELO: "+rs.getString("idPersonal"));
+//            rsm = rs.getMetaData();
+//            while (rs.next()) {                
+//                this.idPersonal = Integer.parseInt(rs.getString("idPersonal"));
+//            }
             return true;
         }else{
             return false;
