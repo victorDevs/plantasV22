@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import persistencia.BD;
+import persistencia.MetodosGlobales;
 import vista.CatalogoUsuarios;
 
 /**
@@ -30,10 +32,14 @@ public class Usuarios {
     String contrasena;
     String repeContrasena;
     String rol;
+    String correo;
 
     ResultSet rs;
     ResultSetMetaData rsm;
     DefaultTableModel dtm; 
+
+  
+    
     
     public int getIdUsuario() {
         return idUsuario;
@@ -97,6 +103,14 @@ public class Usuarios {
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+    
+      public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
     
     public void TablaConsultaUsuarios(){
@@ -188,18 +202,33 @@ public class Usuarios {
             rsm = rs.getMetaData();
             combo.setModel(comboPerfil);
             ArrayList flagArea = new ArrayList();
+            comboPerfil.addElement("Selecciona un Perfil");
             while (rs.next()) {
                 this.idPerfil = Integer.parseInt(rs.getString("idPerfil"));
                 this.perfil = rs.getString("nombre");
                 comboPerfil.addElement(rs.getObject("nombre"));
                 combo.setModel(comboPerfil);
             }
+            comboPerfil.addElement("CREAR PERFIL");
+            combo.setModel(comboPerfil);
             BD.cerrarConexion();
         } catch (Exception e) {
             System.out.println("Excepción: "+e);
             JOptionPane.showMessageDialog(null, "Error al mostrar el listado de procesos",
                     "Error",JOptionPane.ERROR_MESSAGE);
             BD.cerrarConexion();
+        }
+    }
+   
+    public boolean RegistraUsuario(){
+        String sql = "insert into usuarios (nombre,usuario,contrasena,correo,perfil,rol) "
+                + "values ('"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', '"+MetodosGlobales.aceptarComillaSimple(this.Usuario)+"','"
+                +MetodosGlobales.aceptarComillaSimple(this.contrasena)+"','"+this.correo+"','"+this.perfil+"','0')";
+        System.out.println("Registro de usuario: "+sql);
+        if (BD.ejecutarSQL(sql)) {
+            return true;
+        }else{
+            return false;
         }
     }
 }

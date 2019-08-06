@@ -10,6 +10,8 @@ import java.awt.Frame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Usuarios;
+import persistencia.BD;
+import persistencia.MetodosGlobales;
 
 /**
  *
@@ -21,6 +23,8 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
     private static CatalogoUsuarios catalogoUsuarios;
     
     Usuarios usuarios = new Usuarios();
+    
+    MetodosGlobales metodosGlobales = new MetodosGlobales();//PARA PODER CONSUMIR LOS MÉTODOS QUE TODO EL PROYECTO PUEDA UTILIZAR, ESTA CLASE SE UTILIZA CUANDO LOS MÉTODOS NO SON ESTATICOS
     
     public static CatalogoUsuarios getInstancia(){
         if(catalogoUsuarios == null){
@@ -37,6 +41,7 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
         //LLAMAR COMBO PARA MOSTRAR EL LISTADO DEL PERFIL PARA EL USUARIO
         usuarios.ListadoComboPerfil(jCBPerfil);
         
+         
     }
 
     /**
@@ -67,6 +72,8 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
         jTxtRepeContrasena = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableUsuarios = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
+        jTxtCorreo = new javax.swing.JTextField();
 
         setClosable(true);
         setTitle("Catálago de Usuarios");
@@ -83,6 +90,11 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
 
         jbtnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar16.png"))); // NOI18N
         jbtnAgregar.setText("Agregar");
+        jbtnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnAgregarActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Rol");
 
@@ -90,9 +102,11 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
 
         jbtnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/girar.png"))); // NOI18N
         jbtnModificar.setText("Modificar");
+        jbtnModificar.setEnabled(false);
 
         jbtnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basura.png"))); // NOI18N
         jbtnEliminar.setText("Eliminar");
+        jbtnEliminar.setEnabled(false);
 
         jbtnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/borrar16.png"))); // NOI18N
         jbtnLimpiar.setText("Limpiar");
@@ -137,6 +151,8 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
             jTableUsuarios.getColumnModel().getColumn(0).setMaxWidth(35);
         }
 
+        jLabel7.setText("Correo Institucional");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -151,13 +167,7 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(37, 37, 37)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(400, 400, 400))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(52, 52, 52)
-                                        .addComponent(jCBRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel1)
                                     .addComponent(jLabel3)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel4)
@@ -177,7 +187,15 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jLabel6)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTxtRepeContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                                .addComponent(jTxtRepeContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(52, 52, 52)
+                                        .addComponent(jCBRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(31, 31, 31)
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(91, 91, 91)
                                 .addComponent(jbtnAgregar)
@@ -217,7 +235,9 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jCBRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCBRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(jTxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnAgregar)
@@ -226,7 +246,7 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
                     .addComponent(jbtnLimpiar))
                 .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
@@ -256,6 +276,46 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jTableUsuariosMouseClicked
 
+    private void jbtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAgregarActionPerformed
+        // TODO add your handling code here:
+        if (jTxtNombre.getText().equals("") || jCBPerfil.getSelectedIndex()==0
+                || jTxtUsuario.getText().equals("") || jTxtContrasena.getText().equals("") || jTxtRepeContrasena.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+        } else {
+            if(metodosGlobales.validaCorreo(jTxtCorreo.getText())==false){
+                JOptionPane.showMessageDialog(rootPane, "El correo es incorrecto",
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+            }else{
+                if(BD.conectarBD()){
+                    usuarios.setNombre(jTxtNombre.getText());
+                    usuarios.setUsuario(jTxtUsuario.getText());
+                    usuarios.setPerfil((String)jCBPerfil.getSelectedItem());
+                    usuarios.setContrasena(jTxtContrasena.getText());
+                    usuarios.setCorreo(jTxtCorreo.getText());
+                    try {
+                        usuarios.RegistraUsuario();
+//                        ope.buscaUsuario();
+                        JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
+                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                        LimpiaCampos();
+                        MetodosGlobales.LimpiaTabla(jTableUsuarios);
+                        usuarios.TablaConsultaUsuarios();
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(rootPane, "No se registro el operador",
+                            "Error",JOptionPane.ERROR_MESSAGE);
+                        System.out.println("Error al regiatrar un operador: "+e);
+                        BD.cerrarConexion();
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                            "Error",JOptionPane.ERROR_MESSAGE);
+                    BD.cerrarConexion();
+                }
+            }
+        }
+    }//GEN-LAST:event_jbtnAgregarActionPerformed
+
     
      public void LimpiaTablaUsuarios(){
         try {
@@ -270,6 +330,22 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
                     "Error",JOptionPane.ERROR_MESSAGE);
         }
     }
+     
+    public  void LimpiaCampos(){
+        jTxtNombre.setText(null);
+        //jCBPerfil.setSelectedIndex(0);
+        jTxtUsuario.setText(null);
+        jTxtContrasena.setText(null);
+        jTxtRepeContrasena.setText(null);
+        jTxtCorreo.setText(null);
+        jTxtCorreo.setText(null);
+        usuarios.ListadoComboPerfil(jCBPerfil);
+        
+        jbtnAgregar.setEnabled(true);
+        jbtnEliminar.setEnabled(false);
+        jbtnModificar.setEnabled(false);
+        jbtnLimpiar.setEnabled(true);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jCBPerfil;
@@ -280,9 +356,11 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTableUsuarios;
     private javax.swing.JTextField jTxtContrasena;
+    private javax.swing.JTextField jTxtCorreo;
     private javax.swing.JTextField jTxtNombre;
     private javax.swing.JTextField jTxtRepeContrasena;
     private javax.swing.JTextField jTxtUsuario;
