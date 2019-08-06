@@ -59,7 +59,6 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTxtContrasena = new javax.swing.JTextField();
         jTxtUsuario = new javax.swing.JTextField();
         jbtnAgregar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -69,11 +68,12 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
         jbtnLimpiar = new javax.swing.JButton();
         jbtnBuscar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jTxtRepeContrasena = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableUsuarios = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         jTxtCorreo = new javax.swing.JTextField();
+        jTxtContrasena = new javax.swing.JPasswordField();
+        jTxtRepeContrasena = new javax.swing.JPasswordField();
 
         setClosable(true);
         setTitle("Catálago de Usuarios");
@@ -103,6 +103,11 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
         jbtnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/girar.png"))); // NOI18N
         jbtnModificar.setText("Modificar");
         jbtnModificar.setEnabled(false);
+        jbtnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnModificarActionPerformed(evt);
+            }
+        });
 
         jbtnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basura.png"))); // NOI18N
         jbtnEliminar.setText("Eliminar");
@@ -173,7 +178,6 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTxtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
@@ -182,12 +186,13 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
                                                         .addGap(54, 54, 54)
                                                         .addComponent(jCBPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                     .addComponent(jLabel2)))
+                                            .addComponent(jTxtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jTxtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jLabel6)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTxtRepeContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                .addComponent(jTxtRepeContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addGap(52, 52, 52)
@@ -229,8 +234,8 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTxtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
+                    .addComponent(jTxtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTxtRepeContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -246,7 +251,7 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
                     .addComponent(jbtnLimpiar))
                 .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
@@ -271,6 +276,9 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
             usuarios.ApuntaUsuario();
             jTxtNombre.setText(usuarios.getNombre());
             jTxtUsuario.setText(usuarios.getUsuario());
+            jTxtContrasena.setText(usuarios.getContrasena());
+            jTxtRepeContrasena.setText(usuarios.getContrasena());
+            jTxtCorreo.setText(usuarios.getCorreo());
             jCBPerfil.setSelectedItem(usuarios.getPerfil());
             jCBRol.setSelectedItem(usuarios.getRol());
         }
@@ -283,38 +291,88 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
                                 "Aviso",JOptionPane.WARNING_MESSAGE);
         } else {
-            if(metodosGlobales.validaCorreo(jTxtCorreo.getText())==false){
-                JOptionPane.showMessageDialog(rootPane, "El correo es incorrecto",
-                                "Aviso",JOptionPane.WARNING_MESSAGE);
-            }else{
-                if(BD.conectarBD()){
-                    usuarios.setNombre(jTxtNombre.getText());
-                    usuarios.setUsuario(jTxtUsuario.getText());
-                    usuarios.setPerfil((String)jCBPerfil.getSelectedItem());
-                    usuarios.setContrasena(jTxtContrasena.getText());
-                    usuarios.setCorreo(jTxtCorreo.getText());
-                    try {
-                        usuarios.RegistraUsuario();
-//                        ope.buscaUsuario();
-                        JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
-                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                        LimpiaCampos();
-                        MetodosGlobales.LimpiaTabla(jTableUsuarios);
-                        usuarios.TablaConsultaUsuarios();
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(rootPane, "No se registro el operador",
-                            "Error",JOptionPane.ERROR_MESSAGE);
-                        System.out.println("Error al regiatrar un operador: "+e);
+            if(jTxtContrasena.getText().trim().equals(jTxtRepeContrasena.getText().trim())){
+                if(metodosGlobales.validaCorreo(jTxtCorreo.getText())==false){
+                    JOptionPane.showMessageDialog(rootPane, "El correo es incorrecto",
+                                    "Aviso",JOptionPane.WARNING_MESSAGE);
+                }else{
+                    if(BD.conectarBD()){
+                        usuarios.setNombre(jTxtNombre.getText());
+                        usuarios.setUsuario(jTxtUsuario.getText());
+                        usuarios.setPerfil((String)jCBPerfil.getSelectedItem());
+                        usuarios.setContrasena(jTxtContrasena.getText());
+                        usuarios.setCorreo(jTxtCorreo.getText());
+                        try {
+                            usuarios.RegistraUsuario();
+    //                        ope.buscaUsuario();
+                            JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
+                                "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                            LimpiaCampos();
+                            MetodosGlobales.LimpiaTabla(jTableUsuarios);
+                            usuarios.TablaConsultaUsuarios();
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(rootPane, "No se registro el operador",
+                                "Error",JOptionPane.ERROR_MESSAGE);
+                            System.out.println("Error al regiatrar un operador: "+e);
+                            BD.cerrarConexion();
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                                "Error",JOptionPane.ERROR_MESSAGE);
                         BD.cerrarConexion();
                     }
-                }else{
-                    JOptionPane.showMessageDialog(rootPane, "Error de conexión",
-                            "Error",JOptionPane.ERROR_MESSAGE);
-                    BD.cerrarConexion();
                 }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Las contraseñas deben coincidir",
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+                jTxtContrasena.requestFocusInWindow(); 
             }
         }
     }//GEN-LAST:event_jbtnAgregarActionPerformed
+
+    private void jbtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnModificarActionPerformed
+        if(metodosGlobales.validaCorreo(jTxtCorreo.getText())==false){
+                JOptionPane.showMessageDialog(rootPane, "El correo es incorrecto",
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+        }else{
+            if (jTxtNombre.getText().equals("") || jCBPerfil.getSelectedIndex()==0
+                    || jTxtUsuario.getText().equals("") || jTxtContrasena.getText().equals("") || jTxtRepeContrasena.getText().equals("")) {
+                JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
+                                    "Aviso",JOptionPane.WARNING_MESSAGE);
+            }else{
+                if (JOptionPane.showConfirmDialog(rootPane, "Se modificará el usuario, ¿Desea continuar?",
+                        "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){ 
+
+                    if(BD.conectarBD()){
+                        usuarios.setNombre(jTxtNombre.getText());
+                        usuarios.setPerfil((String)jCBPerfil.getSelectedItem());
+                        usuarios.setUsuario(jTxtUsuario.getText());
+                        usuarios.setContrasena(jTxtContrasena.getText());
+                        usuarios.setCorreo(jTxtCorreo.getText());                            
+                        try {
+                            usuarios.ActualizarUsuario(jTableUsuarios);
+                            JOptionPane.showMessageDialog(rootPane, "Actualización exitosa",
+                                "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                            LimpiaCampos();
+                            MetodosGlobales.LimpiaTabla(jTableUsuarios);
+                            usuarios.TablaConsultaUsuarios();
+                            jbtnModificar.setEnabled(false);
+                            jbtnEliminar.setEnabled(false);
+                            jbtnAgregar.setEnabled(true);
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(rootPane, "No se actualizó el usuario: "+e,
+                                "Error",JOptionPane.ERROR_MESSAGE);
+                            BD.cerrarConexion();
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                                "Error",JOptionPane.ERROR_MESSAGE);
+                        BD.cerrarConexion();
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jbtnModificarActionPerformed
 
     
      public void LimpiaTablaUsuarios(){
@@ -359,10 +417,10 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTableUsuarios;
-    private javax.swing.JTextField jTxtContrasena;
+    private javax.swing.JPasswordField jTxtContrasena;
     private javax.swing.JTextField jTxtCorreo;
     private javax.swing.JTextField jTxtNombre;
-    private javax.swing.JTextField jTxtRepeContrasena;
+    private javax.swing.JPasswordField jTxtRepeContrasena;
     private javax.swing.JTextField jTxtUsuario;
     private javax.swing.JButton jbtnAgregar;
     private javax.swing.JButton jbtnBuscar;

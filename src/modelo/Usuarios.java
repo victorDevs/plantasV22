@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import persistencia.BD;
 import persistencia.MetodosGlobales;
@@ -147,15 +148,17 @@ public class Usuarios {
         try {
             BD.conectarBD();
             int fila = CatalogoUsuarios.jTableUsuarios.getSelectedRow();
-            String sql = "select nombre,usuario,perfil,rol"
+            String sql = "select nombre,usuario,contrasena,correo,perfil,rol"
                     + " from usuarios where idUsuario = "+CatalogoUsuarios.jTableUsuarios.getValueAt(fila, 0);
             rs = BD.ejecutarSQLSelect(sql);
             rsm = rs.getMetaData();
             while (rs.next()) {                
                 this.nombre = rs.getString(1);
                 this.Usuario = rs.getString(2);
-                this.perfil = rs.getString(3);
-                this.rol = rs.getString(4);
+                this.contrasena = rs.getString(3);
+                this.correo = rs.getString(4);
+                this.perfil = rs.getString(5);
+                this.rol = rs.getString(6);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"No se pudo mostrar este usuario, vuelve a intentarlo: "+e, 
@@ -228,6 +231,19 @@ public class Usuarios {
         if (BD.ejecutarSQL(sql)) {
             return true;
         }else{
+            return false;
+        }
+    }
+    
+    public boolean ActualizarUsuario(JTable tabla){
+        int fila = tabla.getSelectedRow();
+        String sql = "update usuarios set nombre = '"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', usuario = '"+MetodosGlobales.aceptarComillaSimple(this.Usuario)+"',"
+                + " contrasena='"+MetodosGlobales.aceptarComillaSimple(this.contrasena)+"', correo='"+this.correo+"', perfil='"+this.perfil+"'"
+                + "where idUsuario= "+tabla.getValueAt(fila, 0);
+        System.out.println("consulta: "+sql);
+        if (BD.ejecutarSQL(sql)) {            
+            return true;
+        } else {
             return false;
         }
     }

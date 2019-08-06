@@ -40,7 +40,6 @@
                                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jTxtUsuario" min="-2" pref="115" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jTxtNombre" min="-2" pref="239" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -52,12 +51,13 @@
                                                   <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
+                                          <Component id="jTxtUsuario" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jTxtContrasena" min="-2" pref="115" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jTxtRepeContrasena" min="-2" pref="115" max="-2" attributes="0"/>
+                                              <Component id="jTxtRepeContrasena" min="-2" pref="114" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -114,8 +114,8 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTxtContrasena" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTxtContrasena" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTxtRepeContrasena" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -134,7 +134,7 @@
               </Group>
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="155" max="-2" attributes="0"/>
-              <EmptySpace pref="32" max="32767" attributes="0"/>
+              <EmptySpace pref="36" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -177,8 +177,6 @@
         <Property name="text" type="java.lang.String" value="Contrase&#xf1;a"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTxtContrasena">
-    </Component>
     <Component class="javax.swing.JTextField" name="jTxtUsuario">
     </Component>
     <Component class="javax.swing.JButton" name="jbtnAgregar">
@@ -220,6 +218,9 @@
         <Property name="text" type="java.lang.String" value="Modificar"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtnModificarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jbtnEliminar">
       <Properties>
@@ -253,8 +254,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Repetir Contrase&#xf1;a"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="jTxtRepeContrasena">
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -322,6 +321,10 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTxtCorreo">
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="jTxtContrasena">
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="jTxtRepeContrasena">
     </Component>
   </SubComponents>
 </Form>
