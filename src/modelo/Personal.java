@@ -114,7 +114,7 @@ public class Personal {
                 + "values ('"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', '"+MetodosGlobales.aceptarComillaSimple(this.apellidoPaterno)+"','"+MetodosGlobales.aceptarComillaSimple(this.apellidoMaterno)+"','"
                 +this.fechaNacimiento+"','"+MetodosGlobales.aceptarComillaSimple(this.Domicilio)+"','"+this.telefono+"','"+this.correo+"','"
                 +this.proceso+"');";
-        System.out.println("Registro de personal: "+sql);
+//        System.out.println("Registro de personal: "+sql);
         if (BD.ejecutarSQL(sql)) {
 //            sql = "SELECT LAST_INSERT_ID();";
 //            rs = BD.ejecutarSQLSelect(sql);
@@ -126,6 +126,16 @@ public class Personal {
             return true;
         }else{
             return false;
+        }
+    }
+    
+    public int getlasIdInsert() throws SQLException{
+        String sql = "SELECT LAST_INSERT_ID();";
+        ResultSet rs = new BD().ejecutarSQLSelect(sql);
+        if (rs.next()) {
+            return Integer.parseInt(rs.getString("LAST_INSERT_ID()"));
+        } else {
+            return Integer.parseInt(rs.getString("LAST_INSERT_ID()"));
         }
     }
     
@@ -187,19 +197,20 @@ public class Personal {
         try {
             BD.conectarBD();
             int fila = CatalogoPersonal.jTablePersonal.getSelectedRow();
-            String sql = "select nombre,apellidoPaterno,apellidoMaterno,fechaNacimiento,domicilio,telefono,correo,proceso"
+            String sql = "select idPersonal,nombre,apellidoPaterno,apellidoMaterno,fechaNacimiento,domicilio,telefono,correo,proceso"
                     + " from personal where idPersonal = "+CatalogoPersonal.jTablePersonal.getValueAt(fila, 0);
             rs = BD.ejecutarSQLSelect(sql);
             rsm = rs.getMetaData();
             while (rs.next()) {                
-                this.nombre = rs.getString(1);
-                this.apellidoPaterno = rs.getString(2);
-                this.apellidoMaterno = rs.getString(3);
-                this.fechaNacimiento = rs.getString(4);
-                this.Domicilio = rs.getString(5);
-                this.telefono = rs.getString(6);
-                this.correo = rs.getString(7);
-                this.proceso = rs.getString(8);
+                this.idPersonal = Integer.parseInt(rs.getString("idPersonal"));
+                this.nombre = rs.getString("nombre");
+                this.apellidoPaterno = rs.getString("apellidoPaterno");
+                this.apellidoMaterno = rs.getString("apellidoMaterno");
+                this.fechaNacimiento = rs.getString("fechaNacimiento");
+                this.Domicilio = rs.getString("domicilio");
+                this.telefono = rs.getString("telefono");
+                this.correo = rs.getString("correo");
+                this.proceso = rs.getString("proceso");
                 
             }
         } catch (Exception e) {
