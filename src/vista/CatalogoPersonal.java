@@ -62,7 +62,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
             Dimension height = getSize();
 
             //Se selecciona la imagen que tenemos en el paquete de la //ruta del programa
-            ImageIcon Img = new ImageIcon(getClass().getResource("/codes/BarCode_0987654321.JPEG")); 
+            ImageIcon Img = new ImageIcon(getClass().getResource("/codes/BarCode_"+per.getIdPersonal()+".JPEG")); 
 
             //se dibuja la imagen que tenemos en el paquete Images //dentro de un panel
             grafico.drawImage(Img.getImage(), 10, 20, height.width, height.height, null);
@@ -87,9 +87,10 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
         LimpiaTablaPersonal();
         per.TablaConsultaPersonal();
         pro.buscaPersonal(jCbProceso);
-        Imagen Imagen = new Imagen();
-        jPanelCodeBarras.add(Imagen);
-        jPanelCodeBarras.repaint();
+        
+//        Imagen Imagen = new Imagen();
+//        jPanelCodeBarras.add(Imagen);
+//        jPanelCodeBarras.repaint();
         
         jTxtTelefono.addKeyListener(new KeyAdapter(){
             public void keyTyped(KeyEvent e){
@@ -410,38 +411,40 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
                                 if(per.RegistraPersonal()){
                                     String procesoString = per.getProceso();
                                     String[] procesoSplit = procesoString.split(" ");
-                                    System.out.println(procesoSplit[0]);
                                     if(procesoSplit[0].equals("Calidad")){
-                                        Barcode barcode = null;
-                                        String strCode = per.getIdPersonal()+"";
-                                        System.out.println("strCode: "+strCode);
-                                        try {
-                                            barcode = BarcodeFactory.createCode39(strCode, true);
-                                        } catch (Exception e) {
-                                            JOptionPane.showMessageDialog(null, "El código de barras para el trabajador no se creó correctamente: "+e,
-                                                    "Aviso", JOptionPane.WARNING_MESSAGE);
+                                        per.setIdPersonal(per.getlasIdInsert());
+                                        if(per.getIdPersonal() > 0){
+                                            Barcode barcode = null;
+                                            String strCode = per.getIdPersonal()+"";
+//                                            System.out.println("strCode: "+strCode);
+                                            try {
+                                                barcode = BarcodeFactory.createCode39(strCode, true);
+                                            } catch (Exception e) {
+                                                JOptionPane.showMessageDialog(null, "El código de barras para el trabajador no se creó correctamente: "+e,
+                                                        "Aviso", JOptionPane.WARNING_MESSAGE);
+                                            }
+                                            barcode.setDrawingText(true);
+                                            barcode.setBarWidth(2);
+                                            barcode.setBarHeight(60);
+
+                                            try {
+                                                strFileName = "C:\\Users\\vikto\\OneDrive\\Documentos\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
+//                                                strFileName = "C:\\Users\\alber\\Documents\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
+                                                File file = new File(strFileName);
+                                                file.setExecutable(true);
+                                                file.setReadable(true);
+                                                file.setWritable(true);
+                                                FileOutputStream fos = new FileOutputStream(file);
+                                                BarcodeImageHandler.writeJPEG(barcode, fos);
+//                                                System.out.println("Archivo creado: "+strFileName);
+                                            } catch (Exception e) {
+                                                JOptionPane.showMessageDialog(null, "La imagen del código de barras no se guardo como imagen correctamente"+e,
+                                                        "Aviso", JOptionPane.WARNING_MESSAGE);
+                                            }
+                                        }else{
+                                            JOptionPane.showMessageDialog(rootPane, "El id del personal no se obtuvo correctamente. Contacte con el administrador del sistema",
+                                            "Error",JOptionPane.ERROR_MESSAGE);
                                         }
-                                        barcode.setDrawingText(true);
-                                        barcode.setBarWidth(2);
-                                        barcode.setBarHeight(60);
-                                        
-                                        try {
-//                                            strFileName = "C:\\Users\\vikto\\OneDrive\\Documentos\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
-                                            strFileName = "C:\\Users\\alber\\Documents\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
-                                            File file = new File(strFileName);
-                                            file.setExecutable(true);
-                                            file.setReadable(true);
-                                            file.setWritable(true);
-                                            FileOutputStream fos = new FileOutputStream(file);
-                                            BarcodeImageHandler.writeJPEG(barcode, fos);
-                                            System.out.println("Archivo creado: "+strFileName);
-                                        } catch (Exception e) {
-                                            JOptionPane.showMessageDialog(null, "La imagen del código de barras no se guardo como imagen correctamente"+e,
-                                                    "Aviso", JOptionPane.WARNING_MESSAGE);
-                                        }
-                                        //                        Imagen Imagen = new Imagen();
-                                        //                        jPanelCodeBarras.add(Imagen);
-                                        //                        jPanelCodeBarras.repaint();
                                     }
                                     JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
                                             "Aviso",JOptionPane.INFORMATION_MESSAGE);
@@ -498,6 +501,17 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
             jTxtCorreo.setText(per.getCorreo());
             comboProceso.addElement(per.getProceso());
             jCbProceso.setModel(comboProceso);
+            
+            File codeBarFile = new File("C:\\Users\\vikto\\OneDrive\\Documentos\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+per.getIdPersonal()+".JPEG");
+//            strFileName = "C:\\Users\\alber\\Documents\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+per.getIdPersonal()+".JPEG";
+            if(codeBarFile.exists()){
+                Imagen Imagen = new Imagen();
+                jPanelCodeBarras.add(Imagen);
+                jPanelCodeBarras.repaint();
+            }else{
+                jPanelCodeBarras.removeAll();
+                jPanelCodeBarras.repaint();
+            }
         }
         
     }//GEN-LAST:event_jTablePersonalMouseClicked
@@ -613,7 +627,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
             for (int i = 0; filas > i; i++) {
                 modelo.removeRow(0);
             }
-            System.out.println("Limpieza exitosa!");
+            System.out.println("Limpieza exitosa en LimpiaTablaPersonal!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Error al intentar limpiar la tabla Clientes: "+e,
                     "Error",JOptionPane.ERROR_MESSAGE);
