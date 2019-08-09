@@ -117,7 +117,7 @@ public class Usuarios {
     public void TablaConsultaUsuarios(){
         try {
             if (BD.conectarBD()) {
-                String sql = "select * from usuarios";
+                String sql = "select idUsuario,nombre,usuario,perfil,rol,correo from usuarios";
                 rs = BD.ejecutarSQLSelect(sql);
                 rsm = rs.getMetaData();
                 List<Object[]> datos = new ArrayList<Object[]>();
@@ -169,7 +169,7 @@ public class Usuarios {
    public void buscarUsuario(String tipoBuqueda,String busqueda){
         try {
             if (BD.conectarBD()) {
-                String sql = "select * from usuarios where "+tipoBuqueda+" like '%"+busqueda+"%'";
+                String sql = "select idUsuario,nombre,usuario,perfil,rol,correo from usuarios where "+tipoBuqueda+" like '%"+busqueda+"%'";
                 rs = BD.ejecutarSQLSelect(sql);
                 rsm = rs.getMetaData();
                 List<Object[]> datos = new ArrayList<Object[]>();
@@ -212,7 +212,7 @@ public class Usuarios {
                 comboPerfil.addElement(rs.getObject("nombre"));
                 combo.setModel(comboPerfil);
             }
-            comboPerfil.addElement("CREAR PERFIL");
+            comboPerfil.addElement("REGISTRAR PERFIL");
             combo.setModel(comboPerfil);
             BD.cerrarConexion();
         } catch (Exception e) {
@@ -241,6 +241,16 @@ public class Usuarios {
                 + " contrasena='"+MetodosGlobales.aceptarComillaSimple(this.contrasena)+"', correo='"+this.correo+"', perfil='"+this.perfil+"'"
                 + "where idUsuario= "+tabla.getValueAt(fila, 0);
         System.out.println("consulta: "+sql);
+        if (BD.ejecutarSQL(sql)) {            
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public boolean EliminaUsuario(JTable tabla){
+        int fila = tabla.getSelectedRow();
+        String sql = "delete from usuarios where IdUsuario = '"+tabla.getValueAt(fila, 0)+"'";
         if (BD.ejecutarSQL(sql)) {            
             return true;
         } else {

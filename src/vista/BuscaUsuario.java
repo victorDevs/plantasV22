@@ -37,7 +37,7 @@ public class BuscaUsuario extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buscar Usuario");
 
-        jCBBuscadorUsuarios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona Opción", "Nombre", "Usuario", "Perfil", "Rol" }));
+        jCBBuscadorUsuarios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona Opción", "Nombre", "Usuario", "Perfil", "Rol", "Correo" }));
         jCBBuscadorUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jCBBuscadorUsuarios.setFocusable(false);
 
@@ -111,6 +111,9 @@ public class BuscaUsuario extends javax.swing.JDialog {
         if(jCBBuscadorUsuarios.getSelectedIndex()==4){
             convertir = "rol";
         }
+        if(jCBBuscadorUsuarios.getSelectedIndex()==5){
+            convertir = "correo";
+        }
         //FIN DE CONVERSOR
 
         if(jTxtBuscadorUsuario.getText().equals("")){
@@ -149,9 +152,9 @@ public class BuscaUsuario extends javax.swing.JDialog {
             for (int i = 0; filas > i; i++) {
                 modelo.removeRow(0);
             }
-            System.out.println("Limpieza de tabla exitosa! en busqueda de proveedor");
+            System.out.println("Limpieza de tabla exitosa! en busqueda de usuario");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, "Error al intentar limpiar la tabla Proveedores: "+e,
+            JOptionPane.showMessageDialog(rootPane, "Error al intentar limpiar la tabla usuario: "+e,
                     "Tabla Proveedores",JOptionPane.ERROR_MESSAGE);
         }
     }

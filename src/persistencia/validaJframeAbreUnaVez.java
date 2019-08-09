@@ -12,10 +12,12 @@ import modelo.Clientes;
 import modelo.Materiales;
 import modelo.Personal;
 import modelo.Proveedores;
+import modelo.Usuarios;
 import vista.CatalogoClientes;
 import vista.CatalogoMateriales;
 import vista.CatalogoPersonal;
 import vista.CatalogoProveedores;
+import vista.CatalogoUsuarios;
 
 /**
  *
@@ -27,7 +29,9 @@ public class validaJframeAbreUnaVez {
     Materiales materiales = new Materiales();
     Clientes clientes = new Clientes();
     Personal personal =  new Personal();
+    Usuarios usuarios = new Usuarios();
     CatalogoPersonal catPersonal = new CatalogoPersonal();
+    CatalogoUsuarios catUsuarios = new CatalogoUsuarios();
             
     public validaJframeAbreUnaVez(JDesktopPane jDesktopPane){
         validaJframeAbreUnaVez.jDesktopPane = jDesktopPane;
@@ -152,9 +156,9 @@ public class validaJframeAbreUnaVez {
             jInternalFrame.show();
             
             //LIMPIAR CAMPOS AL VOLVER ABRIR LA VENTANA
-            //CatalogoClientes.LimpiaCampos();
-            //MetodosGlobales.LimpiaTabla(CatalogoClientes.jTableClientes);
-            //clientes.TablaConsultaClientes();
+            catUsuarios.LimpiaCampos();
+            MetodosGlobales.LimpiaTabla(CatalogoUsuarios.jTableUsuarios);
+            usuarios.TablaConsultaUsuarios();
         }
     }
 }

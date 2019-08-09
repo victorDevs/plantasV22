@@ -81,6 +81,11 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
         jLabel1.setText("Nombre");
 
         jCBPerfil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCBPerfil.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCBPerfilItemStateChanged(evt);
+            }
+        });
 
         jLabel2.setText("Perfil");
 
@@ -112,12 +117,23 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
         jbtnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basura.png"))); // NOI18N
         jbtnEliminar.setText("Eliminar");
         jbtnEliminar.setEnabled(false);
+        jbtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnEliminarActionPerformed(evt);
+            }
+        });
 
         jbtnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/borrar16.png"))); // NOI18N
         jbtnLimpiar.setText("Limpiar");
+        jbtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnLimpiarActionPerformed(evt);
+            }
+        });
 
         jbtnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/busqueda.png"))); // NOI18N
         jbtnBuscar.setText("Búsqueda");
+        jbtnBuscar.setFocusable(false);
         jbtnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnBuscarActionPerformed(evt);
@@ -128,17 +144,17 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
 
         jTableUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "Nombre", "Usuario", "Perfil", "Rol"
+                "Id", "Nombre", "Usuario", "Perfil", "Rol", "Correo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -340,39 +356,81 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
                                     "Aviso",JOptionPane.WARNING_MESSAGE);
             }else{
-                if (JOptionPane.showConfirmDialog(rootPane, "Se modificará el usuario, ¿Desea continuar?",
+                if(jTxtContrasena.getText().trim().equals(jTxtRepeContrasena.getText().trim())){
+                    if (JOptionPane.showConfirmDialog(rootPane, "Se modificará el usuario, ¿Desea continuar?",
                         "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){ 
 
-                    if(BD.conectarBD()){
-                        usuarios.setNombre(jTxtNombre.getText());
-                        usuarios.setPerfil((String)jCBPerfil.getSelectedItem());
-                        usuarios.setUsuario(jTxtUsuario.getText());
-                        usuarios.setContrasena(jTxtContrasena.getText());
-                        usuarios.setCorreo(jTxtCorreo.getText());                            
-                        try {
-                            usuarios.ActualizarUsuario(jTableUsuarios);
-                            JOptionPane.showMessageDialog(rootPane, "Actualización exitosa",
-                                "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                            LimpiaCampos();
-                            MetodosGlobales.LimpiaTabla(jTableUsuarios);
-                            usuarios.TablaConsultaUsuarios();
-                            jbtnModificar.setEnabled(false);
-                            jbtnEliminar.setEnabled(false);
-                            jbtnAgregar.setEnabled(true);
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(rootPane, "No se actualizó el usuario: "+e,
-                                "Error",JOptionPane.ERROR_MESSAGE);
+                        if(BD.conectarBD()){
+                            usuarios.setNombre(jTxtNombre.getText());
+                            usuarios.setPerfil((String)jCBPerfil.getSelectedItem());
+                            usuarios.setUsuario(jTxtUsuario.getText());
+                            usuarios.setContrasena(jTxtContrasena.getText());
+                            usuarios.setCorreo(jTxtCorreo.getText());                            
+                            try {
+                                usuarios.ActualizarUsuario(jTableUsuarios);
+                                JOptionPane.showMessageDialog(rootPane, "Actualización exitosa",
+                                    "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                                LimpiaCampos();
+                                MetodosGlobales.LimpiaTabla(jTableUsuarios);
+                                usuarios.TablaConsultaUsuarios();
+                                jbtnModificar.setEnabled(false);
+                                jbtnEliminar.setEnabled(false);
+                                jbtnAgregar.setEnabled(true);
+                            } catch (Exception e) {
+                                JOptionPane.showMessageDialog(rootPane, "No se actualizó el usuario: "+e,
+                                    "Error",JOptionPane.ERROR_MESSAGE);
+                                BD.cerrarConexion();
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                                    "Error",JOptionPane.ERROR_MESSAGE);
                             BD.cerrarConexion();
                         }
-                    }else{
-                        JOptionPane.showMessageDialog(rootPane, "Error de conexión",
-                                "Error",JOptionPane.ERROR_MESSAGE);
-                        BD.cerrarConexion();
                     }
-                }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Las contraseñas deben coincidir",
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+                    jTxtContrasena.requestFocusInWindow();
+                } 
             }
         }
     }//GEN-LAST:event_jbtnModificarActionPerformed
+
+    private void jbtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLimpiarActionPerformed
+        LimpiaCampos();
+        jbtnLimpiar.setSelected(false);
+    }//GEN-LAST:event_jbtnLimpiarActionPerformed
+
+    private void jbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEliminarActionPerformed
+        if (JOptionPane.showConfirmDialog(rootPane, "Se eliminará el usuario, ¿Desea continuar?",
+            "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){    
+            if(BD.conectarBD()){
+                try {
+                    usuarios.EliminaUsuario(jTableUsuarios);
+                    JOptionPane.showMessageDialog(rootPane, "El usuario se eliminó con éxito",
+                        "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                    LimpiaCampos();
+                    MetodosGlobales.LimpiaTabla(jTableUsuarios);
+                    usuarios.TablaConsultaUsuarios();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(rootPane, "No se eliminó el usuario: "+e,
+                        "Aviso",JOptionPane.WARNING_MESSAGE);
+                    BD.cerrarConexion();
+                }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                        "Error",JOptionPane.ERROR_MESSAGE);
+                BD.cerrarConexion();
+            }
+        }
+    }//GEN-LAST:event_jbtnEliminarActionPerformed
+
+    private void jCBPerfilItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCBPerfilItemStateChanged
+        if(jCBPerfil.getSelectedItem().equals("REGISTRAR PERFIL")){
+            JOptionPane.showMessageDialog(rootPane, "CIC EN REGISTRAR",
+                    "Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jCBPerfilItemStateChanged
 
     
      public void LimpiaTablaUsuarios(){
@@ -406,8 +464,8 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jCBPerfil;
-    private javax.swing.JComboBox<String> jCBRol;
+    public static javax.swing.JComboBox<String> jCBPerfil;
+    public static javax.swing.JComboBox<String> jCBRol;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -417,15 +475,15 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTableUsuarios;
-    private javax.swing.JPasswordField jTxtContrasena;
-    private javax.swing.JTextField jTxtCorreo;
-    private javax.swing.JTextField jTxtNombre;
-    private javax.swing.JPasswordField jTxtRepeContrasena;
-    private javax.swing.JTextField jTxtUsuario;
-    private javax.swing.JButton jbtnAgregar;
+    public static javax.swing.JPasswordField jTxtContrasena;
+    public static javax.swing.JTextField jTxtCorreo;
+    public static javax.swing.JTextField jTxtNombre;
+    public static javax.swing.JPasswordField jTxtRepeContrasena;
+    public static javax.swing.JTextField jTxtUsuario;
+    public static javax.swing.JButton jbtnAgregar;
     private javax.swing.JButton jbtnBuscar;
-    private javax.swing.JButton jbtnEliminar;
-    private javax.swing.JButton jbtnLimpiar;
-    private javax.swing.JButton jbtnModificar;
+    public static javax.swing.JButton jbtnEliminar;
+    public static javax.swing.JButton jbtnLimpiar;
+    public static javax.swing.JButton jbtnModificar;
     // End of variables declaration//GEN-END:variables
 }
