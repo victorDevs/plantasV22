@@ -142,6 +142,9 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
         jCbProceso = new javax.swing.JComboBox<>();
         jDCFechaNacimiento = new com.toedter.calendar.JDateChooser();
         jPanelCodeBarras = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtObservaciones = new javax.swing.JTextArea();
+        jLabel9 = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Catálogo de Personal");
@@ -262,20 +265,16 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
             .addGap(0, 127, Short.MAX_VALUE)
         );
 
+        txtObservaciones.setColumns(20);
+        txtObservaciones.setRows(5);
+        jScrollPane2.setViewportView(txtObservaciones);
+
+        jLabel9.setText("Observaciones");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(183, 183, 183)
-                .addComponent(btnAddPersonal)
-                .addGap(18, 18, 18)
-                .addComponent(btnModifyPersonal)
-                .addGap(18, 18, 18)
-                .addComponent(btnEliminar)
-                .addGap(18, 18, 18)
-                .addComponent(btnLimpiar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -284,7 +283,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -298,26 +297,38 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jTxtAptMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCbProceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jDCFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTxtDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 87, Short.MAX_VALUE)
+                                .addComponent(jTxtDomicilio))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnAddPersonal)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnModifyPersonal)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnEliminar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnLimpiar))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel8)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jCbProceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel9)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
                         .addComponent(jPanelCodeBarras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -328,6 +339,15 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
                 .addComponent(jBuscar)
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanelCodeBarras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEliminar)
+                            .addComponent(btnLimpiar)
+                            .addComponent(btnModifyPersonal)
+                            .addComponent(btnAddPersonal))
+                        .addGap(33, 33, 33))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -350,17 +370,14 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
                             .addComponent(jLabel7)
                             .addComponent(jTxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8)
-                            .addComponent(jCbProceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanelCodeBarras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnLimpiar)
-                    .addComponent(btnModifyPersonal)
-                    .addComponent(btnAddPersonal))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                            .addComponent(jCbProceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -402,6 +419,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
                             per.setTelefono(jTxtTelefono.getText());
                             per.setCorreo(jTxtCorreo.getText());
                             per.setProceso(proceso);
+                            per.setObservaciones(txtObservaciones.getText());
                             try {
                                 if(per.RegistraPersonal()){
                                     String procesoString = per.getProceso();
@@ -496,6 +514,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
             jTxtCorreo.setText(per.getCorreo());
             comboProceso.addElement(per.getProceso());
             jCbProceso.setModel(comboProceso);
+            txtObservaciones.setText(per.getObservaciones());
             
             File codeBarFile = new File("C:\\Users\\vikto\\OneDrive\\Documentos\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+per.getIdPersonal()+".JPEG");
 //            strFileName = "C:\\Users\\alber\\Documents\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+per.getIdPersonal()+".JPEG";
@@ -638,6 +657,10 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
         jTxtTelefono.setText(null);
         jTxtCorreo.setText(null);
         pro.buscaPersonal(jCbProceso);
+        txtObservaciones.setText(null);
+        
+        jPanelCodeBarras.removeAll();
+        jPanelCodeBarras.repaint();
         
         btnAddPersonal.setEnabled(true);
         btnEliminar.setEnabled(false);
@@ -660,8 +683,10 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanelCodeBarras;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     public static javax.swing.JTable jTablePersonal;
     public static javax.swing.JTextField jTxtAptMaterno;
     public static javax.swing.JTextField jTxtAptPaterno;
@@ -669,5 +694,6 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
     public static javax.swing.JTextField jTxtDomicilio;
     public static javax.swing.JTextField jTxtNombre;
     public static javax.swing.JTextField jTxtTelefono;
+    private javax.swing.JTextArea txtObservaciones;
     // End of variables declaration//GEN-END:variables
 }
