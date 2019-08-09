@@ -26,6 +26,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.Clientes;
 import modelo.Estilos;
@@ -50,32 +51,24 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
 
     public static List<JRadioButton> radiosMateriales;
     public static List<JRadioButton> radiosProcesos;
-    
     Estilos est = new Estilos();
     Procesos pro = new Procesos();
     Materiales mat = new Materiales();
-    
     String strFileName = "";
-
     MetodosGlobales metodosGlobales = new MetodosGlobales();
-     
-     private static CatalogoEstilos catalogoEstilos;
+    private static CatalogoEstilos catalogoEstilos;
      
      public class Imagen extends javax.swing.JPanel {
         public Imagen() {
             this.setSize(250, 150); //se selecciona el tamaño del panel
         }
-        
         //Se crea un método cuyo parámetro debe ser un objeto Graphics
         public void paint(Graphics grafico) {
             Dimension height = getSize();
-
             //Se selecciona la imagen que tenemos en el paquete de la //ruta del programa
             ImageIcon Img = new ImageIcon(getClass().getResource("/codes/BarCode_0987654321.JPEG")); 
-
             //se dibuja la imagen que tenemos en el paquete Images //dentro de un panel
             grafico.drawImage(Img.getImage(), 10, 20, height.width, height.height, null);
-
             setOpaque(false);
             super.paintComponent(grafico);
         }
@@ -94,11 +87,15 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
         initComponents();
         mat.llenaPanelMateriales();
         pro.llenaPanelProcesos();
+        LimpiaTablaEstilos(jTableEstilos);
+        LimpiaTablaEstilos(jTableMateriales);
+        LimpiaTablaEstilos(jTableProcesos);
+        est.TablaConsultaEstilos();
 //        est.consultaMateriales();
 //        btnEliminar.setEnabled(false);
 //        btnModifyPersonal.setEnabled(false);
 ////        jDCFechaNacimiento.setEnabled(false);
-//        LimpiaTablaPersonal();
+//        LimpiaTablaEstilos();
 //        per.TablaConsultaPersonal();
 //        pro.buscaPersonal(jCbProceso);
 //        Imagen Imagen = new Imagen();
@@ -119,20 +116,22 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txtEstilo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTablePersonal = new javax.swing.JTable();
+        jTableEstilos = new javax.swing.JTable();
         btnAddPersonal = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnModifyPersonal = new javax.swing.JButton();
         jBuscar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTablePersonal1 = new javax.swing.JTable();
+        jTableMateriales = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTablePersonal2 = new javax.swing.JTable();
+        jTableProcesos = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         panelMateriales = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         panelProcesos = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Catálogo de Estilos");
@@ -140,7 +139,7 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Nombre:");
 
-        jTablePersonal.setModel(new javax.swing.table.DefaultTableModel(
+        jTableEstilos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -166,15 +165,15 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTablePersonal.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTableEstilos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTablePersonalMouseClicked(evt);
+                jTableEstilosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTablePersonal);
-        if (jTablePersonal.getColumnModel().getColumnCount() > 0) {
-            jTablePersonal.getColumnModel().getColumn(0).setMinWidth(40);
-            jTablePersonal.getColumnModel().getColumn(0).setMaxWidth(40);
+        jScrollPane1.setViewportView(jTableEstilos);
+        if (jTableEstilos.getColumnModel().getColumnCount() > 0) {
+            jTableEstilos.getColumnModel().getColumn(0).setMinWidth(40);
+            jTableEstilos.getColumnModel().getColumn(0).setMaxWidth(40);
         }
 
         btnAddPersonal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar16.png"))); // NOI18N
@@ -218,22 +217,22 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
             }
         });
 
-        jTablePersonal1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableMateriales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
-                "id", "Material"
+                "Material"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
+                java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -244,33 +243,29 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTablePersonal1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTableMateriales.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTablePersonal1MouseClicked(evt);
+                jTableMaterialesMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(jTablePersonal1);
-        if (jTablePersonal1.getColumnModel().getColumnCount() > 0) {
-            jTablePersonal1.getColumnModel().getColumn(0).setMinWidth(40);
-            jTablePersonal1.getColumnModel().getColumn(0).setMaxWidth(40);
-        }
+        jScrollPane2.setViewportView(jTableMateriales);
 
-        jTablePersonal2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableProcesos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
-                "id", "Proceso"
+                "Proceso"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
+                java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -281,22 +276,22 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTablePersonal2.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTableProcesos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTablePersonal2MouseClicked(evt);
+                jTableProcesosMouseClicked(evt);
             }
         });
-        jScrollPane3.setViewportView(jTablePersonal2);
-        if (jTablePersonal2.getColumnModel().getColumnCount() > 0) {
-            jTablePersonal2.getColumnModel().getColumn(0).setMinWidth(40);
-            jTablePersonal2.getColumnModel().getColumn(0).setMaxWidth(40);
-        }
+        jScrollPane3.setViewportView(jTableProcesos);
 
         panelMateriales.setLayout(new java.awt.GridLayout(0, 3));
         jScrollPane4.setViewportView(panelMateriales);
 
-        panelProcesos.setLayout(new java.awt.GridLayout(1, 3));
+        panelProcesos.setLayout(new java.awt.GridLayout(0, 2));
         jScrollPane5.setViewportView(panelProcesos);
+
+        jLabel2.setText("Materiales");
+
+        jLabel3.setText("Procesos");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -324,9 +319,13 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(txtEstilo, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel2))
                                         .addGap(64, 64, 64)
-                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -343,13 +342,20 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addComponent(jBuscar)
-                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jBuscar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtEstilo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtEstilo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -391,9 +397,9 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
             }
         }
         
-//        for (int i = 0; i < radioTxtProcesos.size(); i++) {
-//            System.out.println("item radio: "+radioTxtProcesos.get(i));
-//        }
+        for (int i = 0; i < radioTxtProcesos.size(); i++) {
+            System.out.println("item radio: "+radioTxtProcesos.get(i));
+        }
         if(radioTxtMateriales.size() == 0 && radioTxtProcesos.size() == 0 && txtEstilo.getText().equals("")){
             JOptionPane.showMessageDialog(rootPane, "Escriba un nombre, enseguida seleccione algunos materiales y procesos para el estilo.",
                             "Aviso",JOptionPane.WARNING_MESSAGE);
@@ -416,71 +422,22 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(rootPane, "Seleccione algunos materiales para el estilo.",
                             "Aviso",JOptionPane.WARNING_MESSAGE);
         } else {
-            System.out.println("Jupy!!!");
             if(BD.conectarBD()){
                 est.setEstilo(txtEstilo.getText());
-//                est. quitar idMateriales y poner materiales como String, se hace lo mismo con procesos
-//                per.setApellidoPaterno(jTxtAptPaterno.getText());
-//                per.setApellidoMaterno(jTxtAptMaterno.getText());
-//                per.setFechaNacimiento(sdf.format(date));
-//                per.setDomicilio(jTxtDomicilio.getText());
-//                per.setTelefono(jTxtTelefono.getText());
-//                per.setCorreo(jTxtCorreo.getText());
-//                per.setProceso(proceso);
-//                if(per.RegistraPersonal()){
-//                    Barcode barcode = null;
-//                    String strCode = "0987654321";
-//                    try {
-//                        barcode = BarcodeFactory.createCode39(strCode, true);
-//                    } catch (Exception e) {
-//                        JOptionPane.showMessageDialog(null, "El código de barras para el trabajador no se creó correctamente: "+e, 
-//                                "Aviso", JOptionPane.WARNING_MESSAGE);
-//                    }
-//                    barcode.setDrawingText(true);
-//                    barcode.setBarWidth(2);
-//                    barcode.setBarHeight(60);
-//
-//                    try {
-//                        strFileName = "C:\\Users\\vikto\\OneDrive\\Documentos\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
-//                        //strFileName = "C:\\Users\\alber\\Documents\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+strCode+".JPEG";
-//                        File file = new File(strFileName);
-//                        file.setExecutable(true);
-//                        file.setReadable(true);
-//                        file.setWritable(true);
-//                        FileOutputStream fos = new FileOutputStream(file);
-//                        BarcodeImageHandler.writeJPEG(barcode, fos);
-//                        System.out.println("Archivo creado: "+strFileName);
-//                    } catch (Exception e) {
-//                        JOptionPane.showMessageDialog(null, "La imagen del código de barras no se guardo como imagen correctamente"+e, 
-//                                "Aviso", JOptionPane.WARNING_MESSAGE);
-//                    }
-////                        Imagen Imagen = new Imagen();
-////                        jPanelCodeBarras.add(Imagen);
-////                        jPanelCodeBarras.repaint();
-//                    JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
-//                        "Aviso",JOptionPane.INFORMATION_MESSAGE);
-//                    LimpiaCampos();
-//                    LimpiaTablaPersonal();
-//                    per.TablaConsultaPersonal();
-//                }else{
-//                    JOptionPane.showMessageDialog(rootPane, "No se registro el personal",
-//                        "Error",JOptionPane.ERROR_MESSAGE);
-//                    BD.cerrarConexion();
-//                }
-////                    try {
-////                        
-////                        per.RegistraPersonal();
-////                        JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
-////                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
-////                        LimpiaCampos();
-////                        LimpiaTablaPersonal();
-////                        per.TablaConsultaPersonal();
-////                    } catch (Exception e) {
-////                        JOptionPane.showMessageDialog(rootPane, "No se registro el personal",
-////                            "Error",JOptionPane.ERROR_MESSAGE);
-//////                        System.out.println("Error al registrar un cliente: "+e);
-////                        BD.cerrarConexion();
-////                    }
+                est.setTxtMateriales(radioTxtMateriales);
+                est.setTxtProcesos(radioTxtProcesos);
+                if(est.registrarEstilo()){
+                    JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
+                        "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                    LimpiaCampos();
+                    LimpiaTablaEstilos(jTableEstilos);
+                    est.TablaConsultaEstilos();
+                    BD.cerrarConexion();
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "No se registro el estilo "+est.getEstilo(),
+                        "Aviso",JOptionPane.ERROR_MESSAGE);
+                    BD.cerrarConexion();
+                }
             }else{
                 JOptionPane.showMessageDialog(rootPane, "Error de conexión",
                         "Error",JOptionPane.ERROR_MESSAGE);
@@ -489,18 +446,36 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnAddPersonalActionPerformed
 
-    private void jTablePersonalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePersonalMouseClicked
+    private void jTableEstilosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEstilosMouseClicked
         // TODO add your handling code here:
-//        DefaultComboBoxModel comboProceso = new DefaultComboBoxModel();
-//        
-//        btnAddPersonal.setEnabled(false);
-//        btnEliminar.setEnabled(true);
-//        btnModifyPersonal.setEnabled(true);
-//        btnLimpiar.setEnabled(true);
-//        
-//        if (evt.getClickCount() == 1) {
-//            per.ApuntaPersonal();
-//            jTxtNombre.setText(per.getNombre());
+        btnAddPersonal.setEnabled(false);
+        btnEliminar.setEnabled(true);
+        btnModifyPersonal.setEnabled(true);
+        btnLimpiar.setEnabled(true);
+        
+        if (evt.getClickCount() == 1) {
+            est.ApuntaEstilo();
+            LimpiaTablaEstilos(jTableMateriales);
+            est.ApuntaEstiloMateriales();
+            LimpiaTablaEstilos(jTableProcesos);
+            est.ApuntaEstiloProcesos();
+            txtEstilo.setText(est.getEstilo());
+            
+            ArrayList radioTxtMateriales = new ArrayList();
+            ArrayList radioTxtProcesos = new ArrayList();
+            for (int i = 0; i < radiosMateriales.size(); i++) {
+                radioTxtMateriales.add(i,radiosMateriales.get(i).getText());
+                System.out.println(radiosMateriales.get(i).getText()+": "+est.getTxtMateriales().indexOf(radiosMateriales.get(i).getText()));
+                if(est.getTxtMateriales().indexOf(radiosMateriales.get(i).getText()) > -1){ 
+                    radiosMateriales.get(i).setSelected(true);
+                }
+            }
+            for (int i = 0; i < radiosProcesos.size(); i++) {
+                radioTxtMateriales.add(i,radiosProcesos.get(i).getText());
+                if(est.getTxtProcesos().indexOf(radiosProcesos.get(i).getText()) > -1){ 
+                    radiosProcesos.get(i).setSelected(true);
+                }
+            }
 //            jTxtAptPaterno.setText(per.getApellidoPaterno());
 //            jTxtAptMaterno.setText(per.getApellidoMaterno());
 //            Date date = null;
@@ -518,9 +493,9 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
 //            jTxtCorreo.setText(per.getCorreo());
 //            comboProceso.addElement(per.getProceso());
 //            jCbProceso.setModel(comboProceso);
-//        }
+        }
         
-    }//GEN-LAST:event_jTablePersonalMouseClicked
+    }//GEN-LAST:event_jTableEstilosMouseClicked
 
     private void btnModifyPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyPersonalActionPerformed
         // TODO add your handling code here:
@@ -574,6 +549,8 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
         btnAddPersonal.setEnabled(true);
         btnEliminar.setEnabled(false);
         btnModifyPersonal.setEnabled(false);
+        LimpiaTablaEstilos(jTableMateriales);
+        LimpiaTablaEstilos(jTableProcesos);
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -615,37 +592,40 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
         buscaPer.show();
     }//GEN-LAST:event_jBuscarActionPerformed
 
-    private void jTablePersonal1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePersonal1MouseClicked
+    private void jTableMaterialesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMaterialesMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTablePersonal1MouseClicked
+    }//GEN-LAST:event_jTableMaterialesMouseClicked
 
-    private void jTablePersonal2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePersonal2MouseClicked
+    private void jTableProcesosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProcesosMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTablePersonal2MouseClicked
+    }//GEN-LAST:event_jTableProcesosMouseClicked
 
-    public void LimpiaTablaPersonal(){
+    public void LimpiaTablaEstilos(JTable dataTable){
         try {
-            DefaultTableModel modelo = (DefaultTableModel)jTablePersonal.getModel();
-            int filas = jTablePersonal.getRowCount();
+            DefaultTableModel modelo = (DefaultTableModel)dataTable.getModel();
+            int filas = dataTable.getRowCount();
             for (int i = 0; filas > i; i++) {
                 modelo.removeRow(0);
             }
             System.out.println("Limpieza exitosa!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, "Error al intentar limpiar la tabla Clientes: "+e,
+            JOptionPane.showMessageDialog(rootPane, "Error al intentar limpiar la tabla Estilos: "+e,
                     "Error",JOptionPane.ERROR_MESSAGE);
         }
     }
     
     public void LimpiaCampos(){
-//        jTxtNombre.setText(null);
-//        jTxtAptPaterno.setText(null);
-//        jTxtAptMaterno.setText(null);
-//        jDCFechaNacimiento.setDate(null);
-//        jTxtDomicilio.setText(null);
-//        jTxtTelefono.setText(null);
-//        jTxtCorreo.setText(null);
-//        pro.buscaPersonal(jCbProceso);
+        txtEstilo.setText(null);
+        for (int i = 0; i < radiosMateriales.size(); i++) {
+            if(radiosMateriales.get(i).isSelected()){
+                radiosMateriales.get(i).setSelected(false);
+            }
+        }
+        for (int i = 0; i < radiosProcesos.size(); i++) {
+            if(radiosProcesos.get(i).isSelected()){
+                radiosProcesos.get(i).setSelected(false);
+            }
+        }
     }
     
     private void llenaPanelMateriales(){
@@ -662,14 +642,16 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnModifyPersonal;
     private javax.swing.JButton jBuscar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    public static javax.swing.JTable jTablePersonal;
-    public static javax.swing.JTable jTablePersonal1;
-    public static javax.swing.JTable jTablePersonal2;
+    public static javax.swing.JTable jTableEstilos;
+    public static javax.swing.JTable jTableMateriales;
+    public static javax.swing.JTable jTableProcesos;
     public static javax.swing.JPanel panelMateriales;
     public static javax.swing.JPanel panelProcesos;
     public static javax.swing.JTextField txtEstilo;
