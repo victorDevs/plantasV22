@@ -33,6 +33,7 @@ public class Personal {
     String telefono;
     String correo;
     String proceso;
+    String observaciones;
     ResultSet rs;
     ResultSetMetaData rsm;
     DefaultTableModel dtm; 
@@ -72,6 +73,10 @@ public class Personal {
     public String getProceso() {
         return proceso;
     }
+    
+    public String getObservaciones() {
+        return observaciones;
+    }
 
     public void setIdPersonal(int idPersonal) {
         this.idPersonal = idPersonal;
@@ -108,12 +113,16 @@ public class Personal {
     public void setProceso(String proceso) {
         this.proceso = proceso;
     }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
     
     public boolean RegistraPersonal() throws SQLException{
-        String sql = "insert into personal (nombre,apellidoPaterno,apellidoMaterno,fechaNacimiento,domicilio,telefono,correo,proceso) "
+        String sql = "insert into personal (nombre,apellidoPaterno,apellidoMaterno,fechaNacimiento,domicilio,telefono,correo,proceso,observaciones) "
                 + "values ('"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', '"+MetodosGlobales.aceptarComillaSimple(this.apellidoPaterno)+"','"+MetodosGlobales.aceptarComillaSimple(this.apellidoMaterno)+"','"
                 +this.fechaNacimiento+"','"+MetodosGlobales.aceptarComillaSimple(this.Domicilio)+"','"+this.telefono+"','"+this.correo+"','"
-                +this.proceso+"');";
+                +this.proceso+"','"+this.observaciones+"');";
 //        System.out.println("Registro de personal: "+sql);
         if (BD.ejecutarSQL(sql)) {
 //            sql = "SELECT LAST_INSERT_ID();";
@@ -197,7 +206,7 @@ public class Personal {
         try {
             BD.conectarBD();
             int fila = CatalogoPersonal.jTablePersonal.getSelectedRow();
-            String sql = "select idPersonal,nombre,apellidoPaterno,apellidoMaterno,fechaNacimiento,domicilio,telefono,correo,proceso"
+            String sql = "select idPersonal,nombre,apellidoPaterno,apellidoMaterno,fechaNacimiento,domicilio,telefono,correo,proceso,observaciones "
                     + " from personal where idPersonal = "+CatalogoPersonal.jTablePersonal.getValueAt(fila, 0);
             rs = BD.ejecutarSQLSelect(sql);
             rsm = rs.getMetaData();
@@ -211,6 +220,7 @@ public class Personal {
                 this.telefono = rs.getString("telefono");
                 this.correo = rs.getString("correo");
                 this.proceso = rs.getString("proceso");
+                this.observaciones = rs.getString("observaciones");
                 
             }
         } catch (Exception e) {
