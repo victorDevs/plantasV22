@@ -184,7 +184,6 @@ public class Personal {
                 + " apellidoMaterno='"+MetodosGlobales.aceptarComillaSimple(this.apellidoMaterno)+"', fechaNacimiento='"+this.fechaNacimiento+"', domicilio='"+MetodosGlobales.aceptarComillaSimple(this.Domicilio)+"',"+
                 "telefono='"+this.correo+"', correo='"+this.correo+"', proceso='"+this.proceso+"' "
                 + "where idPersonal = "+tabla.getValueAt(fila, 0);
-//        System.out.println("consulta: "+sql);
         if (BD.ejecutarSQL(sql)) {            
             return true;
         } else {
@@ -201,7 +200,7 @@ public class Personal {
             return false;
         }
     }
-    
+     
     public void ApuntaPersonal(){
         try {
             BD.conectarBD();
