@@ -5,15 +5,21 @@
  */
 package vista;
 
+import javax.swing.JOptionPane;
+import modelo.PerfilesUsuarios;
+import modelo.Usuarios;
+import persistencia.BD;
+import static vista.CatalogoUsuarios.jCBPerfil;
+
 /**
  *
  * @author Luis
  */
 public class AgregarPerfilInternal extends javax.swing.JDialog {
 
-    /**
-     * Creates new form AgregarPerfilInternal
-     */
+    PerfilesUsuarios perfilesUsuarios = new PerfilesUsuarios();
+    Usuarios usuarios = new Usuarios();
+    
     public AgregarPerfilInternal(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -28,23 +34,77 @@ public class AgregarPerfilInternal extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTxtAgregarPerfil = new javax.swing.JTextField();
+        jBtnAgregarPerfil = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Registrar Perfil");
+        setTitle("Acceso directo Registrar Perfil");
         setResizable(false);
+
+        jBtnAgregarPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/anadir.png"))); // NOI18N
+        jBtnAgregarPerfil.setText("Agregar");
+        jBtnAgregarPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnAgregarPerfilActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jTxtAgregarPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jBtnAgregarPerfil)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTxtAgregarPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnAgregarPerfil))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jBtnAgregarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAgregarPerfilActionPerformed
+        perfilesUsuarios.setNombre(jTxtAgregarPerfil.getText());
+        if(jTxtAgregarPerfil.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Agrega un nombre de Perfil",
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+        }else{
+            if(perfilesUsuarios.noRepetirMaterial(perfilesUsuarios.getNombre()) == 1){
+                JOptionPane.showMessageDialog(rootPane, "Lo sentimos, el Perfil ya existe",
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+            }else{
+                if(BD.conectarBD()){
+                    try {
+                        perfilesUsuarios.registrarPerfil();
+//                        ope.buscaUsuario();
+                        JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
+                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                         usuarios.ListadoComboPerfil(jCBPerfil);
+                        this.dispose();
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(rootPane, "No se registro el perfil",
+                            "Error",JOptionPane.ERROR_MESSAGE);
+                        System.out.println("Error al regiatrar un operador perfil: "+e);
+                        BD.cerrarConexion();
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                            "Error",JOptionPane.ERROR_MESSAGE);
+                    BD.cerrarConexion();
+                }
+            }
+        }
+    }//GEN-LAST:event_jBtnAgregarPerfilActionPerformed
 
     /**
      * @param args the command line arguments
@@ -89,5 +149,7 @@ public class AgregarPerfilInternal extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtnAgregarPerfil;
+    private javax.swing.JTextField jTxtAgregarPerfil;
     // End of variables declaration//GEN-END:variables
 }

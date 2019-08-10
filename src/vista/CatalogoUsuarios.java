@@ -86,6 +86,11 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
                 jCBPerfilItemStateChanged(evt);
             }
         });
+        jCBPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBPerfilActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Perfil");
 
@@ -426,11 +431,20 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbtnEliminarActionPerformed
 
     private void jCBPerfilItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCBPerfilItemStateChanged
-        if(jCBPerfil.getSelectedItem().equals("REGISTRAR PERFIL")){
-            JOptionPane.showMessageDialog(rootPane, "CIC EN REGISTRAR",
-                    "Error",JOptionPane.ERROR_MESSAGE);
-        }
+        
     }//GEN-LAST:event_jCBPerfilItemStateChanged
+
+    private void jCBPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBPerfilActionPerformed
+        if(jCBPerfil.getSelectedItem().equals("REGISTRAR PERFIL")){
+            usuarios.ListadoComboPerfil(jCBPerfil);
+            Frame frame = JOptionPane.getFrameForComponent(this);
+            AgregarPerfilInternal agregarPerfil = new AgregarPerfilInternal(frame,true);
+            Dimension desktopSize = Main.jDesktopMain.getSize();
+            Dimension FrameSize = agregarPerfil.getSize();
+            agregarPerfil.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+            agregarPerfil.show(); 
+        }
+    }//GEN-LAST:event_jCBPerfilActionPerformed
 
     
      public void LimpiaTablaUsuarios(){

@@ -107,7 +107,7 @@ public class Main extends javax.swing.JFrame {
 
         jMenu1.setText("Archivo");
 
-        subMenuUsuarios.setText("Gestor de Usuarios");
+        subMenuUsuarios.setText("Usuarios");
         subMenuUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuUsuariosActionPerformed(evt);
@@ -115,7 +115,7 @@ public class Main extends javax.swing.JFrame {
         });
         jMenu1.add(subMenuUsuarios);
 
-        jMenuItem3.setText("Gestor de Perfiles");
+        jMenuItem3.setText("Perfiles");
         jMenu1.add(jMenuItem3);
 
         subMenuSalir.setText("Salir");

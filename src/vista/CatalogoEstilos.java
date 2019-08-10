@@ -585,11 +585,11 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
 //        miVentanaBuscar.setVisible(true);
 
         Frame frame = JOptionPane.getFrameForComponent(this);
-        BuscaPersonal buscaPer = new BuscaPersonal(frame,true);
+        BuscaEstilo buscaEstilo = new BuscaEstilo(frame,true);
         Dimension desktopSize = Main.jDesktopMain.getSize();
-        Dimension FrameSize = buscaPer.getSize();
-        buscaPer.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
-        buscaPer.show();
+        Dimension FrameSize = buscaEstilo.getSize();
+        buscaEstilo.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+        buscaEstilo.show();
     }//GEN-LAST:event_jBuscarActionPerformed
 
     private void jTableMaterialesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMaterialesMouseClicked

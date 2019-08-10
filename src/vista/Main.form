@@ -11,7 +11,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="subMenuUsuarios">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Gestor de Usuarios"/>
+                <Property name="text" type="java.lang.String" value="Usuarios"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuUsuariosActionPerformed"/>
@@ -22,7 +22,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Gestor de Perfiles"/>
+                <Property name="text" type="java.lang.String" value="Perfiles"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="subMenuSalir">

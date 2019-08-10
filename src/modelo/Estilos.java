@@ -279,4 +279,34 @@ public class Estilos {
             BD.cerrarConexion();
         }
     }
+    
+    public void buscarEstilo(String busqueda){
+        try {
+            if (BD.conectarBD()) {
+                String sql = "select idEstilo,estilo from estilos where estilo like '%"+busqueda+"%'";
+                rs = BD.ejecutarSQLSelect(sql);
+                rsm = rs.getMetaData();
+                List<Object[]> datos = new ArrayList<Object[]>();
+                while (rs.next()) {                
+                    Object[] filas = new Object[rsm.getColumnCount()];
+                    for (int i = 0; i < filas.length; i++) {
+                        filas[i] = rs.getObject(i+1);
+                    }
+                    datos.add(filas);
+                }
+                dtm = (DefaultTableModel)CatalogoEstilos.jTableEstilos.getModel();
+                for (int i = 0; i < datos.size(); i++) {
+                    dtm.addRow(datos.get(i));
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos plantasbd",
+                        "Error de conexión",JOptionPane.ERROR_MESSAGE);
+                BD.cerrarConexion();
+            }            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error al mostrar lo datos en la tabla Estilos: "+e, 
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            BD.cerrarConexion();
+        }
+    }
 }
