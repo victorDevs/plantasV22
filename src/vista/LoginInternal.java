@@ -5,7 +5,9 @@
  */
 package vista;
 
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import modelo.LoginModel;
 import persistencia.BD;
 
@@ -28,6 +30,10 @@ public class LoginInternal extends javax.swing.JInternalFrame {
     
     public LoginInternal() {
         initComponents();
+        
+//        KeyStroke enterKey = KeyStroke.getKeyStroke("pressed ENTER");
+//        jbtnIniciar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(enterKey, "Iniciar");
+//        jbtnIniciar.getActionMap().put("Iniciar", acceptAction);
     }
 
     /**
