@@ -213,6 +213,7 @@ public class Usuarios {
                 combo.setModel(comboPerfil);
             }
             comboPerfil.addElement("REGISTRAR PERFIL");
+            comboPerfil.addElement("ELIMINAR PERFIL");
             combo.setModel(comboPerfil);
             BD.cerrarConexion();
         } catch (Exception e) {
