@@ -65,4 +65,13 @@ public class PerfilesUsuarios {
             return false;
         }
     }
+     
+     public boolean EliminaPerfil(){
+        String sql = "delete from perfiles where nombre = '"+this.nombre+"'";
+        if (BD.ejecutarSQL(sql)) {            
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -36,6 +36,7 @@ public class AgregarPerfilInternal extends javax.swing.JDialog {
 
         jTxtAgregarPerfil = new javax.swing.JTextField();
         jBtnAgregarPerfil = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Acceso directo Registrar Perfil");
@@ -49,21 +50,28 @@ public class AgregarPerfilInternal extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setText("Nombre del Perfil");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jTxtAgregarPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBtnAgregarPerfil)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTxtAgregarPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBtnAgregarPerfil)))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(2, 2, 2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTxtAgregarPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnAgregarPerfil))
@@ -89,7 +97,7 @@ public class AgregarPerfilInternal extends javax.swing.JDialog {
 //                        ope.buscaUsuario();
                         JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
                             "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                         usuarios.ListadoComboPerfil(jCBPerfil);
+                         usuarios.ListadoComboPerfil(jCBPerfil,"agregar");
                         this.dispose();
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(rootPane, "No se registro el perfil",
@@ -150,6 +158,7 @@ public class AgregarPerfilInternal extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnAgregarPerfil;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTxtAgregarPerfil;
     // End of variables declaration//GEN-END:variables
 }

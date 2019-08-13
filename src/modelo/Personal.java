@@ -34,6 +34,9 @@ public class Personal {
     String correo;
     String proceso;
     String observaciones;
+    String FechaRegistro;
+    String horaRegistro;
+    
     ResultSet rs;
     ResultSetMetaData rsm;
     DefaultTableModel dtm; 
@@ -78,6 +81,15 @@ public class Personal {
         return observaciones;
     }
 
+    public String getFechaRegistro() {
+        return FechaRegistro;
+    }
+
+    public String getHoraRegistro() {
+        return horaRegistro;
+    }
+    
+
     public void setIdPersonal(int idPersonal) {
         this.idPersonal = idPersonal;
     }
@@ -117,6 +129,15 @@ public class Personal {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
+
+    public void setFechaRegistro(String FechaRegistro) {
+        this.FechaRegistro = FechaRegistro;
+    }
+
+    public void setHoraRegistro(String horaRegistro) {
+        this.horaRegistro = horaRegistro;
+    }
+    
     
     public boolean RegistraPersonal() throws SQLException{
         String sql = "insert into personal (nombre,apellidoPaterno,apellidoMaterno,fechaNacimiento,domicilio,telefono,correo,proceso,observaciones) "
@@ -205,7 +226,8 @@ public class Personal {
         try {
             BD.conectarBD();
             int fila = CatalogoPersonal.jTablePersonal.getSelectedRow();
-            String sql = "select idPersonal,nombre,apellidoPaterno,apellidoMaterno,fechaNacimiento,domicilio,telefono,correo,proceso,observaciones "
+            String sql = "select idPersonal,nombre,apellidoPaterno,apellidoMaterno,fechaNacimiento,domicilio,telefono,correo,proceso,observaciones,"+
+                    "DATE_FORMAT(dateCreate,'%d-%m-%Y') DATEONLY,DATE_FORMAT(dateCreate,'%H:%i:%s') TIMEONLY "
                     + " from personal where idPersonal = "+CatalogoPersonal.jTablePersonal.getValueAt(fila, 0);
             rs = BD.ejecutarSQLSelect(sql);
             rsm = rs.getMetaData();
@@ -220,7 +242,8 @@ public class Personal {
                 this.correo = rs.getString("correo");
                 this.proceso = rs.getString("proceso");
                 this.observaciones = rs.getString("observaciones");
-                
+                this.FechaRegistro = rs.getString("DATEONLY");
+                this.horaRegistro = rs.getString("TIMEONLY");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"No se pudo mostrar este personal, vuelve a intentarlo: "+e, 

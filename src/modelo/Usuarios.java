@@ -196,7 +196,7 @@ public class Usuarios {
         }
     }
    
-   public void ListadoComboPerfil(JComboBox combo){
+   public void ListadoComboPerfil(JComboBox combo,String ventana){
         DefaultComboBoxModel comboPerfil = new DefaultComboBoxModel();
         try {
             BD.conectarBD();
@@ -212,9 +212,12 @@ public class Usuarios {
                 comboPerfil.addElement(rs.getObject("nombre"));
                 combo.setModel(comboPerfil);
             }
+            if(ventana.equals("agregar")){//valida que jDialog se abrio
             comboPerfil.addElement("REGISTRAR PERFIL");
             comboPerfil.addElement("ELIMINAR PERFIL");
             combo.setModel(comboPerfil);
+            }
+            
             BD.cerrarConexion();
         } catch (Exception e) {
             System.out.println("Excepción: "+e);
