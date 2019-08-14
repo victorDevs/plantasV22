@@ -18,6 +18,7 @@ import vista.CatalogoMateriales;
 import vista.CatalogoPersonal;
 import vista.CatalogoProveedores;
 import vista.CatalogoUsuarios;
+import vista.LoginInternal;
 
 /**
  *
@@ -32,6 +33,7 @@ public class validaJframeAbreUnaVez {
     Usuarios usuarios = new Usuarios();
     CatalogoPersonal catPersonal = new CatalogoPersonal();
     CatalogoUsuarios catUsuarios = new CatalogoUsuarios();
+    LoginInternal login = new LoginInternal();
             
     public validaJframeAbreUnaVez(JDesktopPane jDesktopPane){
         validaJframeAbreUnaVez.jDesktopPane = jDesktopPane;
@@ -135,12 +137,12 @@ public class validaJframeAbreUnaVez {
             Dimension desktopSize = jDesktopPane.getSize();
             Dimension FrameSize = jInternalFrame.getSize();
             jInternalFrame.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+            
             jInternalFrame.show();
             
             //LIMPIAR CAMPOS AL VOLVER ABRIR LA VENTANA
-            //CatalogoClientes.LimpiaCampos();
-            //MetodosGlobales.LimpiaTabla(CatalogoClientes.jTableClientes);
-            //clientes.TablaConsultaClientes();
+            login.limpiarCampos();
+            jInternalFrame.getRootPane().setDefaultButton(LoginInternal.jbtnIniciar);
         }
     }
      
