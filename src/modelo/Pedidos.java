@@ -7,7 +7,14 @@ package modelo;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import persistencia.BD;
+import vista.CatalogoEstilos;
+import vista.CatalogoPedidos;
 
 /**
  *
@@ -145,4 +152,39 @@ public class Pedidos {
         this.observaciones = observaciones;
     }
     
+    public void llenaPanelTallas(){
+        try {
+            if (BD.conectarBD()) {
+                String src = "Nacional";
+                int sizeArray = 20;
+                double begin = 0, end = 0;
+                if(src == "Nacional"){
+                    sizeArray = 20; 
+                    begin = 22;
+                    end = 31.5;
+                }
+                JLabel  jLabelTalla = null;
+                JTextField  txtField = null;
+                for (int i = 0; i < sizeArray; i++) {
+                    if(begin <= end){
+                        jLabelTalla = new JLabel(begin+"");
+                        CatalogoPedidos.jPanelTallas.add(jLabelTalla);
+                        txtField = new JTextField();
+                        CatalogoPedidos.jPanelTallas.add(txtField);
+                        CatalogoPedidos.txtFieldTallas.add(txtField);
+                        CatalogoPedidos.jPanelTallas.updateUI();
+                        begin = begin + 0.5;
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos plantasbd",
+                        "Error de conexión",JOptionPane.ERROR_MESSAGE);
+                BD.cerrarConexion();
+            }            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error al intentar llenar el panel de tallas: "+e, 
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            BD.cerrarConexion();
+        }
+    }
 }
