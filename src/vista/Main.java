@@ -41,6 +41,7 @@ public class Main extends javax.swing.JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
 //        setTimeout(() -> validajFraAbreUnaVez.abrirInternalFramePersonal(CatalogoEstilos.getInstancia()), 500);
 //        setTimeout(() -> validajFraAbreUnaVez.abrirInternalFramePersonal(CatalogoPersonal.getInstancia()), 500);
+//        setTimeout(() -> validajFraAbreUnaVez.abrirInternalFramePersonal(CatalogoPedidos.getInstancia()), 500);
         
         
         
@@ -183,7 +184,7 @@ public class Main extends javax.swing.JFrame {
 
         jMenuBar1.add(menuCatalogos);
 
-        menuNomUsuario.setText("IniciarSesión");
+        menuNomUsuario.setText("Iniciar Sesión");
         menuNomUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuNomUsuarioMouseClicked(evt);

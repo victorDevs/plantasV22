@@ -93,7 +93,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuNomUsuario">
           <Properties>
-            <Property name="text" type="java.lang.String" value="IniciarSesi&#xf3;n"/>
+            <Property name="text" type="java.lang.String" value="Iniciar Sesi&#xf3;n"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuNomUsuarioMouseClicked"/>
