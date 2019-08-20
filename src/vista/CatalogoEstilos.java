@@ -498,39 +498,104 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTableEstilosMouseClicked
 
     private void btnModifyPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyPersonalActionPerformed
-        // TODO add your handling code here:
-//        String proceso = (String) jCbProceso.getSelectedItem();
-//        if (JOptionPane.showConfirmDialog(rootPane, "Se modificará el personal, ¿Desea continuar?",
+
+        ArrayList radioTxtMateriales = new ArrayList();
+        ArrayList radioTxtProcesos = new ArrayList();
+        int cont = 0;
+        for (int i = 0; i < radiosMateriales.size(); i++) {
+            if(radiosMateriales.get(i).isSelected()){
+                radioTxtMateriales.add(cont,radiosMateriales.get(i).getText());
+                cont++;
+            }
+        }
+        cont = 0;
+        for (int i = 0; i < radiosProcesos.size(); i++) {
+            if(radiosProcesos.get(i).isSelected()){
+                radioTxtProcesos.add(cont,radiosProcesos.get(i).getText());
+                cont++;
+            }
+        }
+        
+        for (int i = 0; i < radioTxtProcesos.size(); i++) {
+            System.out.println("item radio: "+radioTxtProcesos.get(i));
+        }
+        if(radioTxtMateriales.size() == 0 && radioTxtProcesos.size() == 0 && txtEstilo.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Escriba un nombre, enseguida seleccione algunos materiales y procesos para el estilo.",
+                            "Aviso",JOptionPane.WARNING_MESSAGE);
+        }else if(radioTxtMateriales.size() == 0 && radioTxtProcesos.size() == 0 && !txtEstilo.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Seleccione algunos materiales y procesos para el estilo.",
+                            "Aviso",JOptionPane.WARNING_MESSAGE);
+        }else if(radioTxtMateriales.size() == 0 && radioTxtProcesos.size() > 0 && txtEstilo.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Escriba un nombre y seleccione algunos materiales para el estilo.",
+                            "Aviso",JOptionPane.WARNING_MESSAGE);
+        }else if(radioTxtMateriales.size() > 0 && radioTxtProcesos.size() == 0 && txtEstilo.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Escriba un nombre y seleccione algunos procesos para el estilo.",
+                            "Aviso",JOptionPane.WARNING_MESSAGE);
+        }else if(radioTxtMateriales.size() > 0 && radioTxtProcesos.size() > 0 && txtEstilo.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Escriba un nombre para el estilo.",
+                            "Aviso",JOptionPane.WARNING_MESSAGE);
+        }else if(radioTxtMateriales.size() > 0 && radioTxtProcesos.size() == 0 && !txtEstilo.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Seleccione algunos procesos para el estilo.",
+                            "Aviso",JOptionPane.WARNING_MESSAGE);
+        }else if(radioTxtMateriales.size() == 0 && radioTxtProcesos.size() > 0 && !txtEstilo.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Seleccione algunos materiales para el estilo.",
+                            "Aviso",JOptionPane.WARNING_MESSAGE);
+        } else {
+            if(BD.conectarBD()){
+                int fila = jTableEstilos.getSelectedRow();
+                est.setIdEstilo((int)jTableEstilos.getValueAt(fila, 0));
+                est.setEstilo(txtEstilo.getText());
+                est.setTxtMateriales(radioTxtMateriales);
+                est.setTxtProcesos(radioTxtProcesos);
+                if(est.ActualizarEstilo()){
+                    JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
+                        "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                    LimpiaCampos();
+                    MetodosGlobales.LimpiaTabla(jTableEstilos);
+                    est.TablaConsultaEstilos();
+                    BD.cerrarConexion();
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "No se Actualizo el estilo "+est.getEstilo(),
+                        "Aviso",JOptionPane.ERROR_MESSAGE);
+                    BD.cerrarConexion();
+                }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                        "Error",JOptionPane.ERROR_MESSAGE);
+                BD.cerrarConexion();
+            }
+        }
+        
+//        if (JOptionPane.showConfirmDialog(rootPane, "Se modificará el estilo, ¿Desea continuar?",
 //            "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-//            Date date = jDCFechaNacimiento.getDate();
-//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 //            btnModifyPersonal.setEnabled(false);
 //            btnEliminar.setEnabled(false);
 //            btnAddPersonal.setEnabled(true);
-//         if(jTxtNombre.getText().equals("") || jTxtAptPaterno.getText().equals("")
-//            || jTxtAptMaterno.getText().equals("") || sdf.format(date).equals("") 
-//            || jTxtDomicilio.equals("") || jTxtTelefono.equals("") || jTxtCorreo.equals("") || proceso.equals(" - Proceso - ")) {
+//         if(txtEstilo.getText().equals("")) {
 //                JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
 //                                    "Aviso",JOptionPane.WARNING_MESSAGE);
 //            } else {
+//                    ArrayList radioTxtMateriales = new ArrayList();
+//                    ArrayList radioTxtProcesos = new ArrayList();
+//            
 //                if(BD.conectarBD()){
-//                    per.setNombre(jTxtNombre.getText());
-//                    per.setApellidoPaterno(jTxtAptPaterno.getText());
-//                    per.setApellidoMaterno(jTxtAptMaterno.getText());
-//                    per.setFechaNacimiento(sdf.format(date));
-//                    per.setDomicilio(jTxtDomicilio.getText());
-//                    per.setTelefono(jTxtTelefono.getText());
-//                    per.setCorreo(jTxtCorreo.getText());
-//                    per.setProceso(proceso);                             
+//                    est.setEstilo(txtEstilo.getText());
+//                    for (int i = 0; i < radiosMateriales.size(); i++) {
+//                        radioTxtMateriales.add(i,radiosMateriales.get(i).getText());
+//                        System.out.println(radiosMateriales.get(i).getText()+": "+est.getTxtMateriales().indexOf(radiosMateriales.get(i).getText()));
+//                       if(radiosMateriales.get(i).isSelected()){ 
+//                            est.setMaterial(radiosMateriales.get(i).getText());
+//                        }
+//                    }                           
 //                    try {
-//                        per.ActualizarPersonal(jTablePersonal);
+//                        est.ActualizarEstilo(jTableEstilos);
 //                        JOptionPane.showMessageDialog(rootPane, "Actualización exitosa",
 //                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
 //                        LimpiaCampos();
-//                        LimpiaTablaPersonal();
-//                        per.TablaConsultaPersonal();
+//                        MetodosGlobales.LimpiaTabla(jTableEstilos);
+//                        est.TablaConsultaEstilos();
 //                    } catch (Exception e) {
-//                        JOptionPane.showMessageDialog(rootPane, "No se actualizó el personal: "+e,
+//                        JOptionPane.showMessageDialog(rootPane, "No se actualizó el estilo: "+e,
 //                            "Error",JOptionPane.ERROR_MESSAGE);
 //                        BD.cerrarConexion();
 //                    }

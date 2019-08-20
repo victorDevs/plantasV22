@@ -12,8 +12,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import persistencia.BD;
+import persistencia.MetodosGlobales;
 import vista.CatalogoEstilos;
 
 /**
@@ -307,6 +309,71 @@ public class Estilos {
             JOptionPane.showMessageDialog(null,"Error al mostrar lo datos en la tabla Estilos: "+e, 
                     "Error",JOptionPane.ERROR_MESSAGE);
             BD.cerrarConexion();
+        }
+    }
+    
+    public boolean ActualizarEstilo(){
+        //int fila = tabla.getSelectedRow();
+//        String sql = "update estilos set estilo = '"+MetodosGlobales.aceptarComillaSimple(this.estilo)+"' where idEstilo = "+tabla.getValueAt(fila, 0);
+//        System.out.println("consulta: "+sql);
+//        if (BD.ejecutarSQL(sql)) {            
+//            return true;
+//        } else {
+//            return false;
+//        }
+        
+        String sql = "update estilos set estilo = '"+MetodosGlobales.aceptarComillaSimple(this.estilo)+"' where idEstilo = "+this.idEstilo;
+        if (BD.ejecutarSQL(sql)) {
+            try {
+//                String sqlMax = "select max(idEstilo) from estilos";
+//                rs = BD.ejecutarSQLSelect(sqlMax);
+//                while (rs.next()) {                
+//                    this.idEstilo = rs.getInt(1);
+//                }
+                for (int i = 0; i < txtMateriales.size(); i++) {
+//                    System.out.println("item radio: "+txtMateriales.get(i));
+                    this.material = txtMateriales.get(i).toString();
+                    if(!actualizarEstiloMaterial()){
+                        JOptionPane.showMessageDialog(null,"La asignación de materiales para el estilo "
+                                +this.estilo+" no se realizó correctamente.", 
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+                for (int i = 0; i < txtProcesos.size(); i++) {
+//                    System.out.println("item radio: "+txtMateriales.get(i));
+                    this.proceso = txtProcesos.get(i).toString();
+                    if(!actualizarEstiloProceso()){
+                        JOptionPane.showMessageDialog(null,"La asignación de procesos para el estilo "
+                                +this.estilo+" no se realizó correctamente.", 
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"No se pudo registrar el estilo junto con sus materiales y procesos."
+                        + "\n CONSULTE AL DESARROLLADOR "+e, 
+                        "Aviso",JOptionPane.WARNING_MESSAGE);
+            }
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+     public boolean actualizarEstiloMaterial(){
+        String sql = "update estilos_materiales set material =  '"+this.material+"' where idEstilos= "+this.idEstilo;
+        if (BD.ejecutarSQL(sql)) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public boolean actualizarEstiloProceso(){
+        String sql = "update estilos_procesos set proceso = '"+this.proceso+"' where idEstilo= "+this.idEstilo;
+        if (BD.ejecutarSQL(sql)) {
+            return true;
+        }else{
+            return false;
         }
     }
 }
