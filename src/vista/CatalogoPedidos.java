@@ -23,6 +23,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import modelo.Clientes;
+import modelo.Estilos;
 import modelo.Pedidos;
 //import modelo.Proveedores;
 import persistencia.BD;
@@ -36,6 +37,7 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
 
     Clientes cli = new Clientes();
     Pedidos ped = new Pedidos();
+    Estilos est = new Estilos();
     
      int clics=0;//para habiitar y deshabilitar el teléfono2
      //VARIABLES PARA CAMBIAR LA IMAGEN DEL BOTÓN QUITAR O AGREGAR TELÉFONO 2
@@ -60,7 +62,11 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
     public CatalogoPedidos() {
         txtFieldTallas = new ArrayList<>();
         initComponents();
-        ped.llenaPanelTallas();
+        est.llenaComboEstilos(jCBEstilos);
+        ped.llenaPanelTallas("Nacional");
+        jTxtSubTotal.setEditable(false);
+        jTxtIva.setEditable(false);
+        jTxtTotal.setEditable(false);
 //        btnEliminar.setEnabled(false);
 //        btnModifyCliente.setEnabled(false);
 //        LimpiaTablaClientes();
@@ -89,7 +95,7 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
         btnModifyCliente = new javax.swing.JButton();
         jBuscar = new javax.swing.JButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jCBEstilos = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
@@ -100,10 +106,12 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jTxtContacto4 = new javax.swing.JTextField();
-        jTxtContacto5 = new javax.swing.JTextField();
-        jTxtContacto6 = new javax.swing.JTextField();
+        jTxtSubTotal = new javax.swing.JTextField();
+        jTxtTotal = new javax.swing.JTextField();
+        jTxtIva = new javax.swing.JTextField();
         jPanelTallas = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jCBTipoTallas = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setTitle("Catálogo de Pedidos");
@@ -214,7 +222,7 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCBEstilos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel6.setText("Estilo");
 
@@ -232,26 +240,45 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
-        jTxtContacto4.addActionListener(new java.awt.event.ActionListener() {
+        jTxtSubTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTxtContacto4ActionPerformed(evt);
+                jTxtSubTotalActionPerformed(evt);
             }
         });
 
-        jTxtContacto5.addActionListener(new java.awt.event.ActionListener() {
+        jTxtTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTxtContacto5ActionPerformed(evt);
+                jTxtTotalActionPerformed(evt);
             }
         });
 
-        jTxtContacto6.addActionListener(new java.awt.event.ActionListener() {
+        jTxtIva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTxtContacto6ActionPerformed(evt);
+                jTxtIvaActionPerformed(evt);
             }
         });
 
         jPanelTallas.setBorder(javax.swing.BorderFactory.createTitledBorder("Tallas"));
-        jPanelTallas.setLayout(new java.awt.GridLayout(0, 10));
+        jPanelTallas.setLayout(new java.awt.GridLayout(0, 22));
+
+        jLabel12.setText("Estilo");
+
+        jCBTipoTallas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nacional", "Americano", "Frances" }));
+        jCBTipoTallas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCBTipoTallasItemStateChanged(evt);
+            }
+        });
+        jCBTipoTallas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCBTipoTallasMouseClicked(evt);
+            }
+        });
+        jCBTipoTallas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBTipoTallasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -264,56 +291,57 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBuscar))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTxtContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTxtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTxtIva, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCBTipoTallas, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jCBEstilos, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanelTallas, javax.swing.GroupLayout.PREFERRED_SIZE, 913, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(21, 21, 21)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel8)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTxtContacto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel9)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTxtContacto4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel10)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTxtContacto6, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel11)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTxtContacto5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(btnAddCliente)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(btnModifyCliente)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(btnEliminar)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(btnLimpiar))
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel5)
-                                    .addComponent(jPanelTallas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(0, 362, Short.MAX_VALUE)))
+                                .addGap(33, 33, 33)
+                                .addComponent(btnAddCliente)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnModifyCliente)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEliminar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnLimpiar))
+                            .addComponent(jLabel5))
+                        .addGap(0, 9, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -323,31 +351,34 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
                 .addComponent(jBuscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCBEstilos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel7)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(jDateChooser3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jDateChooser3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
                         .addComponent(jTxtContacto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel9)
                         .addComponent(jLabel10)
                         .addComponent(jLabel11)
-                        .addComponent(jTxtContacto4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTxtContacto6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTxtContacto5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTxtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTxtIva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jCBTipoTallas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel12)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanelTallas, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
-                .addGap(33, 33, 33)
+                .addComponent(jPanelTallas, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
@@ -355,8 +386,8 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
                     .addComponent(btnModifyCliente)
                     .addComponent(btnAddCliente))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -515,17 +546,35 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
         buscaCliente.show();
     }//GEN-LAST:event_jBuscarActionPerformed
 
-    private void jTxtContacto4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtContacto4ActionPerformed
+    private void jTxtSubTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtSubTotalActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTxtContacto4ActionPerformed
+    }//GEN-LAST:event_jTxtSubTotalActionPerformed
 
-    private void jTxtContacto5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtContacto5ActionPerformed
+    private void jTxtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtTotalActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTxtContacto5ActionPerformed
+    }//GEN-LAST:event_jTxtTotalActionPerformed
 
-    private void jTxtContacto6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtContacto6ActionPerformed
+    private void jTxtIvaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtIvaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTxtContacto6ActionPerformed
+    }//GEN-LAST:event_jTxtIvaActionPerformed
+
+    private void jCBTipoTallasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTipoTallasActionPerformed
+        // TODO add your handling code here:
+//        System.out.println(this.getTitle());
+    }//GEN-LAST:event_jCBTipoTallasActionPerformed
+
+    private void jCBTipoTallasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCBTipoTallasMouseClicked
+        // TODO add your handling code here:
+//        System.out.println(this.getTitle());
+    }//GEN-LAST:event_jCBTipoTallasMouseClicked
+
+    private void jCBTipoTallasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCBTipoTallasItemStateChanged
+        // TODO add your handling code here:
+//        System.out.println(evt.getItem().toString());
+        jPanelTallas.removeAll();
+        jPanelTallas.updateUI();
+        ped.llenaPanelTallas(evt.getItem().toString());
+    }//GEN-LAST:event_jCBTipoTallasItemStateChanged
 
     public void LimpiaTablaClientes(){
         try {
@@ -555,13 +604,15 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModifyCliente;
     private javax.swing.JButton jBuscar;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jCBEstilos;
+    private javax.swing.JComboBox<String> jCBTipoTallas;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private com.toedter.calendar.JDateChooser jDateChooser3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -574,8 +625,8 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
     public static javax.swing.JTable jTableClientes;
     private javax.swing.JTextArea jTextArea1;
     public static javax.swing.JTextField jTxtContacto;
-    public static javax.swing.JTextField jTxtContacto4;
-    public static javax.swing.JTextField jTxtContacto5;
-    public static javax.swing.JTextField jTxtContacto6;
+    public static javax.swing.JTextField jTxtIva;
+    public static javax.swing.JTextField jTxtSubTotal;
+    public static javax.swing.JTextField jTxtTotal;
     // End of variables declaration//GEN-END:variables
 }
