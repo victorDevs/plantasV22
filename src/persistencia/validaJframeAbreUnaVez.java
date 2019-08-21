@@ -9,11 +9,13 @@ import java.awt.Dimension;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import modelo.Clientes;
+import modelo.Estilos;
 import modelo.Materiales;
 import modelo.Personal;
 import modelo.Proveedores;
 import modelo.Usuarios;
 import vista.CatalogoClientes;
+import vista.CatalogoEstilos;
 import vista.CatalogoMateriales;
 import vista.CatalogoPersonal;
 import vista.CatalogoProveedores;
@@ -34,6 +36,8 @@ public class validaJframeAbreUnaVez {
     CatalogoPersonal catPersonal = new CatalogoPersonal();
     CatalogoUsuarios catUsuarios = new CatalogoUsuarios();
     LoginInternal login = new LoginInternal();
+    CatalogoEstilos catEstilos = new CatalogoEstilos();
+    Estilos estilos = new Estilos();
             
     public validaJframeAbreUnaVez(JDesktopPane jDesktopPane){
         validaJframeAbreUnaVez.jDesktopPane = jDesktopPane;
@@ -122,9 +126,30 @@ public class validaJframeAbreUnaVez {
             jInternalFrame.show();
             
             //LIMPIAR CAMPOS AL VOLVER ABRIR LA VENTANA
-           catPersonal.LimpiaCampos();
+            catPersonal.LimpiaCampos();
             MetodosGlobales.LimpiaTabla(CatalogoPersonal.jTablePersonal);
             personal.TablaConsultaPersonal();
+        }
+    }
+    
+    public void abrirInternalFrameEstilos(JInternalFrame jInternalFrame){
+                
+        if(jInternalFrame.isVisible()){
+            jInternalFrame.toFront();
+            jInternalFrame.requestFocus();
+        }else{
+            jDesktopPane.add(jInternalFrame);
+            Dimension desktopSize = jDesktopPane.getSize();
+            Dimension FrameSize = jInternalFrame.getSize();
+            jInternalFrame.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+            jInternalFrame.show();
+            
+            //LIMPIAR CAMPOS AL VOLVER ABRIR LA VENTANA
+           catEstilos.LimpiaCampos();
+           MetodosGlobales.LimpiaTabla(CatalogoEstilos.jTableEstilos);
+           MetodosGlobales.LimpiaTabla(CatalogoEstilos.jTableMateriales);
+           MetodosGlobales.LimpiaTabla(CatalogoEstilos.jTableProcesos);
+           estilos.TablaConsultaEstilos();
         }
     }
     

@@ -315,14 +315,6 @@ public class Estilos {
     }
     
     public boolean ActualizarEstilo(){
-        //int fila = tabla.getSelectedRow();
-//        String sql = "update estilos set estilo = '"+MetodosGlobales.aceptarComillaSimple(this.estilo)+"' where idEstilo = "+tabla.getValueAt(fila, 0);
-//        System.out.println("consulta: "+sql);
-//        if (BD.ejecutarSQL(sql)) {            
-//            return true;
-//        } else {
-//            return false;
-//        }
         
         String sql = "update estilos set estilo = '"+MetodosGlobales.aceptarComillaSimple(this.estilo)+"' where idEstilo = "+this.idEstilo;
         if (BD.ejecutarSQL(sql)) {
@@ -335,7 +327,7 @@ public class Estilos {
                 for (int i = 0; i < txtMateriales.size(); i++) {
 //                    System.out.println("item radio: "+txtMateriales.get(i));
                     this.material = txtMateriales.get(i).toString();
-                    if(!actualizarEstiloMaterial()){
+                    if(!actualizarEstiloMaterial(i)){
                         JOptionPane.showMessageDialog(null,"La asignación de materiales para el estilo "
                                 +this.estilo+" no se realizó correctamente.", 
                                 "Aviso",JOptionPane.WARNING_MESSAGE);
@@ -344,14 +336,14 @@ public class Estilos {
                 for (int i = 0; i < txtProcesos.size(); i++) {
 //                    System.out.println("item radio: "+txtMateriales.get(i));
                     this.proceso = txtProcesos.get(i).toString();
-                    if(!actualizarEstiloProceso()){
+                    if(!actualizarEstiloProceso(i)){
                         JOptionPane.showMessageDialog(null,"La asignación de procesos para el estilo "
                                 +this.estilo+" no se realizó correctamente.", 
                                 "Aviso",JOptionPane.WARNING_MESSAGE);
                     }
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,"No se pudo registrar el estilo junto con sus materiales y procesos."
+                JOptionPane.showMessageDialog(null,"No se pudo modificar el estilo junto con sus materiales y procesos."
                         + "\n CONSULTE AL DESARROLLADOR "+e, 
                         "Aviso",JOptionPane.WARNING_MESSAGE);
             }
@@ -361,20 +353,51 @@ public class Estilos {
         }
     }
     
-     public boolean actualizarEstiloMaterial(){
-        String sql = "update estilos_materiales set material =  '"+this.material+"' where idEstilos= "+this.idEstilo;
-        if (BD.ejecutarSQL(sql)) {
+     public boolean actualizarEstiloMaterial(int val){
+        if(val ==0){//VALIDA PARA QUE SOLAMENTE ENTRE UNA VEZ LA ELIMINACIÓN DE LOS MATERIALES
+            String sqlDelete = "delete from estilos_materiales where idEstilos= "+this.idEstilo;
+            if(!BD.ejecutarSQL(sqlDelete)){
+                JOptionPane.showMessageDialog(null,"Error a eliminar el listado de los materiales. \nNo fue posible modificar el Estilo", 
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        
+        //PASAMOS A INSERTAR TODOS LOS MATERIALES SELECCIONADOS
+        String sql = "insert into estilos_materiales (idEstilos, material) "
+            + "values ("+this.idEstilo+",'"+this.material+"');";
+        if(BD.ejecutarSQL(sql)){
+            return true;
+        }else{
+            return false;
+        }    
+    }
+    
+    public boolean actualizarEstiloProceso(int val){
+        if(val ==0){//VALIDA PARA QUE SOLAMENTE ENTRE UNA VEZ LA ELIMINACIÓN DE LOS PROCESOS
+            String sqlDelete = "delete from estilos_procesos where idEstilo= "+this.idEstilo;
+            if(!BD.ejecutarSQL(sqlDelete)){
+                JOptionPane.showMessageDialog(null,"Error a eliminar el listado de los procesos. \nNo fue posible modificar el Estilo", 
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        
+        //PASAMOS A INSERTAR TODOS LOS PROCESOS SELECCIONADOS
+        String sql = "insert into estilos_procesos (idEstilo, proceso) "
+                + "values ("+this.idEstilo+",'"+this.proceso+"');";
+        if(BD.ejecutarSQL(sql)){
             return true;
         }else{
             return false;
         }
     }
     
-    public boolean actualizarEstiloProceso(){
-        String sql = "update estilos_procesos set proceso = '"+this.proceso+"' where idEstilo= "+this.idEstilo;
-        if (BD.ejecutarSQL(sql)) {
+    public boolean eliminaEstilo(){
+        String sqlEstilo = "delete from estilos where idEstilo = "+this.idEstilo;
+        String sqlEstiloMateriales = "delete from estilos_materiales where idEstilos = "+this.idEstilo;
+        String sqlEstiloProcesos = "delete from estilos_procesos where idEstilo = "+this.idEstilo;
+        if (BD.ejecutarSQL(sqlEstilo) && BD.ejecutarSQL(sqlEstiloMateriales) && BD.ejecutarSQL(sqlEstiloProcesos)) { 
             return true;
-        }else{
+        } else {
             return false;
         }
     }

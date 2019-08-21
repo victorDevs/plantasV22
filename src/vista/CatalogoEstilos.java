@@ -553,6 +553,10 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
                     LimpiaCampos();
                     MetodosGlobales.LimpiaTabla(jTableEstilos);
                     est.TablaConsultaEstilos();
+                    btnAddPersonal.setEnabled(true);
+                    btnModifyPersonal.setEnabled(false);
+                    btnEliminar.setEnabled(false);
+                    
                     BD.cerrarConexion();
                 }else{
                     JOptionPane.showMessageDialog(rootPane, "No se Actualizo el estilo "+est.getEstilo(),
@@ -619,28 +623,36 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-//        if (JOptionPane.showConfirmDialog(rootPane, "Se eliminará el personal, ¿Desea continuar?",
-//            "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){    
-//            if(BD.conectarBD()){
-//                try {
-//                    per.EliminaPersonal(jTablePersonal);
-//                    JOptionPane.showMessageDialog(rootPane, "El personal se eliminó con éxito",
-//                        "Aviso",JOptionPane.INFORMATION_MESSAGE);
-//                    LimpiaCampos();
-//                    LimpiaTablaPersonal();
-//                    per.TablaConsultaPersonal();
-//                } catch (Exception e) {
-//                    JOptionPane.showMessageDialog(rootPane, "No se eliminó el personal: "+e,
-//                        "Aviso",JOptionPane.WARNING_MESSAGE);
-//                    BD.cerrarConexion();
-//                }
-//            }else{
-//                JOptionPane.showMessageDialog(rootPane, "Error de conexión",
-//                        "Error",JOptionPane.ERROR_MESSAGE);
-//                BD.cerrarConexion();
-//            }
-//        }
+        
+        if (JOptionPane.showConfirmDialog(rootPane, "Se eliminará el estilo junto con sus materiales y procesos. ¿Desea continuar?",
+            "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){    
+            if(BD.conectarBD()){
+                try {
+                    int fila = jTableEstilos.getSelectedRow();
+                    est.setIdEstilo((int)jTableEstilos.getValueAt(fila, 0));
+                    est.eliminaEstilo();
+                    JOptionPane.showMessageDialog(rootPane, "El estilo se eliminó con éxito",
+                        "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                    btnAddPersonal.setEnabled(true);
+                    btnModifyPersonal.setEnabled(false);
+                    btnEliminar.setEnabled(false);
+                    LimpiaCampos();
+                    MetodosGlobales.LimpiaTabla(jTableEstilos);
+                    MetodosGlobales.LimpiaTabla(jTableMateriales);
+                    MetodosGlobales.LimpiaTabla(jTableProcesos);
+                    est.TablaConsultaEstilos();
+                    
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(rootPane, "No se eliminó el estilo: "+e,
+                        "Aviso",JOptionPane.WARNING_MESSAGE);
+                    BD.cerrarConexion();
+                }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                        "Error",JOptionPane.ERROR_MESSAGE);
+                BD.cerrarConexion();
+            }
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuscarActionPerformed
