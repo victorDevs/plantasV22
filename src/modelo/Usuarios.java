@@ -32,7 +32,6 @@ public class Usuarios {
     String Usuario;
     String contrasena;
     String repeContrasena;
-    String rol;
     String correo;
 
     ResultSet rs;
@@ -97,14 +96,6 @@ public class Usuarios {
     public void setRepeContrasena(String repeContrasena) {
         this.repeContrasena = repeContrasena;
     }
-
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
     
       public String getCorreo() {
         return correo;
@@ -117,7 +108,7 @@ public class Usuarios {
     public void TablaConsultaUsuarios(){
         try {
             if (BD.conectarBD()) {
-                String sql = "select idUsuario,nombre,usuario,perfil,rol,correo from usuarios";
+                String sql = "select idUsuario,nombre,usuario,perfil,correo from usuarios";
                 rs = BD.ejecutarSQLSelect(sql);
                 rsm = rs.getMetaData();
                 List<Object[]> datos = new ArrayList<Object[]>();
@@ -148,7 +139,7 @@ public class Usuarios {
         try {
             BD.conectarBD();
             int fila = CatalogoUsuarios.jTableUsuarios.getSelectedRow();
-            String sql = "select nombre,usuario,contrasena,correo,perfil,rol"
+            String sql = "select nombre,usuario,contrasena,correo,perfil"
                     + " from usuarios where idUsuario = "+CatalogoUsuarios.jTableUsuarios.getValueAt(fila, 0);
             rs = BD.ejecutarSQLSelect(sql);
             rsm = rs.getMetaData();
@@ -158,7 +149,6 @@ public class Usuarios {
                 this.contrasena = rs.getString(3);
                 this.correo = rs.getString(4);
                 this.perfil = rs.getString(5);
-                this.rol = rs.getString(6);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"No se pudo mostrar este usuario, vuelve a intentarlo: "+e, 
@@ -169,7 +159,7 @@ public class Usuarios {
    public void buscarUsuario(String tipoBuqueda,String busqueda){
         try {
             if (BD.conectarBD()) {
-                String sql = "select idUsuario,nombre,usuario,perfil,rol,correo from usuarios where "+tipoBuqueda+" like '%"+busqueda+"%'";
+                String sql = "select idUsuario,nombre,usuario,perfil,correo from usuarios where "+tipoBuqueda+" like '%"+busqueda+"%'";
                 rs = BD.ejecutarSQLSelect(sql);
                 rsm = rs.getMetaData();
                 List<Object[]> datos = new ArrayList<Object[]>();
@@ -228,7 +218,7 @@ public class Usuarios {
     }
    
     public boolean RegistraUsuario(){
-        String sql = "insert into usuarios (nombre,usuario,contrasena,correo,perfil,rol) "
+        String sql = "insert into usuarios (nombre,usuario,contrasena,correo,perfil) "
                 + "values ('"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', '"+MetodosGlobales.aceptarComillaSimple(this.Usuario)+"','"
                 +MetodosGlobales.aceptarComillaSimple(this.contrasena)+"','"+this.correo+"','"+this.perfil+"','0')";
         System.out.println("Registro de usuario: "+sql);

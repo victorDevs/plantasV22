@@ -556,7 +556,8 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
                     btnAddPersonal.setEnabled(true);
                     btnModifyPersonal.setEnabled(false);
                     btnEliminar.setEnabled(false);
-                    
+                    MetodosGlobales.LimpiaTabla(jTableMateriales);
+                    MetodosGlobales.LimpiaTabla(jTableProcesos);
                     BD.cerrarConexion();
                 }else{
                     JOptionPane.showMessageDialog(rootPane, "No se Actualizo el estilo "+est.getEstilo(),
@@ -618,8 +619,10 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
         btnAddPersonal.setEnabled(true);
         btnEliminar.setEnabled(false);
         btnModifyPersonal.setEnabled(false);
-        LimpiaTablaEstilos(jTableMateriales);
-        LimpiaTablaEstilos(jTableProcesos);
+        MetodosGlobales.LimpiaTabla(jTableEstilos);
+        est.TablaConsultaEstilos();
+        MetodosGlobales.LimpiaTabla(jTableMateriales);
+        MetodosGlobales.LimpiaTabla(jTableProcesos);
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
