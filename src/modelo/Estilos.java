@@ -11,6 +11,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -374,6 +376,30 @@ public class Estilos {
             return true;
         }else{
             return false;
+        }
+    }
+    
+    public void llenaComboEstilos(JComboBox combo){
+        DefaultComboBoxModel comboEstilo = new DefaultComboBoxModel();
+        try {
+            BD.conectarBD();
+            String sql = "select * from estilos";
+            rs = BD.ejecutarSQLSelect(sql);
+            rsm = rs.getMetaData();
+            combo.setModel(comboEstilo);
+            comboEstilo.addElement("-- Seleccione --");
+            while (rs.next()) {
+                this.idEstilo = Integer.parseInt(rs.getString("idEstilo"));
+                this.estilo = rs.getString("estilo");
+                comboEstilo.addElement(rs.getObject("estilo"));
+                combo.setModel(comboEstilo);
+            }
+            BD.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Excepción: "+e);
+            JOptionPane.showMessageDialog(null, "Error al mostrar el listado de estilos",
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            BD.cerrarConexion();
         }
     }
 }
