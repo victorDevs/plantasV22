@@ -5,8 +5,12 @@
  */
 package modelo;
 
+import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
@@ -152,18 +156,29 @@ public class Pedidos {
         this.observaciones = observaciones;
     }
     
-    public void llenaPanelTallas(){
+    public void llenaPanelTallas(String src){
         try {
             if (BD.conectarBD()) {
-                String src = "Nacional";
-                int sizeArray = 20;
-                double begin = 0, end = 0;
+                int sizeArray = 0;
+                double begin = 0, end = 0, punto = 0;
                 if(src == "Nacional"){
-                    sizeArray = 20; 
+                    sizeArray = 22; 
                     begin = 22;
                     end = 31.5;
+                    punto = 0.5;
+                } else if(src == "Americano"){
+                    sizeArray = 20; 
+                    begin = 4;
+                    end = 12.5;
+                    punto = 0.5;
+                } else if(src == "Frances"){
+                    sizeArray = 16; 
+                    begin = 33;
+                    end = 46;
+                    punto = 1;
                 }
                 JLabel  jLabelTalla = null;
+                JLabel  jLabelTotal = null;
                 JTextField  txtField = null;
                 for (int i = 0; i < sizeArray; i++) {
                     if(begin <= end){
@@ -173,9 +188,18 @@ public class Pedidos {
                         CatalogoPedidos.jPanelTallas.add(txtField);
                         CatalogoPedidos.txtFieldTallas.add(txtField);
                         CatalogoPedidos.jPanelTallas.updateUI();
-                        begin = begin + 0.5;
+                        begin = begin + punto;
                     }
                 }
+                jLabelTotal = new JLabel("TOTAL");
+                jLabelTotal.setForeground(Color.blue);
+                CatalogoPedidos.jPanelTallas.add(jLabelTotal);
+                txtField = new JTextField();
+                txtField.setEditable(false);
+                txtField.setForeground(Color.blue);
+                CatalogoPedidos.jPanelTallas.add(txtField);
+                CatalogoPedidos.txtFieldTallas.add(txtField);
+                CatalogoPedidos.jPanelTallas.updateUI();
             } else {
                 JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos plantasbd",
                         "Error de conexión",JOptionPane.ERROR_MESSAGE);
