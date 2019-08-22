@@ -6,9 +6,14 @@
 package modelo;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -19,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import persistencia.BD;
 import vista.CatalogoEstilos;
 import vista.CatalogoPedidos;
+import static vista.CatalogoPedidos.txtFieldTallas;
 
 /**
  *
@@ -43,6 +49,8 @@ public class Pedidos {
     ResultSet rs;
     ResultSetMetaData rsm;
     DefaultTableModel dtm;
+    
+    List<Integer> arraySumTallas = new ArrayList<Integer>();
 
     public int getIdPedido() {
         return idPedido;
@@ -185,6 +193,22 @@ public class Pedidos {
                         jLabelTalla = new JLabel(begin+"");
                         CatalogoPedidos.jPanelTallas.add(jLabelTalla);
                         txtField = new JTextField();
+                        txtField.addKeyListener(new KeyListener(){
+                            @Override
+                            public void keyTyped(KeyEvent ke) {}
+
+                            @Override
+                            public void keyPressed(KeyEvent ke) {
+                                char ky = ke.getKeyChar();
+                                if(Character.isLetter(ky)){
+                                    JOptionPane.showMessageDialog(null, "Solo se permiten números, por favor intente de nuevo.",
+                                        "Aviso",JOptionPane.WARNING_MESSAGE);
+                                }
+                            }
+
+                            @Override
+                            public void keyReleased(KeyEvent ke) {}
+                        });
                         CatalogoPedidos.jPanelTallas.add(txtField);
                         CatalogoPedidos.txtFieldTallas.add(txtField);
                         CatalogoPedidos.jPanelTallas.updateUI();
@@ -194,7 +218,7 @@ public class Pedidos {
                 jLabelTotal = new JLabel("TOTAL");
                 jLabelTotal.setForeground(Color.blue);
                 CatalogoPedidos.jPanelTallas.add(jLabelTotal);
-                txtField = new JTextField();
+                txtField = new JTextField("0");
                 txtField.setEditable(false);
                 txtField.setForeground(Color.blue);
                 CatalogoPedidos.jPanelTallas.add(txtField);
