@@ -261,7 +261,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        validajFraAbreUnaVez.abrirInternalFramePedidos(CatalogoPedidos.getInstancia());
+        validajFraAbreUnaVez.abrirInternalFramePedidos(AdministrarPedidos.getInstancia());
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void subMenuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuSalirActionPerformed
