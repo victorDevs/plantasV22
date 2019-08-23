@@ -66,12 +66,7 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
             jBtnBuscarMaterial.setVisible(false);
             jbtnEliminarMaterial.setVisible(false);
             jbtnModificarMaterial.setVisible(false);
-            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setWidth(0);
-            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setMinWidth(0);
-            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setMaxWidth(0);
-            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setWidth(0);
-            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setMinWidth(0);
-            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setMaxWidth(0);
+            
         }
         
 //        DefaultTableModel modelo = (DefaultTableModel)jTableProveedoresMaterial.getModel();
