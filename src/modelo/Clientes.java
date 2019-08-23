@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -220,6 +222,30 @@ public class Clientes {
             }            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error al mostrar lo datos en la tabla proveedores: "+e, 
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            BD.cerrarConexion();
+        }
+    }
+    
+    public void llenaComboClientes(JComboBox combo){
+        DefaultComboBoxModel comboCliente = new DefaultComboBoxModel();
+        try {
+            BD.conectarBD();
+            String sql = "select * from clientes";
+            rs = BD.ejecutarSQLSelect(sql);
+            rsm = rs.getMetaData();
+            combo.setModel(comboCliente);
+            comboCliente.addElement("-- Seleccione --");
+            while (rs.next()) {
+                this.idCliente = Integer.parseInt(rs.getString("idCliente"));
+                this.nombre = rs.getString("nombre");
+                comboCliente.addElement(rs.getObject("nombre"));
+                combo.setModel(comboCliente);
+            }
+            BD.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Excepción: "+e);
+            JOptionPane.showMessageDialog(null, "Error al mostrar el listado de clientes",
                     "Error",JOptionPane.ERROR_MESSAGE);
             BD.cerrarConexion();
         }
