@@ -34,6 +34,49 @@ public class Usuarios {
     String repeContrasena;
     String correo;
 
+    //PERMISOS EN MATRIALES
+    String matRegistrar="";
+    String matEditar="";
+    String matConsultar="";
+    String matEliminar="";
+    String matPermisos="";
+    //PERMISOS EN PROVEEDORES
+    String proRegistrar="";
+    String proEditar="";
+    String proConsultar="";
+    String proEliminar="";
+    String proPermisos="";
+    //PERMISOS EN CLIENTES
+    String cliRegistrar="";
+    String cliEditar="";
+    String cliConsultar="";
+    String cliEliminar="";
+    String cliPermisos="";
+    //PERMISOS EN PERSONAL
+    String perRegistrar="";
+    String perEditar="";
+    String perConsultar="";
+    String perEliminar="";
+    String perPermisos="";
+    //PERMISOS EN PEDIDOS
+    String pedRegistrar="";
+    String pedEditar="";
+    String pedConsultar="";
+    String pedEliminar="";
+    String pedPermisos="";
+    //PERMISOS EN ESTILOS
+    String estRegistrar="";
+    String estEditar="";
+    String estConsultar="";
+    String estEliminar="";
+    String estPermisos="";
+    //PERMISOS EN USUARIOS
+    String usuRegistrar="";
+    String usuEditar="";
+    String usuConsultar="";
+    String usuEliminar="";
+    String usuPermisos="";
+    
     ResultSet rs;
     ResultSetMetaData rsm;
     DefaultTableModel dtm; 
@@ -103,7 +146,289 @@ public class Usuarios {
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    } 
+
+    public String getMatRegistrar() {
+        return matRegistrar;
     }
+
+    public void setMatRegistrar(String matRegistrar) {
+        this.matRegistrar = matRegistrar;
+    }
+
+    public String getMatEditar() {
+        return matEditar;
+    }
+
+    public void setMatEditar(String matEditar) {
+        this.matEditar = matEditar;
+    }
+
+    public String getMatConsultar() {
+        return matConsultar;
+    }
+
+    public void setMatConsultar(String matConsultar) {
+        this.matConsultar = matConsultar;
+    }
+
+    public String getMatEliminar() {
+        return matEliminar;
+    }
+
+    public void setMatEliminar(String matEliminar) {
+        this.matEliminar = matEliminar;
+    }
+
+    public String getProRegistrar() {
+        return proRegistrar;
+    }
+
+    public void setProRegistrar(String proRegistrar) {
+        this.proRegistrar = proRegistrar;
+    }
+
+    public String getProEditar() {
+        return proEditar;
+    }
+
+    public void setProEditar(String proEditar) {
+        this.proEditar = proEditar;
+    }
+
+    public String getProConsultar() {
+        return proConsultar;
+    }
+
+    public void setProConsultar(String proConsultar) {
+        this.proConsultar = proConsultar;
+    }
+
+    public String getProEliminar() {
+        return proEliminar;
+    }
+
+    public void setProEliminar(String proEliminar) {
+        this.proEliminar = proEliminar;
+    }
+
+    public String getCliRegistrar() {
+        return cliRegistrar;
+    }
+
+    public void setCliRegistrar(String cliRegistrar) {
+        this.cliRegistrar = cliRegistrar;
+    }
+
+    public String getCliEditar() {
+        return cliEditar;
+    }
+
+    public void setCliEditar(String cliEditar) {
+        this.cliEditar = cliEditar;
+    }
+
+    public String getCliConsultar() {
+        return cliConsultar;
+    }
+
+    public void setCliConsultar(String cliConsultar) {
+        this.cliConsultar = cliConsultar;
+    }
+
+    public String getCliEliminar() {
+        return cliEliminar;
+    }
+
+    public void setCliEliminar(String cliEliminar) {
+        this.cliEliminar = cliEliminar;
+    }
+
+    public String getPerRegistrar() {
+        return perRegistrar;
+    }
+
+    public void setPerRegistrar(String perRegistrar) {
+        this.perRegistrar = perRegistrar;
+    }
+
+    public String getPerEditar() {
+        return perEditar;
+    }
+
+    public void setPerEditar(String perEditar) {
+        this.perEditar = perEditar;
+    }
+
+    public String getPerConsultar() {
+        return perConsultar;
+    }
+
+    public void setPerConsultar(String perConsultar) {
+        this.perConsultar = perConsultar;
+    }
+
+    public String getPerEliminar() {
+        return perEliminar;
+    }
+
+    public void setPerEliminar(String perEliminar) {
+        this.perEliminar = perEliminar;
+    }
+
+    public String getPedRegistrar() {
+        return pedRegistrar;
+    }
+
+    public void setPedRegistrar(String pedRegistrar) {
+        this.pedRegistrar = pedRegistrar;
+    }
+
+    public String getPedEditar() {
+        return pedEditar;
+    }
+
+    public void setPedEditar(String pedEditar) {
+        this.pedEditar = pedEditar;
+    }
+
+    public String getPedConsultar() {
+        return pedConsultar;
+    }
+
+    public void setPedConsultar(String pedConsultar) {
+        this.pedConsultar = pedConsultar;
+    }
+
+    public String getPedEliminar() {
+        return pedEliminar;
+    }
+
+    public void setPedEliminar(String pedEliminar) {
+        this.pedEliminar = pedEliminar;
+    }
+
+    public String getEstRegistrar() {
+        return estRegistrar;
+    }
+
+    public void setEstRegistrar(String estRegistrar) {
+        this.estRegistrar = estRegistrar;
+    }
+
+    public String getEstEditar() {
+        return estEditar;
+    }
+
+    public void setEstEditar(String estEditar) {
+        this.estEditar = estEditar;
+    }
+
+    public String getEstConsultar() {
+        return estConsultar;
+    }
+
+    public void setEstConsultar(String estConsultar) {
+        this.estConsultar = estConsultar;
+    }
+
+    public String getEstEliminar() {
+        return estEliminar;
+    }
+
+    public void setEstEliminar(String estEliminar) {
+        this.estEliminar = estEliminar;
+    }
+
+    public String getUsuRegistrar() {
+        return usuRegistrar;
+    }
+
+    public void setUsuRegistrar(String usuRegistrar) {
+        this.usuRegistrar = usuRegistrar;
+    }
+
+    public String getUsuEditar() {
+        return usuEditar;
+    }
+
+    public void setUsuEditar(String usuEditar) {
+        this.usuEditar = usuEditar;
+    }
+
+    public String getUsuConsultar() {
+        return usuConsultar;
+    }
+
+    public void setUsuConsultar(String usuConsultar) {
+        this.usuConsultar = usuConsultar;
+    }
+
+    public String getUsuEliminar() {
+        return usuEliminar;
+    }
+
+    public void setUsuEliminar(String usuEliminar) {
+        this.usuEliminar = usuEliminar;
+    }
+
+    public String getMatPermisos() {
+        return matPermisos;
+    }
+
+    public void setMatPermisos(String matPermisos) {
+        this.matPermisos = matPermisos;
+    }
+
+    public String getProPermisos() {
+        return proPermisos;
+    }
+
+    public void setProPermisos(String proPermisos) {
+        this.proPermisos = proPermisos;
+    }
+
+    public String getCliPermisos() {
+        return cliPermisos;
+    }
+
+    public void setCliPermisos(String cliPermisos) {
+        this.cliPermisos = cliPermisos;
+    }
+
+    public String getPerPermisos() {
+        return perPermisos;
+    }
+
+    public void setPerPermisos(String perPermisos) {
+        this.perPermisos = perPermisos;
+    }
+
+    public String getPedPermisos() {
+        return pedPermisos;
+    }
+
+    public void setPedPermisos(String pedPermisos) {
+        this.pedPermisos = pedPermisos;
+    }
+
+    public String getEstPermisos() {
+        return estPermisos;
+    }
+
+    public void setEstPermisos(String estPermisos) {
+        this.estPermisos = estPermisos;
+    }
+
+    public String getUsuPermisos() {
+        return usuPermisos;
+    }
+
+    public void setUsuPermisos(String usuPermisos) {
+        this.usuPermisos = usuPermisos;
+    }
+    
+    
     
     public void TablaConsultaUsuarios(){
         try {
@@ -139,7 +464,7 @@ public class Usuarios {
         try {
             BD.conectarBD();
             int fila = CatalogoUsuarios.jTableUsuarios.getSelectedRow();
-            String sql = "select nombre,usuario,contrasena,correo,perfil"
+            String sql = "select nombre,usuario,contrasena,correo,perfil,materialPermiso,proveedorPermiso,clientesPermiso,personalPermiso,pedidosPermiso,estilosPermiso,usuariosPermiso"
                     + " from usuarios where idUsuario = "+CatalogoUsuarios.jTableUsuarios.getValueAt(fila, 0);
             rs = BD.ejecutarSQLSelect(sql);
             rsm = rs.getMetaData();
@@ -149,6 +474,13 @@ public class Usuarios {
                 this.contrasena = rs.getString(3);
                 this.correo = rs.getString(4);
                 this.perfil = rs.getString(5);
+                this.matPermisos = rs.getString(6);
+                this.proPermisos = rs.getString(7);
+                this.cliPermisos = rs.getString(8);
+                this.perPermisos = rs.getString(9);
+                this.pedPermisos = rs.getString(10);
+                this.estPermisos = rs.getString(11);
+                this.usuPermisos = rs.getString(12);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"No se pudo mostrar este usuario, vuelve a intentarlo: "+e, 
@@ -218,9 +550,12 @@ public class Usuarios {
     }
    
     public boolean RegistraUsuario(){
-        String sql = "insert into usuarios (nombre,usuario,contrasena,correo,perfil) "
+        String sql = "insert into usuarios (nombre,usuario,contrasena,correo,perfil,materialPermiso,proveedorPermiso,clientesPermiso,personalPermiso,pedidosPermiso,estilosPermiso,usuariosPermiso) "
                 + "values ('"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', '"+MetodosGlobales.aceptarComillaSimple(this.Usuario)+"','"
-                +MetodosGlobales.aceptarComillaSimple(this.contrasena)+"','"+this.correo+"','"+this.perfil+"','0')";
+                +MetodosGlobales.aceptarComillaSimple(this.contrasena)+"','"+this.correo+"','"+this.perfil+"','"+this.matConsultar+this.matRegistrar+this.matEditar+this.matEliminar+"','"+
+                this.proConsultar+this.proRegistrar+this.proEditar+this.proEliminar+"','"+this.cliConsultar+this.cliRegistrar+this.cliEditar+this.cliEliminar+"','"+
+                this.perConsultar+this.perRegistrar+this.perEditar+this.perEliminar+"','"+this.pedConsultar+this.pedRegistrar+this.pedEditar+this.pedEliminar+"','"+
+                this.estConsultar+this.estRegistrar+this.estEditar+this.estEliminar+"','"+this.usuConsultar+this.usuRegistrar+this.usuEditar+this.usuEliminar+"')";
         System.out.println("Registro de usuario: "+sql);
         if (BD.ejecutarSQL(sql)) {
             return true;
@@ -231,9 +566,12 @@ public class Usuarios {
     
     public boolean ActualizarUsuario(JTable tabla){
         int fila = tabla.getSelectedRow();
-        String sql = "update usuarios set nombre = '"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', usuario = '"+MetodosGlobales.aceptarComillaSimple(this.Usuario)+"',"
-                + " contrasena='"+MetodosGlobales.aceptarComillaSimple(this.contrasena)+"', correo='"+this.correo+"', perfil='"+this.perfil+"'"
-                + "where idUsuario= "+tabla.getValueAt(fila, 0);
+        String sql = "update usuarios set nombre = '"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', usuario = '"+MetodosGlobales.aceptarComillaSimple(this.Usuario)+"',"+
+                "contrasena='"+MetodosGlobales.aceptarComillaSimple(this.contrasena)+"', correo='"+this.correo+"', perfil='"+this.perfil+"',"+
+                "materialPermiso='"+this.matConsultar+this.matRegistrar+this.matEditar+this.matEliminar+"',proveedorPermiso='"+this.proConsultar+this.proRegistrar+this.proEditar+this.proEliminar+"',"+
+                "clientesPermiso='"+this.cliConsultar+this.cliRegistrar+this.cliEditar+this.cliEliminar+"',personalPermiso='"+this.perConsultar+this.perRegistrar+this.perEditar+this.perEliminar+"',"+
+                "pedidosPermiso='"+this.pedConsultar+this.pedRegistrar+this.pedEditar+this.pedEliminar+"',estilosPermiso='"+this.estConsultar+this.estRegistrar+this.estEditar+this.estEliminar+"',"+
+                "usuariosPermiso='"+this.usuConsultar+this.usuRegistrar+this.usuEditar+this.usuEliminar+"' where idUsuario= "+tabla.getValueAt(fila, 0);
         System.out.println("consulta: "+sql);
         if (BD.ejecutarSQL(sql)) {            
             return true;

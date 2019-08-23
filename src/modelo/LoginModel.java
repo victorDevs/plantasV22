@@ -23,6 +23,8 @@ public class LoginModel {
     String usuario;
     String contrasena;
     String nomUsuario;
+    
+    String permisoMaterial;
 
      ResultSet rs;
     ResultSetMetaData rsm;
@@ -50,6 +52,14 @@ public class LoginModel {
     public void setNomUsuario(String nomUsuario) {
         this.nomUsuario = nomUsuario;
     }
+
+    public String getPermisoMaterial() {
+        return permisoMaterial;
+    }
+
+    public void setPermisoMaterial(String permisoMaterial) {
+        this.permisoMaterial = permisoMaterial;
+    }
     
     public boolean iniciarSesion(){
         boolean existeUsua=false;
@@ -61,7 +71,7 @@ public class LoginModel {
             rs = BD.ejecutarSQLSelect(sql);
             rsm = rs.getMetaData();
             if (rs.next()) {
-                this.nomUsuario = rs.getString(2); 
+                this.nomUsuario = rs.getString(3); 
                 existeUsua = true;
             }else{
                 existeUsua = false;
@@ -72,5 +82,21 @@ public class LoginModel {
         }
          return existeUsua;
     }
-          
+    
+    public String validaPermisos(String usuario){
+        try {
+            BD.conectarBD();
+            String sql = "select idUsuario,nombre,materialPermiso from usuarios "
+                + "where nombre = '"+usuario+"'";
+            rs = BD.ejecutarSQLSelect(sql);
+            rsm = rs.getMetaData();
+            if (rs.next()) {
+                this.permisoMaterial = rs.getString(3); 
+            }
+        } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null,"No se pudo consultar este usuario, vuelve a intentarlo: "+ex, 
+                    "Aviso",JOptionPane.WARNING_MESSAGE);
+        }
+        return this.permisoMaterial;
+    }
 }

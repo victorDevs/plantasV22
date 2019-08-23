@@ -74,47 +74,47 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
         jTxtRepeContrasena = new javax.swing.JPasswordField();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox33 = new javax.swing.JCheckBox();
+        jcbMaterialRegistrar = new javax.swing.JCheckBox();
+        jcbMaterialEditar = new javax.swing.JCheckBox();
+        jcbMaterialConsultar = new javax.swing.JCheckBox();
+        jcbMaterialEliminar = new javax.swing.JCheckBox();
+        jcbMaterialTodo = new javax.swing.JCheckBox();
         jPanel5 = new javax.swing.JPanel();
-        jCheckBox13 = new javax.swing.JCheckBox();
-        jCheckBox14 = new javax.swing.JCheckBox();
-        jCheckBox15 = new javax.swing.JCheckBox();
-        jCheckBox16 = new javax.swing.JCheckBox();
-        jCheckBox34 = new javax.swing.JCheckBox();
+        jcbProveedorRegistrar = new javax.swing.JCheckBox();
+        jcbProveedorEditar = new javax.swing.JCheckBox();
+        jcbProveedorConsultar = new javax.swing.JCheckBox();
+        jcbProveedorEliminar = new javax.swing.JCheckBox();
+        jcbProveedorTodo = new javax.swing.JCheckBox();
         jPanel4 = new javax.swing.JPanel();
-        jCheckBox9 = new javax.swing.JCheckBox();
-        jCheckBox10 = new javax.swing.JCheckBox();
-        jCheckBox11 = new javax.swing.JCheckBox();
-        jCheckBox12 = new javax.swing.JCheckBox();
-        jCheckBox35 = new javax.swing.JCheckBox();
+        jcbClienteRegistrar = new javax.swing.JCheckBox();
+        jcbClienteEditar = new javax.swing.JCheckBox();
+        jcbClienteConsultar = new javax.swing.JCheckBox();
+        jcbClienteEliminar = new javax.swing.JCheckBox();
+        jcbClienteTodo = new javax.swing.JCheckBox();
         jPanel6 = new javax.swing.JPanel();
-        jCheckBox17 = new javax.swing.JCheckBox();
-        jCheckBox18 = new javax.swing.JCheckBox();
-        jCheckBox19 = new javax.swing.JCheckBox();
-        jCheckBox20 = new javax.swing.JCheckBox();
-        jCheckBox36 = new javax.swing.JCheckBox();
+        jcbPersonalRegistrar = new javax.swing.JCheckBox();
+        jcbPersonalEditar = new javax.swing.JCheckBox();
+        jcbPersonalConsultar = new javax.swing.JCheckBox();
+        jcbPersonalEliminar = new javax.swing.JCheckBox();
+        jcbPersonalTodo = new javax.swing.JCheckBox();
         jPanel8 = new javax.swing.JPanel();
-        jCheckBox25 = new javax.swing.JCheckBox();
-        jCheckBox26 = new javax.swing.JCheckBox();
-        jCheckBox27 = new javax.swing.JCheckBox();
-        jCheckBox28 = new javax.swing.JCheckBox();
-        jCheckBox37 = new javax.swing.JCheckBox();
+        jcbPedidoRegistrar = new javax.swing.JCheckBox();
+        jcbPedidoEditar = new javax.swing.JCheckBox();
+        jcbPedidoConsultar = new javax.swing.JCheckBox();
+        jcbPedidoEliminar = new javax.swing.JCheckBox();
+        jcbPedidoTodo = new javax.swing.JCheckBox();
         jPanel7 = new javax.swing.JPanel();
-        jCheckBox21 = new javax.swing.JCheckBox();
-        jCheckBox22 = new javax.swing.JCheckBox();
-        jCheckBox23 = new javax.swing.JCheckBox();
-        jCheckBox24 = new javax.swing.JCheckBox();
-        jCheckBox38 = new javax.swing.JCheckBox();
+        jcbEstiloRegistrar = new javax.swing.JCheckBox();
+        jcbEstiloEditar = new javax.swing.JCheckBox();
+        jcbEstiloConsultar = new javax.swing.JCheckBox();
+        jcbEstiloEliminar = new javax.swing.JCheckBox();
+        jcbEstiloTodo = new javax.swing.JCheckBox();
         jPanel9 = new javax.swing.JPanel();
-        jCheckBox29 = new javax.swing.JCheckBox();
-        jCheckBox30 = new javax.swing.JCheckBox();
-        jCheckBox31 = new javax.swing.JCheckBox();
-        jCheckBox32 = new javax.swing.JCheckBox();
-        jCheckBox39 = new javax.swing.JCheckBox();
+        jcbUsuarioRegistrar = new javax.swing.JCheckBox();
+        jcbUsuarioEditar = new javax.swing.JCheckBox();
+        jcbUsuarioConsultar = new javax.swing.JCheckBox();
+        jcbUsuarioEliminar = new javax.swing.JCheckBox();
+        jcbUsuarioTodo = new javax.swing.JCheckBox();
 
         setClosable(true);
         setTitle("Catálago de Usuarios");
@@ -220,15 +220,20 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Catálogo Materiales"));
 
-        jCheckBox1.setText("Registrar");
+        jcbMaterialRegistrar.setText("Registrar");
 
-        jCheckBox2.setText("Editar");
+        jcbMaterialEditar.setText("Editar");
 
-        jCheckBox3.setText("Consultar");
+        jcbMaterialConsultar.setText("Consultar");
 
-        jCheckBox4.setText("Eliminar");
+        jcbMaterialEliminar.setText("Eliminar");
 
-        jCheckBox33.setText("Todo");
+        jcbMaterialTodo.setText("Todo");
+        jcbMaterialTodo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbMaterialTodoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -237,39 +242,44 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox33)
-                    .addComponent(jCheckBox4)
-                    .addComponent(jCheckBox3)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jCheckBox1))
+                    .addComponent(jcbMaterialTodo)
+                    .addComponent(jcbMaterialEliminar)
+                    .addComponent(jcbMaterialConsultar)
+                    .addComponent(jcbMaterialEditar)
+                    .addComponent(jcbMaterialRegistrar))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jCheckBox33)
+                .addComponent(jcbMaterialTodo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox1)
+                .addComponent(jcbMaterialRegistrar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox2)
+                .addComponent(jcbMaterialEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox3)
+                .addComponent(jcbMaterialConsultar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox4))
+                .addComponent(jcbMaterialEliminar))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Catálogo Proveedores"));
 
-        jCheckBox13.setText("Registrar");
+        jcbProveedorRegistrar.setText("Registrar");
 
-        jCheckBox14.setText("Editar");
+        jcbProveedorEditar.setText("Editar");
 
-        jCheckBox15.setText("Consultar");
+        jcbProveedorConsultar.setText("Consultar");
 
-        jCheckBox16.setText("Eliminar");
+        jcbProveedorEliminar.setText("Eliminar");
 
-        jCheckBox34.setText("Todo");
+        jcbProveedorTodo.setText("Todo");
+        jcbProveedorTodo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbProveedorTodoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -278,39 +288,44 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox34)
-                    .addComponent(jCheckBox16)
-                    .addComponent(jCheckBox15)
-                    .addComponent(jCheckBox14)
-                    .addComponent(jCheckBox13))
+                    .addComponent(jcbProveedorTodo)
+                    .addComponent(jcbProveedorEliminar)
+                    .addComponent(jcbProveedorConsultar)
+                    .addComponent(jcbProveedorEditar)
+                    .addComponent(jcbProveedorRegistrar))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jCheckBox34)
+                .addComponent(jcbProveedorTodo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox13)
+                .addComponent(jcbProveedorRegistrar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox14)
+                .addComponent(jcbProveedorEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox15)
+                .addComponent(jcbProveedorConsultar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox16))
+                .addComponent(jcbProveedorEliminar))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Catálogo Clientes"));
 
-        jCheckBox9.setText("Registrar");
+        jcbClienteRegistrar.setText("Registrar");
 
-        jCheckBox10.setText("Editar");
+        jcbClienteEditar.setText("Editar");
 
-        jCheckBox11.setText("Consultar");
+        jcbClienteConsultar.setText("Consultar");
 
-        jCheckBox12.setText("Eliminar");
+        jcbClienteEliminar.setText("Eliminar");
 
-        jCheckBox35.setText("Todo");
+        jcbClienteTodo.setText("Todo");
+        jcbClienteTodo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbClienteTodoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -319,39 +334,44 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox35)
-                    .addComponent(jCheckBox12)
-                    .addComponent(jCheckBox11)
-                    .addComponent(jCheckBox10)
-                    .addComponent(jCheckBox9))
+                    .addComponent(jcbClienteTodo)
+                    .addComponent(jcbClienteEliminar)
+                    .addComponent(jcbClienteConsultar)
+                    .addComponent(jcbClienteEditar)
+                    .addComponent(jcbClienteRegistrar))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCheckBox35)
+                .addComponent(jcbClienteTodo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jCheckBox9)
+                .addComponent(jcbClienteRegistrar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox10)
+                .addComponent(jcbClienteEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox11)
+                .addComponent(jcbClienteConsultar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox12))
+                .addComponent(jcbClienteEliminar))
         );
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Catálogo Personal"));
 
-        jCheckBox17.setText("Registrar");
+        jcbPersonalRegistrar.setText("Registrar");
 
-        jCheckBox18.setText("Editar");
+        jcbPersonalEditar.setText("Editar");
 
-        jCheckBox19.setText("Consultar");
+        jcbPersonalConsultar.setText("Consultar");
 
-        jCheckBox20.setText("Eliminar");
+        jcbPersonalEliminar.setText("Eliminar");
 
-        jCheckBox36.setText("Todo");
+        jcbPersonalTodo.setText("Todo");
+        jcbPersonalTodo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbPersonalTodoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -360,39 +380,44 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox36)
-                    .addComponent(jCheckBox20)
-                    .addComponent(jCheckBox19)
-                    .addComponent(jCheckBox18)
-                    .addComponent(jCheckBox17))
+                    .addComponent(jcbPersonalTodo)
+                    .addComponent(jcbPersonalEliminar)
+                    .addComponent(jcbPersonalConsultar)
+                    .addComponent(jcbPersonalEditar)
+                    .addComponent(jcbPersonalRegistrar))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jCheckBox36)
+                .addComponent(jcbPersonalTodo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox17)
+                .addComponent(jcbPersonalRegistrar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox18)
+                .addComponent(jcbPersonalEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox19)
+                .addComponent(jcbPersonalConsultar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox20))
+                .addComponent(jcbPersonalEliminar))
         );
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Catálogo Pedidos"));
 
-        jCheckBox25.setText("Registrar");
+        jcbPedidoRegistrar.setText("Registrar");
 
-        jCheckBox26.setText("Editar");
+        jcbPedidoEditar.setText("Editar");
 
-        jCheckBox27.setText("Consultar");
+        jcbPedidoConsultar.setText("Consultar");
 
-        jCheckBox28.setText("Eliminar");
+        jcbPedidoEliminar.setText("Eliminar");
 
-        jCheckBox37.setText("Todo");
+        jcbPedidoTodo.setText("Todo");
+        jcbPedidoTodo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbPedidoTodoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -401,39 +426,44 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox37)
-                    .addComponent(jCheckBox28)
-                    .addComponent(jCheckBox27)
-                    .addComponent(jCheckBox26)
-                    .addComponent(jCheckBox25))
+                    .addComponent(jcbPedidoTodo)
+                    .addComponent(jcbPedidoEliminar)
+                    .addComponent(jcbPedidoConsultar)
+                    .addComponent(jcbPedidoEditar)
+                    .addComponent(jcbPedidoRegistrar))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jCheckBox37)
+                .addComponent(jcbPedidoTodo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox25)
+                .addComponent(jcbPedidoRegistrar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox26)
+                .addComponent(jcbPedidoEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox27)
+                .addComponent(jcbPedidoConsultar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox28))
+                .addComponent(jcbPedidoEliminar))
         );
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Catálogo Estilos"));
 
-        jCheckBox21.setText("Registrar");
+        jcbEstiloRegistrar.setText("Registrar");
 
-        jCheckBox22.setText("Editar");
+        jcbEstiloEditar.setText("Editar");
 
-        jCheckBox23.setText("Consultar");
+        jcbEstiloConsultar.setText("Consultar");
 
-        jCheckBox24.setText("Eliminar");
+        jcbEstiloEliminar.setText("Eliminar");
 
-        jCheckBox38.setText("Todo");
+        jcbEstiloTodo.setText("Todo");
+        jcbEstiloTodo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbEstiloTodoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -442,39 +472,44 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox38)
-                    .addComponent(jCheckBox24)
-                    .addComponent(jCheckBox23)
-                    .addComponent(jCheckBox22)
-                    .addComponent(jCheckBox21))
+                    .addComponent(jcbEstiloTodo)
+                    .addComponent(jcbEstiloEliminar)
+                    .addComponent(jcbEstiloConsultar)
+                    .addComponent(jcbEstiloEditar)
+                    .addComponent(jcbEstiloRegistrar))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jCheckBox38)
+                .addComponent(jcbEstiloTodo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox21)
+                .addComponent(jcbEstiloRegistrar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox22)
+                .addComponent(jcbEstiloEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox23)
+                .addComponent(jcbEstiloConsultar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox24))
+                .addComponent(jcbEstiloEliminar))
         );
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Gestor de Usuarios"));
 
-        jCheckBox29.setText("Registrar");
+        jcbUsuarioRegistrar.setText("Registrar");
 
-        jCheckBox30.setText("Editar");
+        jcbUsuarioEditar.setText("Editar");
 
-        jCheckBox31.setText("Consultar");
+        jcbUsuarioConsultar.setText("Consultar");
 
-        jCheckBox32.setText("Eliminar");
+        jcbUsuarioEliminar.setText("Eliminar");
 
-        jCheckBox39.setText("Todo");
+        jcbUsuarioTodo.setText("Todo");
+        jcbUsuarioTodo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbUsuarioTodoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -483,26 +518,26 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox39)
-                    .addComponent(jCheckBox32)
-                    .addComponent(jCheckBox31)
-                    .addComponent(jCheckBox30)
-                    .addComponent(jCheckBox29))
+                    .addComponent(jcbUsuarioTodo)
+                    .addComponent(jcbUsuarioEliminar)
+                    .addComponent(jcbUsuarioConsultar)
+                    .addComponent(jcbUsuarioEditar)
+                    .addComponent(jcbUsuarioRegistrar))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jCheckBox39)
+                .addComponent(jcbUsuarioTodo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox29)
+                .addComponent(jcbUsuarioRegistrar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox30)
+                .addComponent(jcbUsuarioEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox31)
+                .addComponent(jcbUsuarioConsultar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox32))
+                .addComponent(jcbUsuarioEliminar))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -666,11 +701,501 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
             jTxtRepeContrasena.setText(usuarios.getContrasena());
             jTxtCorreo.setText(usuarios.getCorreo());
             jCBPerfil.setSelectedItem(usuarios.getPerfil());
+            
+            //VALIDAR SELECCIÓN DE PERMISOS
+            seleccinaPermisosMateriales();
+            seleccinaPermisosProveedores();
+            seleccinaPermisosClientes();
+            seleccinaPermisosPersonal();
+            seleccinaPermisosPedidos();
+            seleccinaPermisosEstilos();
+            seleccinaPermisosUsuarios();
         }
     }//GEN-LAST:event_jTableUsuariosMouseClicked
 
+    public void seleccinaPermisosMateriales(){
+        
+        if(usuarios.getMatPermisos().equals("CRUD")){limpiarCheckBoxsMateriales();jcbMaterialConsultar.setSelected(true);jcbMaterialRegistrar.setSelected(true);jcbMaterialEditar.setSelected(true);jcbMaterialEliminar.setSelected(true);jcbMaterialTodo.setSelected(true);}
+        else{
+            limpiarCheckBoxsMateriales();
+            if(usuarios.getMatPermisos().equals("C")){limpiarCheckBoxsMateriales();jcbMaterialConsultar.setSelected(true);}
+            else{
+                limpiarCheckBoxsMateriales();
+                if(usuarios.getMatPermisos().equals("CR")){limpiarCheckBoxsMateriales();jcbMaterialConsultar.setSelected(true);jcbMaterialRegistrar.setSelected(true);}
+                else{
+                    limpiarCheckBoxsMateriales();
+                    if(usuarios.getMatPermisos().equals("CU")){limpiarCheckBoxsMateriales();jcbMaterialConsultar.setSelected(true);jcbMaterialEditar.setSelected(true);}
+                    else{
+                        limpiarCheckBoxsMateriales();
+                        if(usuarios.getMatPermisos().equals("CD")){limpiarCheckBoxsMateriales();jcbMaterialConsultar.setSelected(true);jcbMaterialEliminar.setSelected(true);}
+                        else{
+                            limpiarCheckBoxsMateriales();
+                            if(usuarios.getMatPermisos().equals("R")){limpiarCheckBoxsMateriales();jcbMaterialRegistrar.setSelected(true);}
+                            else{
+                                limpiarCheckBoxsMateriales();
+                                if(usuarios.getMatPermisos().equals("RD")){limpiarCheckBoxsMateriales();jcbMaterialRegistrar.setSelected(true);jcbMaterialEliminar.setSelected(true);}
+                                else{
+                                    limpiarCheckBoxsMateriales();
+                                    if(usuarios.getMatPermisos().equals("RU")){limpiarCheckBoxsMateriales();jcbMaterialRegistrar.setSelected(true);jcbMaterialEditar.setSelected(true);}
+                                    else{
+                                        limpiarCheckBoxsMateriales();
+                                        if(usuarios.getMatPermisos().equals("U")){limpiarCheckBoxsMateriales();jcbMaterialEditar.setSelected(true);}
+                                        else{
+                                            limpiarCheckBoxsMateriales();
+                                            if(usuarios.getMatPermisos().equals("UD")){limpiarCheckBoxsMateriales();jcbMaterialEditar.setSelected(true);jcbMaterialEliminar.setSelected(true);}
+                                            else{
+                                                limpiarCheckBoxsMateriales();
+                                                if(usuarios.getMatPermisos().equals("D")){limpiarCheckBoxsMateriales();jcbMaterialEliminar.setSelected(true);}
+                                                else{
+                                                    limpiarCheckBoxsMateriales();
+                                                    if(usuarios.getMatPermisos().equals("CRU")){limpiarCheckBoxsMateriales();jcbMaterialConsultar.setSelected(true);jcbMaterialRegistrar.setSelected(true);jcbMaterialEditar.setSelected(true);}
+                                                    else{
+                                                        limpiarCheckBoxsMateriales();
+                                                        if(usuarios.getMatPermisos().equals("CUD")){limpiarCheckBoxsMateriales();jcbMaterialConsultar.setSelected(true);jcbMaterialEditar.setSelected(true);jcbMaterialEliminar.setSelected(true);}
+                                                        else{
+                                                            limpiarCheckBoxsMateriales();
+                                                            if(usuarios.getMatPermisos().equals("RUD")){limpiarCheckBoxsMateriales();jcbMaterialRegistrar.setSelected(true);jcbMaterialEditar.setSelected(true);jcbMaterialEliminar.setSelected(true);}
+                                                            else{
+                                                                limpiarCheckBoxsMateriales();
+                                                                if(usuarios.getMatPermisos().equals("CRD")){limpiarCheckBoxsMateriales();jcbMaterialConsultar.setSelected(true);jcbMaterialRegistrar.setSelected(true);jcbMaterialEliminar.setSelected(true);}
+                                                                else{
+                                                                    limpiarCheckBoxsMateriales();
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }  
+    }
+    public void seleccinaPermisosProveedores(){
+        
+        if(usuarios.getProPermisos().equals("CRUD")){limpiarCheckBoxProveedores();jcbProveedorConsultar.setSelected(true);jcbProveedorRegistrar.setSelected(true);jcbProveedorEditar.setSelected(true);jcbProveedorEliminar.setSelected(true);jcbProveedorTodo.setSelected(true);}
+        else{
+            limpiarCheckBoxProveedores();
+            if(usuarios.getProPermisos().equals("C")){limpiarCheckBoxProveedores();jcbProveedorConsultar.setSelected(true);}
+            else{
+                limpiarCheckBoxProveedores();
+                if(usuarios.getProPermisos().equals("CR")){limpiarCheckBoxProveedores();jcbProveedorConsultar.setSelected(true);jcbProveedorRegistrar.setSelected(true);}
+                else{
+                    limpiarCheckBoxProveedores();
+                    if(usuarios.getProPermisos().equals("CU")){limpiarCheckBoxProveedores();jcbProveedorConsultar.setSelected(true);jcbProveedorEditar.setSelected(true);}
+                    else{
+                        limpiarCheckBoxProveedores();
+                        if(usuarios.getProPermisos().equals("CD")){limpiarCheckBoxProveedores();jcbProveedorConsultar.setSelected(true);jcbProveedorEliminar.setSelected(true);}
+                        else{
+                            limpiarCheckBoxProveedores();
+                            if(usuarios.getProPermisos().equals("R")){limpiarCheckBoxProveedores();jcbProveedorRegistrar.setSelected(true);}
+                            else{
+                                limpiarCheckBoxProveedores();
+                                if(usuarios.getProPermisos().equals("RD")){limpiarCheckBoxProveedores();jcbProveedorRegistrar.setSelected(true);jcbProveedorEliminar.setSelected(true);}
+                                else{
+                                    limpiarCheckBoxProveedores();
+                                    if(usuarios.getProPermisos().equals("RU")){limpiarCheckBoxProveedores();jcbProveedorRegistrar.setSelected(true);jcbProveedorEditar.setSelected(true);}
+                                    else{
+                                        limpiarCheckBoxProveedores();
+                                        if(usuarios.getProPermisos().equals("U")){limpiarCheckBoxProveedores();jcbProveedorEditar.setSelected(true);}
+                                        else{
+                                            limpiarCheckBoxProveedores();
+                                            if(usuarios.getProPermisos().equals("D")){limpiarCheckBoxProveedores();jcbProveedorEliminar.setSelected(true);}
+                                            else{
+                                                limpiarCheckBoxProveedores();
+                                                if(usuarios.getProPermisos().equals("UD")){limpiarCheckBoxProveedores();jcbProveedorEditar.setSelected(true);jcbProveedorEliminar.setSelected(true);}
+                                                else{
+                                                    limpiarCheckBoxProveedores();
+                                                    if(usuarios.getProPermisos().equals("CRU")){limpiarCheckBoxProveedores();jcbProveedorConsultar.setSelected(true);jcbProveedorRegistrar.setSelected(true);jcbProveedorEditar.setSelected(true);}
+                                                    else{
+                                                        limpiarCheckBoxProveedores();
+                                                        if(usuarios.getProPermisos().equals("CUD")){limpiarCheckBoxProveedores();jcbProveedorConsultar.setSelected(true);jcbProveedorEditar.setSelected(true);jcbProveedorEliminar.setSelected(true);}
+                                                        else{
+                                                            limpiarCheckBoxProveedores();
+                                                            if(usuarios.getProPermisos().equals("RUD")){limpiarCheckBoxProveedores();jcbProveedorRegistrar.setSelected(true);jcbProveedorEditar.setSelected(true);jcbProveedorEliminar.setSelected(true);}
+                                                            else{
+                                                                limpiarCheckBoxProveedores();
+                                                                if(usuarios.getProPermisos().equals("CRD")){limpiarCheckBoxProveedores();jcbProveedorConsultar.setSelected(true);jcbProveedorRegistrar.setSelected(true);jcbProveedorEliminar.setSelected(true);}
+                                                                else{
+                                                                    limpiarCheckBoxProveedores();
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }  
+    }
+    
+    public void seleccinaPermisosClientes(){
+        
+        if(usuarios.getCliPermisos().equals("CRUD")){limpiarCheckBoxClientes();jcbClienteConsultar.setSelected(true);jcbClienteRegistrar.setSelected(true);jcbClienteEditar.setSelected(true);jcbClienteEliminar.setSelected(true);jcbClienteTodo.setSelected(true);}
+        else{
+            limpiarCheckBoxClientes();
+            if(usuarios.getCliPermisos().equals("C")){limpiarCheckBoxClientes();jcbClienteConsultar.setSelected(true);}
+            else{
+                limpiarCheckBoxClientes();
+                if(usuarios.getCliPermisos().equals("CR")){limpiarCheckBoxClientes();jcbClienteConsultar.setSelected(true);jcbClienteRegistrar.setSelected(true);}
+                else{
+                    limpiarCheckBoxClientes();
+                    if(usuarios.getCliPermisos().equals("CU")){limpiarCheckBoxClientes();jcbClienteConsultar.setSelected(true);jcbClienteEditar.setSelected(true);}
+                    else{
+                        limpiarCheckBoxClientes();
+                        if(usuarios.getCliPermisos().equals("CD")){limpiarCheckBoxClientes();jcbClienteConsultar.setSelected(true);jcbClienteEliminar.setSelected(true);}
+                        else{
+                            limpiarCheckBoxClientes();
+                            if(usuarios.getCliPermisos().equals("R")){limpiarCheckBoxClientes();jcbClienteRegistrar.setSelected(true);}
+                            else{
+                                limpiarCheckBoxClientes();
+                                if(usuarios.getCliPermisos().equals("RD")){limpiarCheckBoxClientes();jcbClienteRegistrar.setSelected(true);jcbClienteEliminar.setSelected(true);}
+                                else{
+                                    limpiarCheckBoxClientes();
+                                    if(usuarios.getCliPermisos().equals("RU")){limpiarCheckBoxClientes();jcbClienteRegistrar.setSelected(true);jcbClienteEditar.setSelected(true);}
+                                    else{
+                                        limpiarCheckBoxClientes();
+                                        if(usuarios.getCliPermisos().equals("U")){limpiarCheckBoxClientes();jcbClienteEditar.setSelected(true);}
+                                        else{
+                                            limpiarCheckBoxClientes();
+                                            if(usuarios.getCliPermisos().equals("D")){limpiarCheckBoxClientes();jcbClienteEliminar.setSelected(true);}
+                                            else{
+                                                limpiarCheckBoxClientes();
+                                                if(usuarios.getCliPermisos().equals("UD")){limpiarCheckBoxClientes();jcbClienteEditar.setSelected(true);jcbClienteEliminar.setSelected(true);}
+                                                else{
+                                                    limpiarCheckBoxClientes();
+                                                    if(usuarios.getCliPermisos().equals("CRU")){limpiarCheckBoxClientes();jcbClienteConsultar.setSelected(true);jcbClienteRegistrar.setSelected(true);jcbClienteEditar.setSelected(true);}
+                                                    else{
+                                                        limpiarCheckBoxClientes();
+                                                        if(usuarios.getCliPermisos().equals("CUD")){limpiarCheckBoxClientes();jcbClienteConsultar.setSelected(true);jcbClienteEditar.setSelected(true);jcbClienteEliminar.setSelected(true);}
+                                                        else{
+                                                            limpiarCheckBoxClientes();
+                                                            if(usuarios.getCliPermisos().equals("RUD")){limpiarCheckBoxClientes();jcbClienteRegistrar.setSelected(true);jcbClienteEditar.setSelected(true);jcbClienteEliminar.setSelected(true);}
+                                                            else{
+                                                                limpiarCheckBoxClientes();
+                                                                if(usuarios.getCliPermisos().equals("CRD")){limpiarCheckBoxClientes();jcbClienteConsultar.setSelected(true);jcbClienteRegistrar.setSelected(true);jcbClienteEliminar.setSelected(true);}
+                                                                else{
+                                                                    limpiarCheckBoxClientes();
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }  
+    }
+    
+    public void seleccinaPermisosPersonal(){
+        
+        if(usuarios.getPerPermisos().equals("CRUD")){limpiarCheckBoxPersonal();jcbPersonalConsultar.setSelected(true);jcbPersonalRegistrar.setSelected(true);jcbPersonalEditar.setSelected(true);jcbPersonalEliminar.setSelected(true);jcbPersonalTodo.setSelected(true);}
+        else{
+            limpiarCheckBoxPersonal();
+            if(usuarios.getPerPermisos().equals("C")){limpiarCheckBoxPersonal();jcbPersonalConsultar.setSelected(true);}
+            else{
+                limpiarCheckBoxPersonal();
+                if(usuarios.getPerPermisos().equals("CR")){limpiarCheckBoxPersonal();jcbPersonalConsultar.setSelected(true);jcbPersonalRegistrar.setSelected(true);}
+                else{
+                    limpiarCheckBoxPersonal();
+                    if(usuarios.getPerPermisos().equals("CU")){limpiarCheckBoxPersonal();jcbPersonalConsultar.setSelected(true);jcbPersonalEditar.setSelected(true);}
+                    else{
+                        limpiarCheckBoxPersonal();
+                        if(usuarios.getPerPermisos().equals("CD")){limpiarCheckBoxPersonal();jcbPersonalConsultar.setSelected(true);jcbPersonalEliminar.setSelected(true);}
+                        else{
+                            limpiarCheckBoxPersonal();
+                            if(usuarios.getPerPermisos().equals("R")){limpiarCheckBoxPersonal();jcbPersonalRegistrar.setSelected(true);}
+                            else{
+                                limpiarCheckBoxPersonal();
+                                if(usuarios.getPerPermisos().equals("RD")){limpiarCheckBoxPersonal();jcbPersonalRegistrar.setSelected(true);jcbPersonalEliminar.setSelected(true);}
+                                else{
+                                    limpiarCheckBoxPersonal();
+                                    if(usuarios.getPerPermisos().equals("RU")){limpiarCheckBoxPersonal();jcbPersonalRegistrar.setSelected(true);jcbPersonalEditar.setSelected(true);}
+                                    else{
+                                        limpiarCheckBoxPersonal();
+                                        if(usuarios.getPerPermisos().equals("U")){limpiarCheckBoxPersonal();jcbPersonalEditar.setSelected(true);}
+                                        else{
+                                            limpiarCheckBoxPersonal();
+                                            if(usuarios.getPerPermisos().equals("UD")){limpiarCheckBoxPersonal();jcbPersonalEditar.setSelected(true);jcbPersonalEliminar.setSelected(true);}
+                                            else{
+                                                limpiarCheckBoxPersonal();
+                                                if(usuarios.getPerPermisos().equals("D")){limpiarCheckBoxPersonal();jcbPersonalEliminar.setSelected(true);}
+                                                else{
+                                                    limpiarCheckBoxPersonal();
+                                                    if(usuarios.getPerPermisos().equals("CRU")){limpiarCheckBoxPersonal();jcbPersonalConsultar.setSelected(true);jcbPersonalRegistrar.setSelected(true);jcbPersonalEditar.setSelected(true);}
+                                                    else{
+                                                        limpiarCheckBoxPersonal();
+                                                        if(usuarios.getPerPermisos().equals("CUD")){limpiarCheckBoxPersonal();jcbPersonalConsultar.setSelected(true);jcbPersonalEditar.setSelected(true);jcbPersonalEliminar.setSelected(true);}
+                                                        else{
+                                                            limpiarCheckBoxPersonal();
+                                                            if(usuarios.getPerPermisos().equals("RUD")){limpiarCheckBoxPersonal();jcbPersonalRegistrar.setSelected(true);jcbPersonalEditar.setSelected(true);jcbPersonalEliminar.setSelected(true);}
+                                                            else{
+                                                                limpiarCheckBoxPersonal();
+                                                                if(usuarios.getPerPermisos().equals("CRD")){limpiarCheckBoxPersonal();jcbPersonalConsultar.setSelected(true);jcbPersonalRegistrar.setSelected(true);jcbPersonalEliminar.setSelected(true);}
+                                                                else{
+                                                                    limpiarCheckBoxPersonal();
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                } 
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }  
+    }
+    
+    public void seleccinaPermisosPedidos(){
+        
+        if(usuarios.getPedPermisos().equals("CRUD")){limpiarCheckBoxPedidos();jcbPedidoConsultar.setSelected(true);jcbPedidoRegistrar.setSelected(true);jcbPedidoEditar.setSelected(true);jcbPedidoEliminar.setSelected(true);jcbPedidoTodo.setSelected(true);}
+        else{
+            limpiarCheckBoxPedidos();
+            if(usuarios.getPedPermisos().equals("C")){limpiarCheckBoxPedidos();jcbPedidoConsultar.setSelected(true);}
+            else{
+                limpiarCheckBoxPedidos();
+                if(usuarios.getPedPermisos().equals("CR")){limpiarCheckBoxPedidos();jcbPedidoConsultar.setSelected(true);jcbPedidoRegistrar.setSelected(true);}
+                else{
+                    limpiarCheckBoxPedidos();
+                    if(usuarios.getPedPermisos().equals("CU")){limpiarCheckBoxPedidos();jcbPedidoConsultar.setSelected(true);jcbPedidoEditar.setSelected(true);}
+                    else{
+                        limpiarCheckBoxPedidos();
+                        if(usuarios.getPedPermisos().equals("CD")){limpiarCheckBoxPedidos();jcbPedidoConsultar.setSelected(true);jcbPedidoEliminar.setSelected(true);}
+                        else{
+                            limpiarCheckBoxPedidos();
+                            if(usuarios.getPedPermisos().equals("R")){limpiarCheckBoxPedidos();jcbPedidoRegistrar.setSelected(true);}
+                            else{
+                                limpiarCheckBoxPedidos();
+                                if(usuarios.getPedPermisos().equals("RD")){limpiarCheckBoxPedidos();jcbPedidoRegistrar.setSelected(true);jcbPedidoEliminar.setSelected(true);}
+                                else{
+                                    limpiarCheckBoxPedidos();
+                                    if(usuarios.getPedPermisos().equals("RU")){limpiarCheckBoxPedidos();jcbPedidoRegistrar.setSelected(true);jcbPedidoEditar.setSelected(true);}
+                                    else{
+                                        limpiarCheckBoxPedidos();
+                                        if(usuarios.getPedPermisos().equals("U")){limpiarCheckBoxPedidos();jcbPedidoEditar.setSelected(true);}
+                                        else{
+                                            limpiarCheckBoxPedidos();
+                                            if(usuarios.getPedPermisos().equals("UD")){limpiarCheckBoxPedidos();jcbPedidoEditar.setSelected(true);jcbPedidoEliminar.setSelected(true);}
+                                            else{
+                                                limpiarCheckBoxPedidos();
+                                                if(usuarios.getPedPermisos().equals("D")){limpiarCheckBoxPedidos();jcbPedidoEliminar.setSelected(true);}
+                                                else{
+                                                    limpiarCheckBoxPedidos();
+                                                    if(usuarios.getPedPermisos().equals("CRU")){limpiarCheckBoxPedidos();jcbPedidoConsultar.setSelected(true);jcbPedidoRegistrar.setSelected(true);jcbPedidoEditar.setSelected(true);}
+                                                    else{
+                                                        limpiarCheckBoxPedidos();
+                                                        if(usuarios.getPedPermisos().equals("CUD")){limpiarCheckBoxPedidos();jcbPedidoConsultar.setSelected(true);jcbPedidoEditar.setSelected(true);jcbPedidoEliminar.setSelected(true);}
+                                                        else{
+                                                            limpiarCheckBoxPedidos();
+                                                            if(usuarios.getPedPermisos().equals("RUD")){limpiarCheckBoxPedidos();jcbPedidoRegistrar.setSelected(true);jcbPedidoEditar.setSelected(true);jcbPedidoEliminar.setSelected(true);}
+                                                            else{
+                                                                limpiarCheckBoxPedidos();
+                                                                if(usuarios.getPedPermisos().equals("CRD")){limpiarCheckBoxPedidos();jcbPedidoConsultar.setSelected(true);jcbPedidoRegistrar.setSelected(true);jcbPedidoEliminar.setSelected(true);}
+                                                                else{
+                                                                    limpiarCheckBoxPedidos();
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }  
+    }
+    
+    public void seleccinaPermisosEstilos(){
+        
+        if(usuarios.getEstPermisos().equals("CRUD")){limpiarCheckBoxEstilos();jcbEstiloConsultar.setSelected(true);jcbEstiloRegistrar.setSelected(true);jcbEstiloEditar.setSelected(true);jcbEstiloEliminar.setSelected(true);jcbEstiloTodo.setSelected(true);}
+        else{
+            limpiarCheckBoxEstilos();
+            if(usuarios.getEstPermisos().equals("C")){limpiarCheckBoxEstilos();jcbEstiloConsultar.setSelected(true);}
+            else{
+                limpiarCheckBoxEstilos();
+                if(usuarios.getEstPermisos().equals("CR")){limpiarCheckBoxEstilos();jcbEstiloConsultar.setSelected(true);jcbEstiloRegistrar.setSelected(true);}
+                else{
+                    limpiarCheckBoxEstilos();
+                    if(usuarios.getEstPermisos().equals("CU")){limpiarCheckBoxEstilos();jcbEstiloConsultar.setSelected(true);jcbEstiloEditar.setSelected(true);}
+                    else{
+                        limpiarCheckBoxEstilos();
+                        if(usuarios.getEstPermisos().equals("CD")){limpiarCheckBoxEstilos();jcbEstiloConsultar.setSelected(true);jcbEstiloEliminar.setSelected(true);}
+                        else{
+                            limpiarCheckBoxEstilos();
+                            if(usuarios.getEstPermisos().equals("R")){limpiarCheckBoxEstilos();jcbEstiloRegistrar.setSelected(true);}
+                            else{
+                                limpiarCheckBoxEstilos();
+                                if(usuarios.getEstPermisos().equals("RD")){limpiarCheckBoxEstilos();jcbEstiloRegistrar.setSelected(true);jcbEstiloEliminar.setSelected(true);}
+                                else{
+                                    limpiarCheckBoxEstilos();
+                                    if(usuarios.getEstPermisos().equals("RU")){limpiarCheckBoxEstilos();jcbEstiloRegistrar.setSelected(true);jcbEstiloEditar.setSelected(true);}
+                                    else{
+                                        limpiarCheckBoxEstilos();
+                                        if(usuarios.getEstPermisos().equals("U")){limpiarCheckBoxEstilos();jcbEstiloEditar.setSelected(true);}
+                                        else{
+                                            limpiarCheckBoxEstilos();
+                                            if(usuarios.getEstPermisos().equals("UD")){limpiarCheckBoxEstilos();jcbEstiloEditar.setSelected(true);jcbEstiloEliminar.setSelected(true);}
+                                            else{
+                                                limpiarCheckBoxEstilos();
+                                                if(usuarios.getEstPermisos().equals("D")){limpiarCheckBoxEstilos();jcbEstiloEliminar.setSelected(true);}
+                                                else{
+                                                    limpiarCheckBoxEstilos();
+                                                    if(usuarios.getEstPermisos().equals("CRU")){limpiarCheckBoxEstilos();jcbEstiloConsultar.setSelected(true);jcbEstiloRegistrar.setSelected(true);jcbEstiloEditar.setSelected(true);}
+                                                    else{
+                                                        limpiarCheckBoxEstilos();
+                                                        if(usuarios.getEstPermisos().equals("CUD")){limpiarCheckBoxEstilos();jcbEstiloConsultar.setSelected(true);jcbEstiloEditar.setSelected(true);jcbEstiloEliminar.setSelected(true);}
+                                                        else{
+                                                            limpiarCheckBoxEstilos();
+                                                            if(usuarios.getEstPermisos().equals("RUD")){limpiarCheckBoxEstilos();jcbEstiloRegistrar.setSelected(true);jcbEstiloEditar.setSelected(true);jcbEstiloEliminar.setSelected(true);}
+                                                            else{
+                                                                limpiarCheckBoxEstilos();
+                                                                if(usuarios.getEstPermisos().equals("CRD")){limpiarCheckBoxEstilos();jcbEstiloConsultar.setSelected(true);jcbEstiloRegistrar.setSelected(true);jcbEstiloEliminar.setSelected(true);}
+                                                                else{
+                                                                    limpiarCheckBoxEstilos();
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                } 
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }  
+    }
+    
+     public void seleccinaPermisosUsuarios(){
+        
+        if(usuarios.getUsuPermisos().equals("CRUD")){limpiarCheckBoxUsuarios();jcbUsuarioConsultar.setSelected(true);jcbUsuarioRegistrar.setSelected(true);jcbUsuarioEditar.setSelected(true);jcbUsuarioEliminar.setSelected(true);jcbUsuarioTodo.setSelected(true);}
+        else{
+            limpiarCheckBoxUsuarios();
+            if(usuarios.getUsuPermisos().equals("C")){limpiarCheckBoxUsuarios();jcbUsuarioConsultar.setSelected(true);}
+            else{
+                limpiarCheckBoxUsuarios();
+                if(usuarios.getUsuPermisos().equals("CR")){limpiarCheckBoxUsuarios();jcbUsuarioConsultar.setSelected(true);jcbUsuarioRegistrar.setSelected(true);}
+                else{
+                    limpiarCheckBoxUsuarios();
+                    if(usuarios.getUsuPermisos().equals("CU")){limpiarCheckBoxUsuarios();jcbUsuarioConsultar.setSelected(true);jcbUsuarioEditar.setSelected(true);}
+                    else{
+                        limpiarCheckBoxUsuarios();
+                        if(usuarios.getUsuPermisos().equals("CD")){limpiarCheckBoxUsuarios();jcbUsuarioConsultar.setSelected(true);jcbUsuarioEliminar.setSelected(true);}
+                        else{
+                            limpiarCheckBoxUsuarios();
+                            if(usuarios.getUsuPermisos().equals("R")){limpiarCheckBoxUsuarios();jcbUsuarioRegistrar.setSelected(true);}
+                            else{
+                                limpiarCheckBoxUsuarios();
+                                if(usuarios.getUsuPermisos().equals("RD")){limpiarCheckBoxUsuarios();jcbUsuarioRegistrar.setSelected(true);jcbUsuarioEliminar.setSelected(true);}
+                                else{
+                                    limpiarCheckBoxUsuarios();
+                                    if(usuarios.getUsuPermisos().equals("RU")){limpiarCheckBoxUsuarios();jcbUsuarioRegistrar.setSelected(true);jcbUsuarioEditar.setSelected(true);}
+                                    else{
+                                        limpiarCheckBoxUsuarios();
+                                        if(usuarios.getUsuPermisos().equals("U")){limpiarCheckBoxUsuarios();jcbUsuarioEditar.setSelected(true);}
+                                        else{
+                                            limpiarCheckBoxUsuarios();
+                                            if(usuarios.getUsuPermisos().equals("UD")){limpiarCheckBoxUsuarios();jcbUsuarioEditar.setSelected(true);jcbUsuarioEliminar.setSelected(true);}
+                                            else{
+                                                limpiarCheckBoxUsuarios();
+                                                if(usuarios.getUsuPermisos().equals("CRU")){limpiarCheckBoxUsuarios();jcbUsuarioConsultar.setSelected(true);jcbUsuarioRegistrar.setSelected(true);jcbUsuarioEditar.setSelected(true);}
+                                                else{
+                                                    limpiarCheckBoxUsuarios();
+                                                    if(usuarios.getUsuPermisos().equals("CUD")){limpiarCheckBoxUsuarios();jcbUsuarioConsultar.setSelected(true);jcbUsuarioEditar.setSelected(true);jcbUsuarioEliminar.setSelected(true);}
+                                                    else{
+                                                        limpiarCheckBoxUsuarios();
+                                                        if(usuarios.getUsuPermisos().equals("RUD")){limpiarCheckBoxUsuarios();jcbUsuarioRegistrar.setSelected(true);jcbUsuarioEditar.setSelected(true);jcbUsuarioEliminar.setSelected(true);}
+                                                        else{
+                                                            limpiarCheckBoxUsuarios();
+                                                            if(usuarios.getUsuPermisos().equals("CRD")){limpiarCheckBoxUsuarios();jcbUsuarioConsultar.setSelected(true);jcbUsuarioRegistrar.setSelected(true);jcbUsuarioEliminar.setSelected(true);}
+                                                            else{
+                                                                limpiarCheckBoxUsuarios();
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }  
+    }
+    
     private void jbtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAgregarActionPerformed
-        // TODO add your handling code here:
+        int poderRegistrar=0;
+       //PERMISOS MATERIALES
+        if(jcbMaterialRegistrar.isSelected()){usuarios.setMatRegistrar("R"); poderRegistrar=1;}else{usuarios.setMatRegistrar("");}
+        if(jcbMaterialEditar.isSelected()){usuarios.setMatEditar("U");poderRegistrar=1;}else{usuarios.setMatEditar("");}
+        if(jcbMaterialConsultar.isSelected()){usuarios.setMatConsultar("C");poderRegistrar=1;}else{usuarios.setMatConsultar("");}
+        if(jcbMaterialEliminar.isSelected()){usuarios.setMatEliminar("D");poderRegistrar=1;}else{usuarios.setMatEliminar("");}
+        //PERMISOS PROVEEDORES
+        if(jcbProveedorRegistrar.isSelected()){usuarios.setProRegistrar("R");poderRegistrar=1;}else{usuarios.setProRegistrar("");}
+        if(jcbProveedorEditar.isSelected()){usuarios.setProEditar("U");poderRegistrar=1;}else{usuarios.setProEditar("");}
+        if(jcbProveedorConsultar.isSelected()){usuarios.setProConsultar("C");poderRegistrar=1;}else{usuarios.setProConsultar("");}
+        if(jcbProveedorEliminar.isSelected()){usuarios.setProEliminar("D");poderRegistrar=1;}else{usuarios.setProEliminar("");}
+        //PERMISOS CLIENTES
+        if(jcbClienteRegistrar.isSelected()){usuarios.setCliRegistrar("R");poderRegistrar=1;}else{usuarios.setCliRegistrar("");}
+        if(jcbClienteEditar.isSelected()){usuarios.setCliEditar("U");poderRegistrar=1;}else{usuarios.setCliEditar("");}
+        if(jcbClienteConsultar.isSelected()){usuarios.setCliConsultar("C");poderRegistrar=1;}else{usuarios.setCliConsultar("");}
+        if(jcbClienteEliminar.isSelected()){usuarios.setCliEliminar("D");poderRegistrar=1;}else{usuarios.setCliEliminar("");}
+        //PERMISOS PERSONAL
+        if(jcbPersonalRegistrar.isSelected()){usuarios.setPerRegistrar("R");poderRegistrar=1;}else{usuarios.setPerRegistrar("");}
+        if(jcbPersonalEditar.isSelected()){usuarios.setPerEditar("U");poderRegistrar=1;}else{usuarios.setPerEditar("");}
+        if(jcbPersonalConsultar.isSelected()){usuarios.setPerConsultar("C");poderRegistrar=1;}else{usuarios.setPerConsultar("");}
+        if(jcbPersonalEliminar.isSelected()){usuarios.setPerEliminar("D");poderRegistrar=1;}else{usuarios.setPerEliminar("");}
+        //PERMISOS PEDIDOS
+        if(jcbPedidoRegistrar.isSelected()){usuarios.setPedRegistrar("R");poderRegistrar=1;}else{usuarios.setPedRegistrar("");}
+        if(jcbPedidoEditar.isSelected()){usuarios.setPedEditar("U");poderRegistrar=1;}else{usuarios.setPedEditar("");}
+        if(jcbPedidoConsultar.isSelected()){usuarios.setPedConsultar("C");poderRegistrar=1;}else{usuarios.setPedConsultar("");}
+        if(jcbPedidoEliminar.isSelected()){usuarios.setPedEliminar("D");poderRegistrar=1;}else{usuarios.setPedEliminar("");}
+        //PERMISOS ESTILOS
+        if(jcbEstiloRegistrar.isSelected()){usuarios.setEstRegistrar("R");poderRegistrar=1;}else{usuarios.setEstRegistrar("");}
+        if(jcbEstiloEditar.isSelected()){usuarios.setEstEditar("U");poderRegistrar=1;}else{usuarios.setEstEditar("");}
+        if(jcbEstiloConsultar.isSelected()){usuarios.setEstConsultar("C");poderRegistrar=1;}else{usuarios.setEstConsultar("");}
+        if(jcbEstiloEliminar.isSelected()){usuarios.setEstEliminar("D");poderRegistrar=1;}else{usuarios.setEstEliminar("");}
+        //PERMISOS USUARIOS
+        if(jcbUsuarioRegistrar.isSelected()){usuarios.setUsuRegistrar("R");poderRegistrar=1;}else{usuarios.setUsuRegistrar("");}
+        if(jcbUsuarioEditar.isSelected()){usuarios.setUsuEditar("U");poderRegistrar=1;}else{usuarios.setUsuEditar("");}
+        if(jcbUsuarioConsultar.isSelected()){usuarios.setUsuConsultar("C");poderRegistrar=1;}else{usuarios.setUsuConsultar("");}
+        if(jcbUsuarioEliminar.isSelected()){usuarios.setUsuEliminar("D");poderRegistrar=1;}else{usuarios.setUsuEliminar("");}
+        
+       
         if (jTxtNombre.getText().equals("") || jCBPerfil.getSelectedIndex()==0
                 || jTxtUsuario.getText().equals("") || jTxtContrasena.getText().equals("") || jTxtRepeContrasena.equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
@@ -687,19 +1212,30 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
                         usuarios.setPerfil((String)jCBPerfil.getSelectedItem());
                         usuarios.setContrasena(jTxtContrasena.getText());
                         usuarios.setCorreo(jTxtCorreo.getText());
-                        try {
-                            usuarios.RegistraUsuario();
-    //                        ope.buscaUsuario();
-                            JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
-                                "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                            LimpiaCampos();
-                            MetodosGlobales.LimpiaTabla(jTableUsuarios);
-                            usuarios.TablaConsultaUsuarios();
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(rootPane, "No se registro el operador",
-                                "Error",JOptionPane.ERROR_MESSAGE);
-                            System.out.println("Error al regiatrar un operador: "+e);
-                            BD.cerrarConexion();
+                        if(poderRegistrar == 1){//VALIDA SI SE HA SELECCIONADO ALGÚN PERMISO
+                            try {
+                                usuarios.RegistraUsuario();
+        //                        ope.buscaUsuario();
+                                JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
+                                    "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                                LimpiaCampos();
+                                MetodosGlobales.LimpiaTabla(jTableUsuarios);
+                                usuarios.TablaConsultaUsuarios();
+                                limpiarCheckBoxsMateriales();
+                                limpiarCheckBoxProveedores();
+                                limpiarCheckBoxClientes();
+                                limpiarCheckBoxPersonal();
+                                limpiarCheckBoxPedidos();
+                                limpiarCheckBoxEstilos();
+                                limpiarCheckBoxUsuarios();
+                            } catch (Exception e) {
+                                JOptionPane.showMessageDialog(rootPane, "No se registro el operador",
+                                    "Error",JOptionPane.ERROR_MESSAGE);
+                                System.out.println("Error al regiatrar un operador: "+e);
+                                BD.cerrarConexion();
+                            }
+                        }else{
+                            JOptionPane.showMessageDialog(rootPane, "Selecciona algún permiso","Aviso",JOptionPane.WARNING_MESSAGE);
                         }
                     }else{
                         JOptionPane.showMessageDialog(rootPane, "Error de conexión",
@@ -716,6 +1252,44 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbtnAgregarActionPerformed
 
     private void jbtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnModificarActionPerformed
+         int poderRegistrar=0;
+        //PERMISOS MATERIALES
+        if(jcbMaterialRegistrar.isSelected()){usuarios.setMatRegistrar("R"); poderRegistrar=1;}else{usuarios.setMatRegistrar("");}
+        if(jcbMaterialEditar.isSelected()){usuarios.setMatEditar("U");poderRegistrar=1;}else{usuarios.setMatEditar("");}
+        if(jcbMaterialConsultar.isSelected()){usuarios.setMatConsultar("C");poderRegistrar=1;}else{usuarios.setMatConsultar("");}
+        if(jcbMaterialEliminar.isSelected()){usuarios.setMatEliminar("D");poderRegistrar=1;}else{usuarios.setMatEliminar("");}
+        //PERMISOS PROVEEDORES
+        if(jcbProveedorRegistrar.isSelected()){usuarios.setProRegistrar("R");poderRegistrar=1;}else{usuarios.setProRegistrar("");}
+        if(jcbProveedorEditar.isSelected()){usuarios.setProEditar("U");poderRegistrar=1;}else{usuarios.setProEditar("");}
+        if(jcbProveedorConsultar.isSelected()){usuarios.setProConsultar("C");poderRegistrar=1;}else{usuarios.setProConsultar("");}
+        if(jcbProveedorEliminar.isSelected()){usuarios.setProEliminar("D");poderRegistrar=1;}else{usuarios.setProEliminar("");}
+        //PERMISOS CLIENTES
+        if(jcbClienteRegistrar.isSelected()){usuarios.setCliRegistrar("R");poderRegistrar=1;}else{usuarios.setCliRegistrar("");}
+        if(jcbClienteEditar.isSelected()){usuarios.setCliEditar("U");poderRegistrar=1;}else{usuarios.setCliEditar("");}
+        if(jcbClienteConsultar.isSelected()){usuarios.setCliConsultar("C");poderRegistrar=1;}else{usuarios.setCliConsultar("");}
+        if(jcbClienteEliminar.isSelected()){usuarios.setCliEliminar("D");poderRegistrar=1;}else{usuarios.setCliEliminar("");}
+        //PERMISOS PERSONAL
+        if(jcbPersonalRegistrar.isSelected()){usuarios.setPerRegistrar("R");poderRegistrar=1;}else{usuarios.setPerRegistrar("");}
+        if(jcbPersonalEditar.isSelected()){usuarios.setPerEditar("U");poderRegistrar=1;}else{usuarios.setPerEditar("");}
+        if(jcbPersonalConsultar.isSelected()){usuarios.setPerConsultar("C");poderRegistrar=1;}else{usuarios.setPerConsultar("");}
+        if(jcbPersonalEliminar.isSelected()){usuarios.setPerEliminar("D");poderRegistrar=1;}else{usuarios.setPerEliminar("");}
+        //PERMISOS PEDIDOS
+        if(jcbPedidoRegistrar.isSelected()){usuarios.setPedRegistrar("R");poderRegistrar=1;}else{usuarios.setPedRegistrar("");}
+        if(jcbPedidoEditar.isSelected()){usuarios.setPedEditar("U");poderRegistrar=1;}else{usuarios.setPedEditar("");}
+        if(jcbPedidoConsultar.isSelected()){usuarios.setPedConsultar("C");poderRegistrar=1;}else{usuarios.setPedConsultar("");}
+        if(jcbPedidoEliminar.isSelected()){usuarios.setPedEliminar("D");poderRegistrar=1;}else{usuarios.setPedEliminar("");}
+        //PERMISOS ESTILOS
+        if(jcbEstiloRegistrar.isSelected()){usuarios.setEstRegistrar("R");poderRegistrar=1;}else{usuarios.setEstRegistrar("");}
+        if(jcbEstiloEditar.isSelected()){usuarios.setEstEditar("U");poderRegistrar=1;}else{usuarios.setEstEditar("");}
+        if(jcbEstiloConsultar.isSelected()){usuarios.setEstConsultar("C");poderRegistrar=1;}else{usuarios.setEstConsultar("");}
+        if(jcbEstiloEliminar.isSelected()){usuarios.setEstEliminar("D");poderRegistrar=1;}else{usuarios.setEstEliminar("");}
+        //PERMISOS USUARIOS
+        if(jcbUsuarioRegistrar.isSelected()){usuarios.setUsuRegistrar("R");poderRegistrar=1;}else{usuarios.setUsuRegistrar("");}
+        if(jcbUsuarioEditar.isSelected()){usuarios.setUsuEditar("U");poderRegistrar=1;}else{usuarios.setUsuEditar("");}
+        if(jcbUsuarioConsultar.isSelected()){usuarios.setUsuConsultar("C");poderRegistrar=1;}else{usuarios.setUsuConsultar("");}
+        if(jcbUsuarioEliminar.isSelected()){usuarios.setUsuEliminar("D");poderRegistrar=1;}else{usuarios.setUsuEliminar("");}
+        
+        
         if(metodosGlobales.validaCorreo(jTxtCorreo.getText())==false){
                 JOptionPane.showMessageDialog(rootPane, "El correo es incorrecto",
                                 "Aviso",JOptionPane.WARNING_MESSAGE);
@@ -734,21 +1308,32 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
                             usuarios.setPerfil((String)jCBPerfil.getSelectedItem());
                             usuarios.setUsuario(jTxtUsuario.getText());
                             usuarios.setContrasena(jTxtContrasena.getText());
-                            usuarios.setCorreo(jTxtCorreo.getText());                            
-                            try {
-                                usuarios.ActualizarUsuario(jTableUsuarios);
-                                JOptionPane.showMessageDialog(rootPane, "Actualización exitosa",
-                                    "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                                LimpiaCampos();
-                                MetodosGlobales.LimpiaTabla(jTableUsuarios);
-                                usuarios.TablaConsultaUsuarios();
-                                jbtnModificar.setEnabled(false);
-                                jbtnEliminar.setEnabled(false);
-                                jbtnAgregar.setEnabled(true);
-                            } catch (Exception e) {
-                                JOptionPane.showMessageDialog(rootPane, "No se actualizó el usuario: "+e,
-                                    "Error",JOptionPane.ERROR_MESSAGE);
-                                BD.cerrarConexion();
+                            usuarios.setCorreo(jTxtCorreo.getText()); 
+                            if(poderRegistrar == 1){//VALIDA SI SE HA SELECCIONADO ALGÚN PERMISO
+                                try {
+                                    usuarios.ActualizarUsuario(jTableUsuarios);
+                                    JOptionPane.showMessageDialog(rootPane, "Actualización exitosa",
+                                        "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                                    LimpiaCampos();
+                                    MetodosGlobales.LimpiaTabla(jTableUsuarios);
+                                    usuarios.TablaConsultaUsuarios();
+                                    jbtnModificar.setEnabled(false);
+                                    jbtnEliminar.setEnabled(false);
+                                    jbtnAgregar.setEnabled(true);
+                                    limpiarCheckBoxsMateriales();
+                                    limpiarCheckBoxProveedores();
+                                    limpiarCheckBoxClientes();
+                                    limpiarCheckBoxPersonal();
+                                    limpiarCheckBoxPedidos();
+                                    limpiarCheckBoxEstilos();
+                                    limpiarCheckBoxUsuarios();
+                                } catch (Exception e) {
+                                    JOptionPane.showMessageDialog(rootPane, "No se actualizó el usuario: "+e,
+                                        "Error",JOptionPane.ERROR_MESSAGE);
+                                    BD.cerrarConexion();
+                                }
+                            }else{
+                                JOptionPane.showMessageDialog(rootPane, "Selecciona algún permiso","Aviso",JOptionPane.WARNING_MESSAGE);
                             }
                         }else{
                             JOptionPane.showMessageDialog(rootPane, "Error de conexión",
@@ -768,6 +1353,13 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
     private void jbtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLimpiarActionPerformed
         LimpiaCampos();
         jbtnLimpiar.setSelected(false);
+        limpiarCheckBoxsMateriales();
+        limpiarCheckBoxProveedores();
+        limpiarCheckBoxClientes();
+        limpiarCheckBoxPersonal();
+        limpiarCheckBoxPedidos();
+        limpiarCheckBoxEstilos();
+        limpiarCheckBoxUsuarios();
     }//GEN-LAST:event_jbtnLimpiarActionPerformed
 
     private void jbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEliminarActionPerformed
@@ -821,6 +1413,106 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jCBPerfilActionPerformed
 
+    private void jcbMaterialTodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbMaterialTodoMouseClicked
+        if(jcbMaterialTodo.isSelected()){
+            jcbMaterialRegistrar.setSelected(true);
+            jcbMaterialEditar.setSelected(true);
+            jcbMaterialConsultar.setSelected(true);
+            jcbMaterialEliminar.setSelected(true);
+        }else{
+            jcbMaterialRegistrar.setSelected(false);
+            jcbMaterialEditar.setSelected(false);
+            jcbMaterialConsultar.setSelected(false);
+            jcbMaterialEliminar.setSelected(false);
+        }
+        
+    }//GEN-LAST:event_jcbMaterialTodoMouseClicked
+
+    private void jcbProveedorTodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbProveedorTodoMouseClicked
+        if(jcbProveedorTodo.isSelected()){
+            jcbProveedorRegistrar.setSelected(true);
+            jcbProveedorEditar.setSelected(true);
+            jcbProveedorConsultar.setSelected(true);
+            jcbProveedorEliminar.setSelected(true);
+        }else{
+            jcbProveedorRegistrar.setSelected(false);
+            jcbProveedorEditar.setSelected(false);
+            jcbProveedorConsultar.setSelected(false);
+            jcbProveedorEliminar.setSelected(false);
+        }
+    }//GEN-LAST:event_jcbProveedorTodoMouseClicked
+
+    private void jcbClienteTodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbClienteTodoMouseClicked
+        if(jcbClienteTodo.isSelected()){
+            jcbClienteRegistrar.setSelected(true);
+            jcbClienteEditar.setSelected(true);
+            jcbClienteConsultar.setSelected(true);
+            jcbClienteEliminar.setSelected(true);
+        }else{
+            jcbClienteRegistrar.setSelected(false);
+            jcbClienteEditar.setSelected(false);
+            jcbClienteConsultar.setSelected(false);
+            jcbClienteEliminar.setSelected(false);
+        }
+        
+    }//GEN-LAST:event_jcbClienteTodoMouseClicked
+
+    private void jcbPersonalTodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbPersonalTodoMouseClicked
+        if(jcbPersonalTodo.isSelected()){
+           jcbPersonalRegistrar.setSelected(true);
+            jcbPersonalEditar.setSelected(true);      
+            jcbPersonalConsultar.setSelected(true);
+            jcbPersonalEliminar.setSelected(true); 
+        }else{
+            jcbPersonalRegistrar.setSelected(false);
+            jcbPersonalEditar.setSelected(false);      
+            jcbPersonalConsultar.setSelected(false);
+            jcbPersonalEliminar.setSelected(false);
+        }
+    }//GEN-LAST:event_jcbPersonalTodoMouseClicked
+
+    private void jcbPedidoTodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbPedidoTodoMouseClicked
+        if(jcbPedidoTodo.isSelected()){
+            jcbPedidoRegistrar.setSelected(true);
+            jcbPedidoEditar.setSelected(true);      
+            jcbPedidoConsultar.setSelected(true);
+            jcbPedidoEliminar.setSelected(true); 
+        }else{
+            jcbPedidoRegistrar.setSelected(false);
+            jcbPedidoEditar.setSelected(false);      
+            jcbPedidoConsultar.setSelected(false);
+            jcbPedidoEliminar.setSelected(false);
+        }
+    }//GEN-LAST:event_jcbPedidoTodoMouseClicked
+
+    private void jcbEstiloTodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbEstiloTodoMouseClicked
+        if(jcbEstiloTodo.isSelected()){
+            jcbEstiloRegistrar.setSelected(true);
+            jcbEstiloEditar.setSelected(true);      
+            jcbEstiloConsultar.setSelected(true);
+            jcbEstiloEliminar.setSelected(true);
+        }else{
+            jcbEstiloRegistrar.setSelected(false);
+            jcbEstiloEditar.setSelected(false);      
+            jcbEstiloConsultar.setSelected(false);
+            jcbEstiloEliminar.setSelected(false);
+        }
+    }//GEN-LAST:event_jcbEstiloTodoMouseClicked
+
+    private void jcbUsuarioTodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbUsuarioTodoMouseClicked
+        if(jcbUsuarioTodo.isSelected()){
+            jcbUsuarioRegistrar.setSelected(true);
+            jcbUsuarioEditar.setSelected(true);      
+            jcbUsuarioConsultar.setSelected(true);
+            jcbUsuarioEliminar.setSelected(true);
+        }else{
+            jcbUsuarioRegistrar.setSelected(false);
+            jcbUsuarioEditar.setSelected(false);      
+            jcbUsuarioConsultar.setSelected(false);
+            jcbUsuarioEliminar.setSelected(false);
+        }
+    }//GEN-LAST:event_jcbUsuarioTodoMouseClicked
+
     
      public void LimpiaTablaUsuarios(){
         try {
@@ -851,44 +1543,65 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
         jbtnModificar.setEnabled(false);
         jbtnLimpiar.setEnabled(true);
     }
+    
+    public void limpiarCheckBoxsMateriales(){
+        jcbMaterialTodo.setSelected(false);
+        jcbMaterialRegistrar.setSelected(false);
+        jcbMaterialEditar.setSelected(false);
+        jcbMaterialConsultar.setSelected(false);
+        jcbMaterialEliminar.setSelected(false);
+    }
+    
+    public void limpiarCheckBoxProveedores(){
+        jcbProveedorTodo.setSelected(false);
+        jcbProveedorRegistrar.setSelected(false);
+        jcbProveedorEditar.setSelected(false);
+        jcbProveedorConsultar.setSelected(false);
+        jcbProveedorEliminar.setSelected(false);
+    }
+    
+    public void limpiarCheckBoxClientes(){
+        jcbClienteTodo.setSelected(false);
+        jcbClienteRegistrar.setSelected(false);
+        jcbClienteEditar.setSelected(false);
+        jcbClienteConsultar.setSelected(false);
+        jcbClienteEliminar.setSelected(false);
+    }
+    
+    public void limpiarCheckBoxPersonal(){  
+        jcbPersonalTodo.setSelected(false);
+        jcbPersonalRegistrar.setSelected(false);
+        jcbPersonalEditar.setSelected(false);      
+        jcbPersonalConsultar.setSelected(false);
+        jcbPersonalEliminar.setSelected(false); 
+    }
+    
+    public void limpiarCheckBoxPedidos(){
+        jcbPedidoTodo.setSelected(false);
+        jcbPedidoRegistrar.setSelected(false);
+        jcbPedidoEditar.setSelected(false);      
+        jcbPedidoConsultar.setSelected(false);
+        jcbPedidoEliminar.setSelected(false); 
+    }
+    
+    public void limpiarCheckBoxEstilos(){
+        jcbEstiloTodo.setSelected(false);
+        jcbEstiloRegistrar.setSelected(false);
+        jcbEstiloEditar.setSelected(false);      
+        jcbEstiloConsultar.setSelected(false);
+        jcbEstiloEliminar.setSelected(false);
+    }
+    
+    public void limpiarCheckBoxUsuarios(){
+        jcbUsuarioTodo.setSelected(false);
+        jcbUsuarioRegistrar.setSelected(false);
+        jcbUsuarioEditar.setSelected(false);      
+        jcbUsuarioConsultar.setSelected(false);
+        jcbUsuarioEliminar.setSelected(false);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JComboBox<String> jCBPerfil;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox10;
-    private javax.swing.JCheckBox jCheckBox11;
-    private javax.swing.JCheckBox jCheckBox12;
-    private javax.swing.JCheckBox jCheckBox13;
-    private javax.swing.JCheckBox jCheckBox14;
-    private javax.swing.JCheckBox jCheckBox15;
-    private javax.swing.JCheckBox jCheckBox16;
-    private javax.swing.JCheckBox jCheckBox17;
-    private javax.swing.JCheckBox jCheckBox18;
-    private javax.swing.JCheckBox jCheckBox19;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox20;
-    private javax.swing.JCheckBox jCheckBox21;
-    private javax.swing.JCheckBox jCheckBox22;
-    private javax.swing.JCheckBox jCheckBox23;
-    private javax.swing.JCheckBox jCheckBox24;
-    private javax.swing.JCheckBox jCheckBox25;
-    private javax.swing.JCheckBox jCheckBox26;
-    private javax.swing.JCheckBox jCheckBox27;
-    private javax.swing.JCheckBox jCheckBox28;
-    private javax.swing.JCheckBox jCheckBox29;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox30;
-    private javax.swing.JCheckBox jCheckBox31;
-    private javax.swing.JCheckBox jCheckBox32;
-    private javax.swing.JCheckBox jCheckBox33;
-    private javax.swing.JCheckBox jCheckBox34;
-    private javax.swing.JCheckBox jCheckBox35;
-    private javax.swing.JCheckBox jCheckBox36;
-    private javax.swing.JCheckBox jCheckBox37;
-    private javax.swing.JCheckBox jCheckBox38;
-    private javax.swing.JCheckBox jCheckBox39;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -915,5 +1628,40 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
     public static javax.swing.JButton jbtnEliminar;
     public static javax.swing.JButton jbtnLimpiar;
     public static javax.swing.JButton jbtnModificar;
+    private javax.swing.JCheckBox jcbClienteConsultar;
+    private javax.swing.JCheckBox jcbClienteEditar;
+    private javax.swing.JCheckBox jcbClienteEliminar;
+    private javax.swing.JCheckBox jcbClienteRegistrar;
+    private javax.swing.JCheckBox jcbClienteTodo;
+    private javax.swing.JCheckBox jcbEstiloConsultar;
+    private javax.swing.JCheckBox jcbEstiloEditar;
+    private javax.swing.JCheckBox jcbEstiloEliminar;
+    private javax.swing.JCheckBox jcbEstiloRegistrar;
+    private javax.swing.JCheckBox jcbEstiloTodo;
+    private javax.swing.JCheckBox jcbMaterialConsultar;
+    private javax.swing.JCheckBox jcbMaterialEditar;
+    private javax.swing.JCheckBox jcbMaterialEliminar;
+    private javax.swing.JCheckBox jcbMaterialRegistrar;
+    private javax.swing.JCheckBox jcbMaterialTodo;
+    private javax.swing.JCheckBox jcbPedidoConsultar;
+    private javax.swing.JCheckBox jcbPedidoEditar;
+    private javax.swing.JCheckBox jcbPedidoEliminar;
+    private javax.swing.JCheckBox jcbPedidoRegistrar;
+    private javax.swing.JCheckBox jcbPedidoTodo;
+    private javax.swing.JCheckBox jcbPersonalConsultar;
+    private javax.swing.JCheckBox jcbPersonalEditar;
+    private javax.swing.JCheckBox jcbPersonalEliminar;
+    private javax.swing.JCheckBox jcbPersonalRegistrar;
+    private javax.swing.JCheckBox jcbPersonalTodo;
+    private javax.swing.JCheckBox jcbProveedorConsultar;
+    private javax.swing.JCheckBox jcbProveedorEditar;
+    private javax.swing.JCheckBox jcbProveedorEliminar;
+    private javax.swing.JCheckBox jcbProveedorRegistrar;
+    private javax.swing.JCheckBox jcbProveedorTodo;
+    private javax.swing.JCheckBox jcbUsuarioConsultar;
+    private javax.swing.JCheckBox jcbUsuarioEditar;
+    private javax.swing.JCheckBox jcbUsuarioEliminar;
+    private javax.swing.JCheckBox jcbUsuarioRegistrar;
+    private javax.swing.JCheckBox jcbUsuarioTodo;
     // End of variables declaration//GEN-END:variables
 }

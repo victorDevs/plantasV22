@@ -26,8 +26,7 @@ public class Main extends javax.swing.JFrame {
     
     //GENERAR VARIABLE PARA QUE POSTERIORMENTE SEA UTILIZADO EL DESKTOPANEL
     validaJframeAbreUnaVez validajFraAbreUnaVez;
-    
-    
+    //CatalogoMateriales catMateriales = new CatalogoMateriales();
     
 
     
@@ -49,6 +48,7 @@ public class Main extends javax.swing.JFrame {
         
         menuCatalogos.setVisible(false);
         subMenuUsuarios.setVisible(false);
+        subMenuCerrarSesion.setVisible(false);
         
         jMenuBar1.addComponentListener(new java.awt.event.ComponentAdapter() {
 	public void componentResized(java.awt.event.ComponentEvent evt) {
@@ -84,6 +84,7 @@ public class Main extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         subMenuUsuarios = new javax.swing.JMenuItem();
         subMenuSalir = new javax.swing.JMenuItem();
+        subMenuCerrarSesion = new javax.swing.JMenuItem();
         menuCatalogos = new javax.swing.JMenu();
         subMenuCatMateriales = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
@@ -124,6 +125,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jMenu1.add(subMenuSalir);
+
+        subMenuCerrarSesion.setText("Cerrar Sesión");
+        subMenuCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuCerrarSesionActionPerformed(evt);
+            }
+        });
+        jMenu1.add(subMenuCerrarSesion);
 
         jMenuBar1.add(jMenu1);
 
@@ -265,8 +274,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void subMenuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuSalirActionPerformed
-        if (JOptionPane.showConfirmDialog(rootPane, "Esta seguro de salir",
-                    "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+        if (JOptionPane.showConfirmDialog(rootPane, "Esta seguro de salir", "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
             this.dispose();
         } 
         
@@ -287,6 +295,19 @@ public class Main extends javax.swing.JFrame {
     private void subMenuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuUsuariosActionPerformed
         validajFraAbreUnaVez.abrirInternalFrameUsuarios(CatalogoUsuarios.getInstancia());
     }//GEN-LAST:event_subMenuUsuariosActionPerformed
+
+    private void subMenuCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subMenuCerrarSesionActionPerformed
+        
+        if (JOptionPane.showConfirmDialog(rootPane, "Esta seguro de Cerrar Sesión", "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+            validajFraAbreUnaVez.abrirInternalFrameLogin(LoginInternal.getInstancia());
+            menuCatalogos.setVisible(false);
+            subMenuUsuarios.setVisible(false);
+            subMenuCerrarSesion.setVisible(false);
+            menuNomUsuario.setText("Iniciar Sesión");
+            
+            //catMateriales.dispose();
+        }
+    }//GEN-LAST:event_subMenuCerrarSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -335,6 +356,7 @@ public class Main extends javax.swing.JFrame {
     public static javax.swing.JMenu menuCatalogos;
     public static javax.swing.JMenu menuNomUsuario;
     private javax.swing.JCheckBoxMenuItem subMenuCatMateriales;
+    public static javax.swing.JMenuItem subMenuCerrarSesion;
     private javax.swing.JMenuItem subMenuSalir;
     public static javax.swing.JMenuItem subMenuUsuarios;
     // End of variables declaration//GEN-END:variables

@@ -145,6 +145,7 @@ public class LoginInternal extends javax.swing.JInternalFrame {
                     //main.setVisible(true);
                     Main.menuCatalogos.setVisible(true);
                     Main.subMenuUsuarios.setVisible(true);
+                    Main.subMenuCerrarSesion.setVisible(true);
 
                 }else{
                     JOptionPane.showMessageDialog(rootPane, "Usuario o contraseña incorrecto",

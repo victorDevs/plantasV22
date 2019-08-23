@@ -9,15 +9,12 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.LoginModel;
 import modelo.Materiales;
 import persistencia.BD;
-import persistencia.IconCellRenderer;
-import persistencia.MaterialesPersistencia;
 import persistencia.MetodosGlobales;
 
 /**
@@ -27,6 +24,7 @@ import persistencia.MetodosGlobales;
 public class CatalogoMateriales extends javax.swing.JInternalFrame {
 
     Materiales materiales = new Materiales();
+    LoginModel login = new LoginModel();
     
     //OBJETITO PARA HACER UNA INSTANCIA
     private static CatalogoMateriales catalogoMateriales;
@@ -50,7 +48,12 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
         jbtnModificarMaterial.setEnabled(false);
         
         MetodosGlobales.LimpiaTabla(jTableMateriales);
-        materiales.TablaConsultaMateriales();        
+        materiales.TablaConsultaMateriales(); 
+        
+        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("R")){
+            jbtnEliminarMaterial.setVisible(false);
+            jbtnModificarMaterial.setVisible(false);
+        }
         
 //        DefaultTableModel modelo = (DefaultTableModel)jTableProveedoresMaterial.getModel();
 //        jTableProveedoresMaterial.setDefaultRenderer(Object.class, new IconCellRenderer());
