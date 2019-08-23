@@ -87,7 +87,7 @@ public class LoginModel {
         try {
             BD.conectarBD();
             String sql = "select idUsuario,nombre,materialPermiso from usuarios "
-                + "where nombre = '"+usuario+"'";
+                + "where usuario = '"+usuario+"'";
             rs = BD.ejecutarSQLSelect(sql);
             rsm = rs.getMetaData();
             if (rs.next()) {

@@ -50,9 +50,28 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
         MetodosGlobales.LimpiaTabla(jTableMateriales);
         materiales.TablaConsultaMateriales(); 
         
-        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("R")){
+        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("C")){
             jbtnEliminarMaterial.setVisible(false);
             jbtnModificarMaterial.setVisible(false);
+            jbtnAgregarMaterial.setVisible(false);
+            jbtnAgregarProveedorMaterial.setVisible(false);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setWidth(0);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setMinWidth(0);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setMaxWidth(0);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setWidth(0);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setMinWidth(0);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setMaxWidth(0);
+        }
+        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("R")){
+            jBtnBuscarMaterial.setVisible(false);
+            jbtnEliminarMaterial.setVisible(false);
+            jbtnModificarMaterial.setVisible(false);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setWidth(0);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setMinWidth(0);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setMaxWidth(0);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setWidth(0);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setMinWidth(0);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setMaxWidth(0);
         }
         
 //        DefaultTableModel modelo = (DefaultTableModel)jTableProveedoresMaterial.getModel();
@@ -431,19 +450,24 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbtnAgregarProveedorMaterialActionPerformed
 
     private void jTableMaterialesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMaterialesMouseClicked
-        jbtnAgregarMaterial.setEnabled(false);
-        jbtnEliminarMaterial.setEnabled(true);
-        jbtnModificarMaterial.setEnabled(true);
-        jbtnLimpiarMaterial.setEnabled(true);
-        
-        if (evt.getClickCount() == 1) {
-            materiales.ApuntaMaterial();
-            jTxtNombreMaterial.setText(materiales.getNombre());
-            jCBUnidad.setSelectedItem(materiales.getUnidad());
-            jTxtRendimiento.setText(materiales.getRendimiento());
-            jTxtPrecio.setText(Double.toString(materiales.getPrecio()));
-            jTxtDescripciónBM.setText(materiales.getDescripcionBM());
-            //FIN DE LA VALIDACIÓN TELÉFONO 2
+        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("R")){
+            JOptionPane.showMessageDialog(rootPane, "Lo sentimos, no tiene los permisos para consultar la información",
+                                "Aviso",JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            jbtnAgregarMaterial.setEnabled(false);
+            jbtnEliminarMaterial.setEnabled(true);
+            jbtnModificarMaterial.setEnabled(true);
+            jbtnLimpiarMaterial.setEnabled(true);
+
+            if (evt.getClickCount() == 1) {
+                materiales.ApuntaMaterial();
+                jTxtNombreMaterial.setText(materiales.getNombre());
+                jCBUnidad.setSelectedItem(materiales.getUnidad());
+                jTxtRendimiento.setText(materiales.getRendimiento());
+                jTxtPrecio.setText(Double.toString(materiales.getPrecio()));
+                jTxtDescripciónBM.setText(materiales.getDescripcionBM());
+                //FIN DE LA VALIDACIÓN TELÉFONO 2
+            }
         }
         
     }//GEN-LAST:event_jTableMaterialesMouseClicked
