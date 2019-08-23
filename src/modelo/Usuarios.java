@@ -589,4 +589,20 @@ public class Usuarios {
             return false;
         }
     }
+    
+    public int noRepetirUsuario(String nombre){
+        int existeUsuario = 0;
+        try {
+                BD.conectarBD();
+                String sql = "select usuario from usuarios where usuario='"+MetodosGlobales.aceptarComillaSimple(nombre)+"'";
+                rs = BD.ejecutarSQLSelect(sql);
+                while (rs.next()) {                
+                    existeUsuario = 1;
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"No se pudo buscar el usuario para saber si exite en la BD. CONSULTE AL DESARROLLADOR "+e, 
+                        "Aviso",JOptionPane.WARNING_MESSAGE);
+            }
+        return existeUsuario;
+    }
 }

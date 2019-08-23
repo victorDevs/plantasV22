@@ -1201,52 +1201,57 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
                                 "Aviso",JOptionPane.WARNING_MESSAGE);
         } else {
-            if(jTxtContrasena.getText().trim().equals(jTxtRepeContrasena.getText().trim())){
-                if(metodosGlobales.validaCorreo(jTxtCorreo.getText())==false){
-                    JOptionPane.showMessageDialog(rootPane, "El correo es incorrecto",
-                                    "Aviso",JOptionPane.WARNING_MESSAGE);
-                }else{
-                    if(BD.conectarBD()){
-                        usuarios.setNombre(jTxtNombre.getText());
-                        usuarios.setUsuario(jTxtUsuario.getText());
-                        usuarios.setPerfil((String)jCBPerfil.getSelectedItem());
-                        usuarios.setContrasena(jTxtContrasena.getText());
-                        usuarios.setCorreo(jTxtCorreo.getText());
-                        if(poderRegistrar == 1){//VALIDA SI SE HA SELECCIONADO ALGÚN PERMISO
-                            try {
-                                usuarios.RegistraUsuario();
-        //                        ope.buscaUsuario();
-                                JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
-                                    "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                                LimpiaCampos();
-                                MetodosGlobales.LimpiaTabla(jTableUsuarios);
-                                usuarios.TablaConsultaUsuarios();
-                                limpiarCheckBoxsMateriales();
-                                limpiarCheckBoxProveedores();
-                                limpiarCheckBoxClientes();
-                                limpiarCheckBoxPersonal();
-                                limpiarCheckBoxPedidos();
-                                limpiarCheckBoxEstilos();
-                                limpiarCheckBoxUsuarios();
-                            } catch (Exception e) {
-                                JOptionPane.showMessageDialog(rootPane, "No se registro el operador",
-                                    "Error",JOptionPane.ERROR_MESSAGE);
-                                System.out.println("Error al regiatrar un operador: "+e);
-                                BD.cerrarConexion();
+            if(usuarios.noRepetirUsuario(jTxtUsuario.getText().trim()) == 1){
+                JOptionPane.showMessageDialog(rootPane, "Lo sentimos. Este usuario ya existe",
+                                "Aviso",JOptionPane.WARNING_MESSAGE); 
+            }else{
+                if(jTxtContrasena.getText().trim().equals(jTxtRepeContrasena.getText().trim())){
+                    if(metodosGlobales.validaCorreo(jTxtCorreo.getText())==false){
+                        JOptionPane.showMessageDialog(rootPane, "El correo es incorrecto",
+                                        "Aviso",JOptionPane.WARNING_MESSAGE);
+                    }else{
+                        if(BD.conectarBD()){
+                            usuarios.setNombre(jTxtNombre.getText());
+                            usuarios.setUsuario(jTxtUsuario.getText());
+                            usuarios.setPerfil((String)jCBPerfil.getSelectedItem());
+                            usuarios.setContrasena(jTxtContrasena.getText());
+                            usuarios.setCorreo(jTxtCorreo.getText());
+                            if(poderRegistrar == 1){//VALIDA SI SE HA SELECCIONADO ALGÚN PERMISO
+                                try {
+                                    usuarios.RegistraUsuario();
+            //                        ope.buscaUsuario();
+                                    JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
+                                        "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                                    LimpiaCampos();
+                                    MetodosGlobales.LimpiaTabla(jTableUsuarios);
+                                    usuarios.TablaConsultaUsuarios();
+                                    limpiarCheckBoxsMateriales();
+                                    limpiarCheckBoxProveedores();
+                                    limpiarCheckBoxClientes();
+                                    limpiarCheckBoxPersonal();
+                                    limpiarCheckBoxPedidos();
+                                    limpiarCheckBoxEstilos();
+                                    limpiarCheckBoxUsuarios();
+                                } catch (Exception e) {
+                                    JOptionPane.showMessageDialog(rootPane, "No se registro el operador",
+                                        "Error",JOptionPane.ERROR_MESSAGE);
+                                    System.out.println("Error al regiatrar un operador: "+e);
+                                    BD.cerrarConexion();
+                                }
+                            }else{
+                                JOptionPane.showMessageDialog(rootPane, "Selecciona algún permiso","Aviso",JOptionPane.WARNING_MESSAGE);
                             }
                         }else{
-                            JOptionPane.showMessageDialog(rootPane, "Selecciona algún permiso","Aviso",JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                                    "Error",JOptionPane.ERROR_MESSAGE);
+                            BD.cerrarConexion();
                         }
-                    }else{
-                        JOptionPane.showMessageDialog(rootPane, "Error de conexión",
-                                "Error",JOptionPane.ERROR_MESSAGE);
-                        BD.cerrarConexion();
                     }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Las contraseñas deben coincidir",
+                                    "Aviso",JOptionPane.WARNING_MESSAGE);
+                    jTxtContrasena.requestFocusInWindow(); 
                 }
-            }else{
-                JOptionPane.showMessageDialog(rootPane, "Las contraseñas deben coincidir",
-                                "Aviso",JOptionPane.WARNING_MESSAGE);
-                jTxtContrasena.requestFocusInWindow(); 
             }
         }
     }//GEN-LAST:event_jbtnAgregarActionPerformed
@@ -1360,6 +1365,8 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
         limpiarCheckBoxPedidos();
         limpiarCheckBoxEstilos();
         limpiarCheckBoxUsuarios();
+        MetodosGlobales.LimpiaTabla(jTableUsuarios);
+        usuarios.TablaConsultaUsuarios();
     }//GEN-LAST:event_jbtnLimpiarActionPerformed
 
     private void jbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEliminarActionPerformed
