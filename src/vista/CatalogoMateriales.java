@@ -68,7 +68,29 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
             jbtnModificarMaterial.setVisible(false);
             
         }
-        
+        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("U")){
+            jBtnBuscarMaterial.setVisible(false);
+            jbtnEliminarMaterial.setVisible(false);
+            jbtnModificarMaterial.setVisible(true);
+            jbtnAgregarMaterial.setVisible(false);
+            jbtnAgregarProveedorMaterial.setVisible(false);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setWidth(0);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setMinWidth(0);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setMaxWidth(0);
+        }
+        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("D")){
+            jBtnBuscarMaterial.setVisible(false);
+            jbtnModificarMaterial.setVisible(false);
+            jbtnAgregarMaterial.setVisible(false);
+            jbtnAgregarProveedorMaterial.setVisible(false);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setWidth(0);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setMinWidth(0);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setMaxWidth(0);
+        }
+        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CR")){
+            jbtnEliminarMaterial.setVisible(false);
+            jbtnModificarMaterial.setVisible(false);
+        }
 //        DefaultTableModel modelo = (DefaultTableModel)jTableProveedoresMaterial.getModel();
 //        jTableProveedoresMaterial.setDefaultRenderer(Object.class, new IconCellRenderer());
 //        JButton btnModificar = new JButton(iconModif);

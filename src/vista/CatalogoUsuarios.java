@@ -1123,22 +1123,26 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
                                             if(usuarios.getUsuPermisos().equals("UD")){limpiarCheckBoxUsuarios();jcbUsuarioEditar.setSelected(true);jcbUsuarioEliminar.setSelected(true);}
                                             else{
                                                 limpiarCheckBoxUsuarios();
-                                                if(usuarios.getUsuPermisos().equals("CRU")){limpiarCheckBoxUsuarios();jcbUsuarioConsultar.setSelected(true);jcbUsuarioRegistrar.setSelected(true);jcbUsuarioEditar.setSelected(true);}
+                                                if(usuarios.getUsuPermisos().equals("D")){limpiarCheckBoxUsuarios();jcbUsuarioEditar.setSelected(true);jcbUsuarioEliminar.setSelected(true);}
                                                 else{
                                                     limpiarCheckBoxUsuarios();
-                                                    if(usuarios.getUsuPermisos().equals("CUD")){limpiarCheckBoxUsuarios();jcbUsuarioConsultar.setSelected(true);jcbUsuarioEditar.setSelected(true);jcbUsuarioEliminar.setSelected(true);}
+                                                    if(usuarios.getUsuPermisos().equals("CRU")){limpiarCheckBoxUsuarios();jcbUsuarioConsultar.setSelected(true);jcbUsuarioRegistrar.setSelected(true);jcbUsuarioEditar.setSelected(true);}
                                                     else{
                                                         limpiarCheckBoxUsuarios();
-                                                        if(usuarios.getUsuPermisos().equals("RUD")){limpiarCheckBoxUsuarios();jcbUsuarioRegistrar.setSelected(true);jcbUsuarioEditar.setSelected(true);jcbUsuarioEliminar.setSelected(true);}
+                                                        if(usuarios.getUsuPermisos().equals("CUD")){limpiarCheckBoxUsuarios();jcbUsuarioConsultar.setSelected(true);jcbUsuarioEditar.setSelected(true);jcbUsuarioEliminar.setSelected(true);}
                                                         else{
                                                             limpiarCheckBoxUsuarios();
-                                                            if(usuarios.getUsuPermisos().equals("CRD")){limpiarCheckBoxUsuarios();jcbUsuarioConsultar.setSelected(true);jcbUsuarioRegistrar.setSelected(true);jcbUsuarioEliminar.setSelected(true);}
+                                                            if(usuarios.getUsuPermisos().equals("RUD")){limpiarCheckBoxUsuarios();jcbUsuarioRegistrar.setSelected(true);jcbUsuarioEditar.setSelected(true);jcbUsuarioEliminar.setSelected(true);}
                                                             else{
                                                                 limpiarCheckBoxUsuarios();
+                                                                if(usuarios.getUsuPermisos().equals("CRD")){limpiarCheckBoxUsuarios();jcbUsuarioConsultar.setSelected(true);jcbUsuarioRegistrar.setSelected(true);jcbUsuarioEliminar.setSelected(true);}
+                                                                else{
+                                                                    limpiarCheckBoxUsuarios();
+                                                                }
                                                             }
                                                         }
                                                     }
-                                                }
+                                                } 
                                             }
                                         }
                                     }
