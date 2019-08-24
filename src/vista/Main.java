@@ -47,6 +47,7 @@ public class Main extends javax.swing.JFrame {
         //validajFraAbreUnaVez.abrirInternalFrameLogin(LoginInternal.getInstancia());
         
         menuCatalogos.setVisible(false);
+        menuReportes.setVisible(false);
         subMenuUsuarios.setVisible(false);
         subMenuCerrarSesion.setVisible(false);
         
@@ -92,6 +93,10 @@ public class Main extends javax.swing.JFrame {
         jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        menuReportes = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         menuNomUsuario = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -192,6 +197,19 @@ public class Main extends javax.swing.JFrame {
         menuCatalogos.add(jMenuItem2);
 
         jMenuBar1.add(menuCatalogos);
+
+        menuReportes.setText("Reportes");
+
+        jMenuItem3.setText("Pedidos");
+        menuReportes.add(jMenuItem3);
+
+        jMenuItem4.setText("Producción");
+        menuReportes.add(jMenuItem4);
+
+        jMenuItem5.setText("Pagos por destajo");
+        menuReportes.add(jMenuItem5);
+
+        jMenuBar1.add(menuReportes);
 
         menuNomUsuario.setText("Iniciar Sesión");
         menuNomUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -301,6 +319,7 @@ public class Main extends javax.swing.JFrame {
         if (JOptionPane.showConfirmDialog(rootPane, "Esta seguro de Cerrar Sesión", "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
             validajFraAbreUnaVez.abrirInternalFrameLogin(LoginInternal.getInstancia());
             menuCatalogos.setVisible(false);
+            menuReportes.setVisible(false);
             subMenuUsuarios.setVisible(false);
             subMenuCerrarSesion.setVisible(false);
             menuNomUsuario.setText("Iniciar Sesión");
@@ -353,8 +372,12 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     public static javax.swing.JMenu menuCatalogos;
     public static javax.swing.JMenu menuNomUsuario;
+    public static javax.swing.JMenu menuReportes;
     private javax.swing.JCheckBoxMenuItem subMenuCatMateriales;
     public static javax.swing.JMenuItem subMenuCerrarSesion;
     private javax.swing.JMenuItem subMenuSalir;
