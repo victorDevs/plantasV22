@@ -91,6 +91,17 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
             jbtnEliminarMaterial.setVisible(false);
             jbtnModificarMaterial.setVisible(false);
         }
+        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CU")){
+            jbtnEliminarMaterial.setVisible(false);
+            jbtnAgregarMaterial.setVisible(false);
+            jbtnAgregarProveedorMaterial.setVisible(false);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setWidth(0);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setMinWidth(0);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setMaxWidth(0);
+        }
+        
+        
+        
 //        DefaultTableModel modelo = (DefaultTableModel)jTableProveedoresMaterial.getModel();
 //        jTableProveedoresMaterial.setDefaultRenderer(Object.class, new IconCellRenderer());
 //        JButton btnModificar = new JButton(iconModif);
@@ -484,6 +495,29 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
                 jTxtPrecio.setText(Double.toString(materiales.getPrecio()));
                 jTxtDescripciónBM.setText(materiales.getDescripcionBM());
                 //FIN DE LA VALIDACIÓN TELÉFONO 2
+                int cuentaFilas = jTableProveedoresMaterial.getRowCount();
+                if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CR")){//VALIDA PERMISOS
+                    for(int i=0; i<cuentaFilas; i++){
+                        Object value = jTableProveedoresMaterial.getValueAt(i, 5);//BOTÓN EDITAR
+                        Object value2 = jTableProveedoresMaterial.getValueAt(i, 6);//BOTÓN ELIMINAR
+                        if(value instanceof JButton){
+                            JButton boton = (JButton) value;
+                            if(boton.getName().equals("modif")){
+                                if(!jTableProveedoresMaterial.getValueAt(i, 0).equals("")){
+                                    boton.setEnabled(false);
+                                }
+                            }   
+                        }
+                        if(value2 instanceof JButton){
+                            JButton boton = (JButton) value2;
+                            if(boton.getName().equals("elimi")){
+                                if(!jTableProveedoresMaterial.getValueAt(i, 0).equals("")){
+                                    boton.setEnabled(false);
+                                }
+                            }   
+                        }
+                    }
+                }
             }
         }
         
@@ -590,47 +624,53 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
                 JButton boton = (JButton) value;
                 
                 if(boton.getName().equals("modif")){
-                    Frame frame = JOptionPane.getFrameForComponent(this);
-                    ModificarProveedorMaterial modificarProveedor = new ModificarProveedorMaterial(frame,true);
-                    Dimension desktopSize = Main.jDesktopMain.getSize();
-                    Dimension FrameSize = modificarProveedor.getSize();
-                    modificarProveedor.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
-                    modificarProveedor.show();
+                    if(boton.isEnabled()==false){
+                        JOptionPane.showMessageDialog(rootPane, "Lo sentimos, no tienes permisos para editar esta información.",
+                                        "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                    }else{
+                        Frame frame = JOptionPane.getFrameForComponent(this);
+                        ModificarProveedorMaterial modificarProveedor = new ModificarProveedorMaterial(frame,true);
+                        Dimension desktopSize = Main.jDesktopMain.getSize();
+                        Dimension FrameSize = modificarProveedor.getSize();
+                        modificarProveedor.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+                        modificarProveedor.show();
+                    }
                 }
                 if(boton.getName().equals("elimi")){
-                    if (JOptionPane.showConfirmDialog(rootPane, "Se eliminará el proveedor "+jTableProveedoresMaterial.getValueAt(fila, 1)+" ¿Desea continuar?",
-                        "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-                        
-                        if(jTableProveedoresMaterial.getValueAt(fila, 0).equals("")){//SI LA COLUMNA FOLIO ESTA VACIA, PASA A ELIMINAR SOLAMENTE LA FILA SIN BD
-                            dtm.removeRow(jTableProveedoresMaterial.getSelectedRow());//SE LIMPIA LA TABLA MATERIALES PARA QUE DEJE DE ESTAR SELECCIONADA
-                            MetodosGlobales.LimpiaTabla(jTableMateriales);//SE ACTUALIZA LA TABLA PARA QUE VUELVA A MOSTRAR LOS DATOS
-                            materiales.TablaConsultaMateriales();
-                        }else{//SINO ENTONCES ELIMINA LA FILA CON BD
-                            if(BD.conectarBD()){
-                                try {
-                                    materiales.EliminaMaterialProveedorUnoenUno(jTableProveedoresMaterial);
-                                    JOptionPane.showMessageDialog(rootPane, "El proveedor se eliminó con éxito",
+                    if(boton.isEnabled()==false){
+                        JOptionPane.showMessageDialog(rootPane, "Lo sentimos, no tienes permisos para eliminar esta información.",
                                         "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                                    dtm.removeRow(jTableProveedoresMaterial.getSelectedRow());//ELIMINA LA FILA SELECCIONADA DEL JTABLE
-                                    
-                                    MetodosGlobales.LimpiaTabla(jTableMateriales);//SE LIMPIA LA TABLA MATERIALES PARA QUE DEJE DE ESTAR SELECCIONADA
-                                    materiales.TablaConsultaMateriales();//SE ACTUALIZA LA TABLA PARA QUE VUELVA A MOSTRAR LOS DATOS
-                                    
-                                } catch (Exception e) {
-                                    JOptionPane.showMessageDialog(rootPane, "No se eliminó el Proveedor: "+e,
-                                        "Aviso",JOptionPane.WARNING_MESSAGE);
+                    }else{
+                        if (JOptionPane.showConfirmDialog(rootPane, "Se eliminará el proveedor "+jTableProveedoresMaterial.getValueAt(fila, 1)+" ¿Desea continuar?",
+                        "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                            if(jTableProveedoresMaterial.getValueAt(fila, 0).equals("")){//SI LA COLUMNA FOLIO ESTA VACIA, PASA A ELIMINAR SOLAMENTE LA FILA SIN BD
+                                dtm.removeRow(jTableProveedoresMaterial.getSelectedRow());//SE LIMPIA LA TABLA MATERIALES PARA QUE DEJE DE ESTAR SELECCIONADA
+                                MetodosGlobales.LimpiaTabla(jTableMateriales);//SE ACTUALIZA LA TABLA PARA QUE VUELVA A MOSTRAR LOS DATOS
+                                materiales.TablaConsultaMateriales();
+                            }else{//SINO ENTONCES ELIMINA LA FILA CON BD
+                                if(BD.conectarBD()){
+                                    try {
+                                        materiales.EliminaMaterialProveedorUnoenUno(jTableProveedoresMaterial);
+                                        JOptionPane.showMessageDialog(rootPane, "El proveedor se eliminó con éxito",
+                                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                                        dtm.removeRow(jTableProveedoresMaterial.getSelectedRow());//ELIMINA LA FILA SELECCIONADA DEL JTABLE
+
+                                        MetodosGlobales.LimpiaTabla(jTableMateriales);//SE LIMPIA LA TABLA MATERIALES PARA QUE DEJE DE ESTAR SELECCIONADA
+                                        materiales.TablaConsultaMateriales();//SE ACTUALIZA LA TABLA PARA QUE VUELVA A MOSTRAR LOS DATOS
+
+                                    } catch (Exception e) {
+                                        JOptionPane.showMessageDialog(rootPane, "No se eliminó el Proveedor: "+e,
+                                            "Aviso",JOptionPane.WARNING_MESSAGE);
+                                        BD.cerrarConexion();
+                                    }
+                                }else{
+                                    JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                                            "Error",JOptionPane.ERROR_MESSAGE);
                                     BD.cerrarConexion();
                                 }
-                            }else{
-                                JOptionPane.showMessageDialog(rootPane, "Error de conexión",
-                                        "Error",JOptionPane.ERROR_MESSAGE);
-                                BD.cerrarConexion();
                             }
                         }
                     }
-                   
-                    
-                    
                 }
             }
         }
