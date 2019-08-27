@@ -24,6 +24,7 @@ import persistencia.MetodosGlobales;
 import vista.AgregarProveedorMaterial;
 import vista.CatalogoEstilos;
 import vista.CatalogoMateriales;
+import vista.Main;
 import vista.ModificarProveedorMaterial;
 
 /**
@@ -52,6 +53,8 @@ public class Materiales {
     //CREAMOS ESTOS BOTONES PARA ANEXARLOS A LA TABLA DE PROVEEDORESMATERIALES
      JButton btnModificar = new JButton(iconModif);
      JButton btnEliminar = new JButton(iconElimina);
+     
+    LoginModel login = new LoginModel();
 
     public int getIdMaterial() {
         return idMaterial;
@@ -276,8 +279,10 @@ public class Materiales {
                 this.rendimiento = rs.getString(3);
                 this.descripcionBM = rs.getString(4);
                 this.precio = rs.getDouble(5);
-                MetodosGlobales.LimpiaTabla(CatalogoMateriales.jTableProveedoresMaterial);
-                TablaConsultaProveedoresMateriales((int) CatalogoMateriales.jTableMateriales.getValueAt(fila, 0));
+                if(!login.validaPermisos(Main.menuNomUsuario.getText()).equals("UD") && !login.validaPermisos(Main.menuNomUsuario.getText()).equals("RUD")){
+                    MetodosGlobales.LimpiaTabla(CatalogoMateriales.jTableProveedoresMaterial);
+                    TablaConsultaProveedoresMateriales((int) CatalogoMateriales.jTableMateriales.getValueAt(fila, 0));
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"No se pudo mostrar este proveedor, vuelve a intentarlo: "+e, 

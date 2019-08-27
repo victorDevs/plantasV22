@@ -99,6 +99,40 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
             jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setMinWidth(0);
             jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setMaxWidth(0);
         }
+        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CD")){
+            jbtnAgregarMaterial.setVisible(false);
+            jbtnModificarMaterial.setVisible(false);
+            jbtnAgregarProveedorMaterial.setVisible(false);
+            jBtnBuscarMaterial.setVisible(false);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setWidth(0);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setMinWidth(0);
+            jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setMaxWidth(0);
+        }
+         if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("RD")){
+            jbtnModificarMaterial.setVisible(false);
+            jBtnBuscarMaterial.setVisible(false);
+        }
+        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("RU")){
+            jbtnEliminarMaterial.setVisible(false);
+            jBtnBuscarMaterial.setVisible(false);
+        }
+        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("UD")){
+            jbtnAgregarMaterial.setVisible(false);
+            jBtnBuscarMaterial.setVisible(false);
+        }
+        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CRU")){
+            jbtnEliminarMaterial.setVisible(false);
+        }
+        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CUD")){
+            jbtnAgregarMaterial.setVisible(false);
+            jbtnAgregarProveedorMaterial.setVisible(false);
+        }
+        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("RUD")){
+            jBtnBuscarMaterial.setVisible(false);
+        }
+        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CRD")){
+            jbtnModificarMaterial.setVisible(false);
+        }
         
         
         
@@ -478,9 +512,13 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbtnAgregarProveedorMaterialActionPerformed
 
     private void jTableMaterialesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMaterialesMouseClicked
-        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("R")){
-            JOptionPane.showMessageDialog(rootPane, "Lo sentimos, no tiene los permisos para consultar la información",
+        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("R") || login.validaPermisos(Main.menuNomUsuario.getText()).equals("RD") || 
+                login.validaPermisos(Main.menuNomUsuario.getText()).equals("RU")){
+            JOptionPane.showMessageDialog(rootPane, "Lo sentimos, no tienes los permisos para consultar la información",
                                 "Aviso",JOptionPane.INFORMATION_MESSAGE);
+            jbtnEliminarMaterial.setEnabled(true);
+            jbtnModificarMaterial.setEnabled(true);
+            jbtnAgregarMaterial.setEnabled(false);
         }else{
             jbtnAgregarMaterial.setEnabled(false);
             jbtnEliminarMaterial.setEnabled(true);
@@ -488,13 +526,14 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
             jbtnLimpiarMaterial.setEnabled(true);
 
             if (evt.getClickCount() == 1) {
+                if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("UD") || login.validaPermisos(Main.menuNomUsuario.getText()).equals("RUD"))JOptionPane.showMessageDialog(rootPane, "Lo sentimos, no tienes los permisos para consultar la información","Aviso",JOptionPane.INFORMATION_MESSAGE);
                 materiales.ApuntaMaterial();
                 jTxtNombreMaterial.setText(materiales.getNombre());
                 jCBUnidad.setSelectedItem(materiales.getUnidad());
                 jTxtRendimiento.setText(materiales.getRendimiento());
                 jTxtPrecio.setText(Double.toString(materiales.getPrecio()));
                 jTxtDescripciónBM.setText(materiales.getDescripcionBM());
-                //FIN DE LA VALIDACIÓN TELÉFONO 2
+                
                 int cuentaFilas = jTableProveedoresMaterial.getRowCount();
                 if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CR")){//VALIDA PERMISOS
                     for(int i=0; i<cuentaFilas; i++){
@@ -511,6 +550,32 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
                         if(value2 instanceof JButton){
                             JButton boton = (JButton) value2;
                             if(boton.getName().equals("elimi")){
+                                if(!jTableProveedoresMaterial.getValueAt(i, 0).equals("")){
+                                    boton.setEnabled(false);
+                                }
+                            }   
+                        }
+                    }
+                }
+                if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CRU")){//VALIDA PERMISOS
+                    for(int i=0; i<cuentaFilas; i++){
+                        Object value2 = jTableProveedoresMaterial.getValueAt(i, 6);//BOTÓN ELIMINAR
+                        if(value2 instanceof JButton){
+                            JButton boton = (JButton) value2;
+                            if(boton.getName().equals("elimi")){
+                                if(!jTableProveedoresMaterial.getValueAt(i, 0).equals("")){
+                                    boton.setEnabled(false);
+                                }
+                            }   
+                        }
+                    }
+                }
+                if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CRD")){//VALIDA PERMISOS
+                    for(int i=0; i<cuentaFilas; i++){
+                        Object value = jTableProveedoresMaterial.getValueAt(i, 5);//BOTÓN EDITAR
+                        if(value instanceof JButton){
+                            JButton boton = (JButton) value;
+                            if(boton.getName().equals("modif")){
                                 if(!jTableProveedoresMaterial.getValueAt(i, 0).equals("")){
                                     boton.setEnabled(false);
                                 }
@@ -641,7 +706,7 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
                         JOptionPane.showMessageDialog(rootPane, "Lo sentimos, no tienes permisos para eliminar esta información.",
                                         "Aviso",JOptionPane.INFORMATION_MESSAGE);
                     }else{
-                        if (JOptionPane.showConfirmDialog(rootPane, "Se eliminará el proveedor "+jTableProveedoresMaterial.getValueAt(fila, 1)+" ¿Desea continuar?",
+                        if (JOptionPane.showConfirmDialog(rootPane, "Se eliminará el proveedor "+jTableProveedoresMaterial.getValueAt(fila, 2)+" ¿Desea continuar?",
                         "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                             if(jTableProveedoresMaterial.getValueAt(fila, 0).equals("")){//SI LA COLUMNA FOLIO ESTA VACIA, PASA A ELIMINAR SOLAMENTE LA FILA SIN BD
                                 dtm.removeRow(jTableProveedoresMaterial.getSelectedRow());//SE LIMPIA LA TABLA MATERIALES PARA QUE DEJE DE ESTAR SELECCIONADA
