@@ -193,6 +193,7 @@ public class Pedidos {
                         jLabelTalla = new JLabel(begin+"");
                         CatalogoPedidos.jPanelTallas.add(jLabelTalla);
                         txtField = new JTextField();
+                        txtField.setName(begin+"");
                         txtField.addKeyListener(new KeyListener(){
                             @Override
                             public void keyTyped(KeyEvent ke) {}
