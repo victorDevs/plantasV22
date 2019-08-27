@@ -369,6 +369,7 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
     private void btnAddClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClienteActionPerformed
         // TODO add your handling code here:
         String estilo = (String) jCBEstilos.getSelectedItem();
+        String cliente = (String) jCBClientes.getSelectedItem();
         Date date1 = jDCFecha1.getDate();
         Date dateInterna = jDCFechaInterna.getDate();
         Date dateCliente = jDCFechaCliente.getDate();
