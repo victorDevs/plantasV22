@@ -101,7 +101,7 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTxtObservaciones = new javax.swing.JTextArea();
         jTxtSubTotal = new javax.swing.JTextField();
         jTxtTotal = new javax.swing.JTextField();
         jTxtIva = new javax.swing.JTextField();
@@ -175,9 +175,9 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
 
         jLabel11.setText("Total");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        jTxtObservaciones.setColumns(20);
+        jTxtObservaciones.setRows(5);
+        jScrollPane2.setViewportView(jTxtObservaciones);
 
         jTxtSubTotal.setForeground(java.awt.Color.blue);
         jTxtSubTotal.addActionListener(new java.awt.event.ActionListener() {
@@ -287,9 +287,7 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(571, 571, 571))
+                                    .addComponent(jLabel5)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(228, 228, 228)
                                         .addComponent(btnAddCliente)
@@ -370,46 +368,56 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         String estilo = (String) jCBEstilos.getSelectedItem();
         String cliente = (String) jCBClientes.getSelectedItem();
+        String tipoTalla = (String) jCBClientes.getSelectedItem();
         Date date1 = jDCFecha1.getDate();
         Date dateInterna = jDCFechaInterna.getDate();
         Date dateCliente = jDCFechaCliente.getDate();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//        if (metodosGlobales.validaFecha(jDCFecha1)==null || estilo.equals("-- Seleccione --") || jTxtPrecio.getText().equals("")
-//                || jTxtSubTotal.getText().equals("") || jTxtIva.getText().equals("") || jTxtTotal.equals("")) {
-//            JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
-//                                "Aviso",JOptionPane.WARNING_MESSAGE);
-//        } 
-        for (int i = 0; i < txtFieldTallas.size(); i++) {
-            if(!txtFieldTallas.get(i).getText().equals("")){
-                System.out.println("item JTextField de tallas: "+txtFieldTallas.get(i).getName());
-            }
-        }
-//          else {
-//                if(BD.conectarBD()){
-//                    cli.setNombre(jTxtNombreCliente.getText());
-//                    cli.setDomicilio(jTxtDomicilio.getText());
-//                    cli.setTelefono(jTxtTel.getText());
-//                    cli.setContacto(jTxtContacto.getText());
-//                    cli.setCorreo(jTxtCorreo.getText());
-//                    try {
-//                        cli.RegistraCliente();
-//                        JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
-//                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
-//                        LimpiaCampos();
-//                        LimpiaTablaClientes();
-//                        cli.TablaConsultaClientes();
-//                    } catch (Exception e) {
-//                        JOptionPane.showMessageDialog(rootPane, "No se registro el cliente",
-//                            "Error",JOptionPane.ERROR_MESSAGE);
-////                        System.out.println("Error al registrar un cliente: "+e);
-//                        BD.cerrarConexion();
+        if (cliente.equals("-- Seleccione --") || metodosGlobales.validaFecha(jDCFecha1)==null || estilo.equals("-- Seleccione --") 
+                || metodosGlobales.validaFecha(jDCFechaInterna)==null || metodosGlobales.validaFecha(jDCFechaCliente)==null 
+                || jTxtPrecio.getText().equals("")
+                || jTxtSubTotal.getText().equals("") || jTxtIva.getText().equals("") || jTxtTotal.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+        } 
+          else {
+//                for (int i = 0; i < txtFieldTallas.size(); i++) {
+//                    if(!txtFieldTallas.get(i).getText().equals("")){
+//                        System.out.println("item JTextField de tallas: "+txtFieldTallas.get(i).getName());
 //                    }
-//                }else{
-//                    JOptionPane.showMessageDialog(rootPane, "Error de conexión",
-//                            "Error",JOptionPane.ERROR_MESSAGE);
-//                    BD.cerrarConexion();
 //                }
-//        }
+                if(BD.conectarBD()){
+                    ped.setNombreCliente(cliente);
+                    ped.setFecha(sdf.format(date1));
+                    ped.setNombreEstilo(estilo);
+                    ped.setFecha(sdf.format(dateInterna));
+                    ped.setFecha(sdf.format(dateCliente));
+                    ped.setPrecio(Double.parseDouble(jTxtPrecio.getText()));
+                    ped.setSubtotal(Double.parseDouble(jTxtSubTotal.getText()));
+                    ped.setIva(Double.parseDouble(jTxtIva.getText()));
+                    ped.setTotal(Double.parseDouble(jTxtTotal.getText()));
+                    ped.setTipoTalla(tipoTalla);
+                    
+                    try {
+                        ped.RegistraPedido();
+                        JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
+                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                        
+                        LimpiaCampos();
+                        LimpiaTablaClientes();
+                        cli.TablaConsultaClientes();
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(rootPane, "No se registro el cliente",
+                            "Error",JOptionPane.ERROR_MESSAGE);
+//                        System.out.println("Error al registrar un cliente: "+e);
+                        BD.cerrarConexion();
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                            "Error",JOptionPane.ERROR_MESSAGE);
+                    BD.cerrarConexion();
+                }
+        }
     }//GEN-LAST:event_btnAddClienteActionPerformed
 
     private void btnModifyClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyClienteActionPerformed
@@ -582,8 +590,8 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     public static javax.swing.JPanel jPanelTallas;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     public static javax.swing.JTextField jTxtIva;
+    private javax.swing.JTextArea jTxtObservaciones;
     public static javax.swing.JTextField jTxtPrecio;
     public static javax.swing.JTextField jTxtSubTotal;
     public static javax.swing.JTextField jTxtTotal;
