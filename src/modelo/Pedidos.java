@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -22,6 +23,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import persistencia.BD;
+import persistencia.MetodosGlobales;
 import vista.CatalogoEstilos;
 import vista.CatalogoPedidos;
 import static vista.CatalogoPedidos.txtFieldTallas;
@@ -33,8 +35,10 @@ import static vista.CatalogoPedidos.txtFieldTallas;
 public class Pedidos {
     int idPedido; //número de pedido
     String fecha;
-    String cliente;
-    String estilo; // Descripción
+    int idCliente;
+    String nombreCliente;
+    int idEstilo; // Descripción
+    String nombreEstilo; // Descripción
     int tallas[][];
     int totalTallasEstilo;
     String estatus;
@@ -45,6 +49,7 @@ public class Pedidos {
     double iva;
     double total;
     String observaciones;
+    String tipoTalla;
     
     ResultSet rs;
     ResultSetMetaData rsm;
@@ -60,12 +65,12 @@ public class Pedidos {
         return fecha;
     }
 
-    public String getCliente() {
-        return cliente;
+    public int getIdCliente() {
+        return idCliente;
     }
 
-    public String getEstilo() {
-        return estilo;
+    public int getIdEstilo() {
+        return idEstilo;
     }
 
     public int[][] getTallas() {
@@ -107,6 +112,18 @@ public class Pedidos {
     public String getObservaciones() {
         return observaciones;
     }
+    
+    public String getTipoTalla() {
+        return tipoTalla;
+    }
+    
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+    
+    public String getNombreEstilo() {
+        return nombreEstilo;
+    }
 
     public void setIdPedido(int idPedido) {
         this.idPedido = idPedido;
@@ -116,12 +133,12 @@ public class Pedidos {
         this.fecha = fecha;
     }
 
-    public void setCliente(String cliente) {
-        this.cliente = cliente;
+    public void setCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 
-    public void setEstilo(String estilo) {
-        this.estilo = estilo;
+    public void setIdEstilo(int IdEstilo) {
+        this.idEstilo = IdEstilo;
     }
 
     public void setTallas(int[][] tallas) {
@@ -162,6 +179,18 @@ public class Pedidos {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+    
+    public void setTipoTalla(String tipoTalla) {
+        this.tipoTalla = tipoTalla;
+    }
+    
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+    
+    public void setNombreEstilo(String nombreEstilo) {
+        this.nombreEstilo = nombreEstilo;
     }
     
     public void llenaPanelTallas(String src){
@@ -232,6 +261,38 @@ public class Pedidos {
             }            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error al intentar llenar el panel de tallas: "+e, 
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            BD.cerrarConexion();
+        }
+    }
+    
+    public boolean RegistraPedido(){
+        getIdClienteFromBD(this.nombreCliente);
+        String sql = "insert into pedidos (idCliente,idEstilo,fecha,fechaCliente,fechaInterna,tipoTalla,"
+                + "precio,subtotal,iva,total,observaciones,) "
+                + "values ("+this.idCliente+", "+this.idEstilo+",'"+this.fecha+"','"+this.fechaCliente+"', '"+this.fechaInterna+"', "
+                + "'"+this.tipoTalla+"',"+this.precio+","+this.subtotal+","+this.iva+","+this.total+",'"+this.observaciones+");";
+        System.out.println("Registro de cliente: "+sql);
+        if (BD.ejecutarSQL(sql)) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public void getIdClienteFromBD(String nombre){
+        try {
+            BD.conectarBD();
+            String sql = "select idCliente from clientes where nombre = '"+nombre+"';";
+            rs = BD.ejecutarSQLSelect(sql);
+            rsm = rs.getMetaData();
+            while (rs.next()) {
+                this.idCliente = Integer.parseInt(rs.getString("idCliente"));
+            }
+            BD.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Excepción: "+e);
+            JOptionPane.showMessageDialog(null, "Error al obtener el id del cliente",
                     "Error",JOptionPane.ERROR_MESSAGE);
             BD.cerrarConexion();
         }
