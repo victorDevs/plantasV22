@@ -21,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Clientes;
+import modelo.Pedidos;
 import modelo.Proveedores;
 import persistencia.BD;
 import persistencia.MetodosGlobales;
@@ -35,6 +36,7 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
 
     Clientes cli = new Clientes();
     MetodosGlobales metodosGlobales = new MetodosGlobales();
+    Pedidos pedidos = new Pedidos();
     validaJframeAbreUnaVez validajFraAbreUnaVez;
 
     /**
@@ -51,8 +53,12 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
      }
      
     public AdministrarPedidos() {
-        this.validajFraAbreUnaVez = new validaJframeAbreUnaVez(Main.jDesktopMain);
+        //this.validajFraAbreUnaVez = new validaJframeAbreUnaVez(Main.jDesktopMain);
         initComponents();
+        MetodosGlobales.LimpiaTabla(jTableAdminPedidos);
+        pedidos.TablaConsultaPedidos();
+        
+        
 //        btnEliminar.setEnabled(false);
 //        btnModifyCliente.setEnabled(false);
 //        LimpiaTablaClientes();
@@ -118,7 +124,7 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false

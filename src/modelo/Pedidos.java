@@ -17,6 +17,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,7 +27,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import persistencia.BD;
+import persistencia.IconCellRenderer;
 import persistencia.MetodosGlobales;
+import vista.AdministrarPedidos;
 import vista.CatalogoEstilos;
 
 
@@ -58,6 +62,14 @@ public class Pedidos {
     DefaultTableModel dtm;
     
     List<Integer> arraySumTallas = new ArrayList<Integer>();
+    
+    //PARA LOS BOTONES DE LA TABLA PEDIDOS 
+    ImageIcon iconModif = new ImageIcon(getClass().getResource("/imagenes/editar.png"));
+    ImageIcon iconElimina = new ImageIcon(getClass().getResource("/imagenes/quitar.png"));
+    
+    //CREAMOS ESTOS BOTONES PARA ANEXARLOS A LA TABLA DE PEDIDOS
+     JButton btnModificar = new JButton(iconModif);
+     JButton btnEliminar = new JButton(iconElimina);
 
     public int getIdPedido() {
         return idPedido;
@@ -306,6 +318,34 @@ public class Pedidos {
         } catch (Exception e) {
             System.out.println("Excepción: "+e);
             JOptionPane.showMessageDialog(null, "Error al obtener el id del cliente",
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            BD.cerrarConexion();
+        }
+    }
+    
+      public void TablaConsultaPedidos(){
+        try {
+            dtm = (DefaultTableModel)AdministrarPedidos.jTableAdminPedidos.getModel();
+            AdministrarPedidos.jTableAdminPedidos.setDefaultRenderer(Object.class,new IconCellRenderer());
+            btnModificar.setName("modif");
+            btnEliminar.setName("elimi");
+            
+            if (BD.conectarBD()) {
+                String sql = "select idPedido,fecha,fechaInterna,fechacliente,CONCAT('$ ',round(precio,2))as precio,CONCAT('$ ',round(subtotal,2)) as subtotal,CONCAT('$ ',round(iva,2)) as iva,CONCAT('$',round(total,2)) as total,observaciones from pedidos";
+                rs = BD.ejecutarSQLSelect(sql);
+                rsm = rs.getMetaData();
+                
+                while (rs.next()) {                
+                    Object nuev[] =  {rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),btnModificar,btnEliminar};
+                    dtm.addRow(nuev);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos plantasbd",
+                        "Error de conexión",JOptionPane.ERROR_MESSAGE);
+                BD.cerrarConexion();
+            }            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error al mostrar lo datos en la tabla pedidos: "+e, 
                     "Error",JOptionPane.ERROR_MESSAGE);
             BD.cerrarConexion();
         }
