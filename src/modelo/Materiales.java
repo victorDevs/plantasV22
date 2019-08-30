@@ -38,9 +38,9 @@ public class Materiales {
     String unidad;
     String rendimiento;
     double precio;
-   String tipoProveedor;
-   String descripcionProveedor;
-   String nombreProveedor;
+    String tipoProveedor;
+    String descripcionProveedor;
+    String nombreProveedor;
    
     String descripcionBM;
     ResultSet rs;
@@ -127,6 +127,7 @@ public class Materiales {
     public void setNombreProveedor(String nombreProveedor) {
         this.nombreProveedor = nombreProveedor;
     }
+    
     
     public int noRepetirMaterial(String nombre){
         int existeMaterial = 0;
@@ -406,6 +407,33 @@ public class Materiales {
             }            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error al intentar llenar el panel de materiales en el Catálogo de Estilos: "+e, 
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            BD.cerrarConexion();
+        }
+    }
+    
+     public void buscarMaterialesCheckBox( String nombreMaterial){
+        try {
+            if (BD.conectarBD()) {
+                String sql = "select idMateriales,nombre from materiales where nombre like '%"+nombreMaterial+"%'";
+                rs = BD.ejecutarSQLSelect(sql);
+                rsm = rs.getMetaData();
+                JRadioButton  radio = null;
+                  CatalogoEstilos.panelMateriales.removeAll();
+                    CatalogoEstilos.radiosMateriales.remove(0);
+                while (rs.next()) { 
+                    radio = new JRadioButton(rs.getString("nombre"));
+                    CatalogoEstilos.panelMateriales.add(radio);
+                    CatalogoEstilos.radiosMateriales.add(radio);
+                    CatalogoEstilos.panelMateriales.updateUI();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos plantasbd",
+                        "Error de conexión",JOptionPane.ERROR_MESSAGE);
+                BD.cerrarConexion();
+            }            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error de la busqueda al intentar llenar el panel de materiales en el Catálogo de Estilos: "+e, 
                     "Error",JOptionPane.ERROR_MESSAGE);
             BD.cerrarConexion();
         }

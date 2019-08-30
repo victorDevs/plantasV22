@@ -96,4 +96,31 @@ public class Procesos {
             BD.cerrarConexion();
         }
     }
+    
+     public void buscarProcesosCheckBox(String nombreProcesos){
+        try {
+            if (BD.conectarBD()) {
+                String sql = "select idProceso,nombre from procesos where nombre like '%"+nombreProcesos.trim()+"%'";
+                rs = BD.ejecutarSQLSelect(sql);
+                rsm = rs.getMetaData();
+                JRadioButton  radio = null;
+                CatalogoEstilos.panelProcesos.removeAll();
+                CatalogoEstilos.radiosProcesos.remove(0);
+                while (rs.next()) { 
+                    radio = new JRadioButton(rs.getString("nombre"));
+                    CatalogoEstilos.panelProcesos.add(radio);
+                    CatalogoEstilos.radiosProcesos.add(radio);
+                    CatalogoEstilos.panelProcesos.updateUI();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos plantasbd",
+                        "Error de conexión",JOptionPane.ERROR_MESSAGE);
+                BD.cerrarConexion();
+            }            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error de la busqueda al intentar llenar el panel de procesos en el Catálogo de Estilos: "+e, 
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            BD.cerrarConexion();
+        }
+    }
 }

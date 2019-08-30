@@ -151,6 +151,7 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
 //        modelo.addRow(nuevo);
 //        }
 
+//      ACEPTA PURO NÚNERO
         jTxtRendimiento.addKeyListener(new KeyAdapter(){
             public void keyTyped(KeyEvent e){
                 char c = e.getKeyChar();
@@ -162,7 +163,7 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
                 }
             }
         });
-        
+        //ACEPTA NÚMERO CON PUNTO DECIMAL
         jTxtPrecio.addKeyListener(new KeyAdapter(){
             public void keyTyped(KeyEvent e){
                 char c = e.getKeyChar();
