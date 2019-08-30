@@ -366,6 +366,7 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
     
     private void btnAddClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddClienteActionPerformed
         // TODO add your handling code here:
+        ArrayList arrayListTallas = new ArrayList();
         String estilo = (String) jCBEstilos.getSelectedItem();
         String cliente = (String) jCBClientes.getSelectedItem();
         String tipoTalla = (String) jCBClientes.getSelectedItem();
@@ -387,15 +388,16 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
 //                    }
 //                }
                 if(BD.conectarBD()){
+                    Pedidos.setTxtFieldTallas(txtFieldTallas);
                     ped.setNombreCliente(cliente);
                     ped.setFecha(sdf.format(date1));
                     ped.setNombreEstilo(estilo);
                     ped.setFecha(sdf.format(dateInterna));
                     ped.setFecha(sdf.format(dateCliente));
                     ped.setPrecio(Double.parseDouble(jTxtPrecio.getText()));
-                    ped.setSubtotal(Double.parseDouble(jTxtSubTotal.getText()));
-                    ped.setIva(Double.parseDouble(jTxtIva.getText()));
-                    ped.setTotal(Double.parseDouble(jTxtTotal.getText()));
+                    ped.setSubtotal(Double.parseDouble(jTxtSubTotal.getText().replace("$", "")));
+                    ped.setIva(Double.parseDouble(jTxtIva.getText().replace("$", "")));
+                    ped.setTotal(Double.parseDouble(jTxtTotal.getText().replace("$", "")));
                     ped.setTipoTalla(tipoTalla);
                     
                     try {
@@ -403,9 +405,9 @@ public class CatalogoPedidos extends javax.swing.JInternalFrame {
                         JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
                             "Aviso",JOptionPane.INFORMATION_MESSAGE);
                         
-                        LimpiaCampos();
-                        LimpiaTablaClientes();
-                        cli.TablaConsultaClientes();
+//                        LimpiaCampos();
+//                        LimpiaTablaClientes();
+//                        cli.TablaConsultaClientes();
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(rootPane, "No se registro el cliente",
                             "Error",JOptionPane.ERROR_MESSAGE);
