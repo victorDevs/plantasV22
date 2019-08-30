@@ -28,6 +28,7 @@ public class Estilos {
 
     int idEstilo;
     String estilo;
+    double precio;
     int idMaterial;
     String material;
     int idProceso;
@@ -72,6 +73,10 @@ public class Estilos {
         return txtProcesos;
     }
 
+    public double getPrecio() {
+        return precio;
+    }
+
     public void setIdEstilo(int idEstilo) {
         this.idEstilo = idEstilo;
     }
@@ -103,9 +108,13 @@ public class Estilos {
     public void setTxtProcesos(ArrayList txtProcesos) {
         this.txtProcesos = txtProcesos;
     }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
     
     public boolean registrarEstilo(){
-        String sql = "insert into estilos (estilo) values ('"+this.estilo+"');";
+        String sql = "insert into estilos (estilo,precio) values ('"+this.estilo+"',"+this.precio+");";
         if (BD.ejecutarSQL(sql)) {
             try {
                 String sqlMax = "select max(idEstilo) from estilos";
@@ -172,7 +181,7 @@ public class Estilos {
     public void TablaConsultaEstilos(){
         try {
             if (BD.conectarBD()) {
-                String sql = "select idEstilo,estilo from estilos";
+                String sql = "select idEstilo,estilo,CONCAT('$', round(precio,2)) from estilos";
                 rs = BD.ejecutarSQLSelect(sql);
                 rsm = rs.getMetaData();
                 List<Object[]> datos = new ArrayList<Object[]>();
@@ -203,15 +212,16 @@ public class Estilos {
         try {
             BD.conectarBD();
             int fila = CatalogoEstilos.jTableEstilos.getSelectedRow();
-            String sql = "select estilo"
+            String sql = "select estilo,precio"
                     + " from estilos where idEstilo = "+CatalogoEstilos.jTableEstilos.getValueAt(fila, 0);
             rs = BD.ejecutarSQLSelect(sql);
             rsm = rs.getMetaData();
             while (rs.next()) {                
                 this.estilo = rs.getString(1);
+                this.precio = Double.parseDouble(rs.getString(2));
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"No se pudo mostrar el nombre del estilo, vuelve a intentarlo: "+e, 
+            JOptionPane.showMessageDialog(null,"No se pudo mostrar el nombre y precio del estilo, vuelve a intentarlo: "+e, 
                     "Aviso",JOptionPane.WARNING_MESSAGE);
         }
     }
@@ -225,14 +235,17 @@ public class Estilos {
                 rs = BD.ejecutarSQLSelect(sql);
                 rsm = rs.getMetaData();
                 List<Object[]> datos = new ArrayList<Object[]>();
+                this.txtMateriales.clear();//REINICIA EL ARRAYIST, PARA PODER MOSTRAR LOS NUEVOS PROCESOS QUE LE PERTENECEN AL ESTILO SELECCIONADO
                 while (rs.next()) {                
                     Object[] filas = new Object[rsm.getColumnCount()];
                     for (int i = 0; i < filas.length; i++) {
                         filas[i] = rs.getObject(i+1);
                         this.txtMateriales.add(i,rs.getObject(i+1));
                     }
+                    
                     datos.add(filas);
                 }
+                
                 dtm = (DefaultTableModel)CatalogoEstilos.jTableMateriales.getModel();
                 for (int i = 0; i < datos.size(); i++) {
                     dtm.addRow(datos.get(i));
@@ -259,6 +272,7 @@ public class Estilos {
                 rs = BD.ejecutarSQLSelect(sql);
                 rsm = rs.getMetaData();
                 List<Object[]> datos = new ArrayList<Object[]>();
+                this.txtProcesos.clear();//REINICIA EL ARRAYIST, PARA PODER MOSTRAR LOS NUEVOS PROCESOS QUE LE PERTENECEN AL ESTILO SELECCIONADO
                 while (rs.next()) {                
                     Object[] filas = new Object[rsm.getColumnCount()];
                     for (int i = 0; i < filas.length; i++) {

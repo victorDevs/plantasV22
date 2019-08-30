@@ -193,6 +193,8 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
         if (jTableEstilos.getColumnModel().getColumnCount() > 0) {
             jTableEstilos.getColumnModel().getColumn(0).setMinWidth(40);
             jTableEstilos.getColumnModel().getColumn(0).setMaxWidth(40);
+            jTableEstilos.getColumnModel().getColumn(2).setMinWidth(70);
+            jTableEstilos.getColumnModel().getColumn(2).setMaxWidth(70);
         }
 
         btnAddPersonal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar16.png"))); // NOI18N
@@ -480,6 +482,7 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
         } else {
             if(BD.conectarBD()){
                 est.setEstilo(txtEstilo.getText());
+                est.setPrecio(Double.parseDouble(txtPrecio.getText()));
                 est.setTxtMateriales(radioTxtMateriales);
                 est.setTxtProcesos(radioTxtProcesos);
                 if(est.registrarEstilo()){
@@ -508,14 +511,18 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(true);
         btnModifyPersonal.setEnabled(true);
         btnLimpiar.setEnabled(true);
+        txtPrecio.setEditable(false);
         
         if (evt.getClickCount() == 1) {
+            
             est.ApuntaEstilo();
             LimpiaTablaEstilos(jTableMateriales);
+            //est.setTxtMateriales(est.getTxtMateriales().clear());
             est.ApuntaEstiloMateriales();
             LimpiaTablaEstilos(jTableProcesos);
             est.ApuntaEstiloProcesos();
             txtEstilo.setText(est.getEstilo());
+            txtPrecio.setText(Double.toString(est.getPrecio()));
             
             ArrayList radioTxtMateriales = new ArrayList();
             ArrayList radioTxtProcesos = new ArrayList();
@@ -524,12 +531,17 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
                 System.out.println(radiosMateriales.get(i).getText()+": "+est.getTxtMateriales().indexOf(radiosMateriales.get(i).getText()));
                 if(est.getTxtMateriales().indexOf(radiosMateriales.get(i).getText()) > -1){ 
                     radiosMateriales.get(i).setSelected(true);
+                }else{
+                    radiosMateriales.get(i).setSelected(false);
                 }
             }
+            
             for (int i = 0; i < radiosProcesos.size(); i++) {
-                radioTxtMateriales.add(i,radiosProcesos.get(i).getText());
+                radioTxtMateriales.add(i,radiosProcesos.get(i).getText());               
                 if(est.getTxtProcesos().indexOf(radiosProcesos.get(i).getText()) > -1){ 
                     radiosProcesos.get(i).setSelected(true);
+                }else{
+                    radiosProcesos.get(i).setSelected(false);
                 }
             }
 //            jTxtAptPaterno.setText(per.getApellidoPaterno());
@@ -761,6 +773,8 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
     
     public void LimpiaCampos(){
         txtEstilo.setText(null);
+        txtPrecio.setText(null);
+        
         for (int i = 0; i < radiosMateriales.size(); i++) {
             if(radiosMateriales.get(i).isSelected()){
                 radiosMateriales.get(i).setSelected(false);

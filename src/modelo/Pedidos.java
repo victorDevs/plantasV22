@@ -8,6 +8,7 @@ package modelo;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.ResultSet;
@@ -19,14 +20,14 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import persistencia.BD;
 import persistencia.MetodosGlobales;
 import vista.CatalogoEstilos;
-import vista.CatalogoPedidos;
-import static vista.CatalogoPedidos.txtFieldTallas;
+
 
 /**
  *
@@ -203,7 +204,7 @@ public class Pedidos {
     }
 
     
-    public void llenaPanelTallas(String src){
+    public void llenaPanelTallas(String src, JPanel panel,List<JTextField> txtFieldTallas){
         try {
             if (BD.conectarBD()) {
                 int sizeArray = 0;
@@ -230,40 +231,41 @@ public class Pedidos {
                 for (int i = 0; i < sizeArray; i++) {
                     if(begin <= end){
                         jLabelTalla = new JLabel(begin+"");
-                        CatalogoPedidos.jPanelTallas.add(jLabelTalla);
+                        panel.add(jLabelTalla);
                         txtField = new JTextField();
                         txtField.setName(begin+"");
-                        txtField.addKeyListener(new KeyListener(){
+                        txtField.addKeyListener(new KeyAdapter(){
                             @Override
-                            public void keyTyped(KeyEvent ke) {}
-
-                            @Override
-                            public void keyPressed(KeyEvent ke) {
-                                char ky = ke.getKeyChar();
-                                if(Character.isLetter(ky)){
-                                    JOptionPane.showMessageDialog(null, "Solo se permiten números, por favor intente de nuevo.",
+                            public void keyTyped(KeyEvent ke) {
+                            char ky = ke.getKeyChar();
+                                if(!Character.isDigit(ky) || (ky==KeyEvent.VK_BACK_SPACE)){
+                                    ke.consume();
+                                    JOptionPane.showMessageDialog(null, "Solo se permiten número enteros, por favor intentarlo de nuevo",
                                         "Aviso",JOptionPane.WARNING_MESSAGE);
                                 }
                             }
 
                             @Override
+                            public void keyPressed(KeyEvent ke) {}
+
+                            @Override
                             public void keyReleased(KeyEvent ke) {}
                         });
-                        CatalogoPedidos.jPanelTallas.add(txtField);
-                        CatalogoPedidos.txtFieldTallas.add(txtField);
-                        CatalogoPedidos.jPanelTallas.updateUI();
+                        panel.add(txtField);
+                        txtFieldTallas.add(txtField);
+                        panel.updateUI();
                         begin = begin + punto;
                     }
                 }
                 jLabelTotal = new JLabel("TOTAL");
                 jLabelTotal.setForeground(Color.blue);
-                CatalogoPedidos.jPanelTallas.add(jLabelTotal);
+                panel.add(jLabelTotal);
                 txtField = new JTextField("0");
                 txtField.setEditable(false);
                 txtField.setForeground(Color.blue);
-                CatalogoPedidos.jPanelTallas.add(txtField);
-                CatalogoPedidos.txtFieldTallas.add(txtField);
-                CatalogoPedidos.jPanelTallas.updateUI();
+                panel.add(txtField);
+                txtFieldTallas.add(txtField);
+                panel.updateUI();
             } else {
                 JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos plantasbd",
                         "Error de conexión",JOptionPane.ERROR_MESSAGE);
@@ -279,16 +281,16 @@ public class Pedidos {
     public boolean RegistraPedido(){
         getIdClienteFromBD(this.nombreCliente);
         System.out.println("idCliente: "+this.idCliente);
-//        String sql = "insert into pedidos (idCliente,idEstilo,fecha,fechaCliente,fechaInterna,tipoTalla,"
-//                + "precio,subtotal,iva,total,observaciones,) "
-//                + "values ("+this.idCliente+", "+this.idEstilo+",'"+this.fecha+"','"+this.fechaCliente+"', '"+this.fechaInterna+"', "
-//                + "'"+this.tipoTalla+"',"+this.precio+","+this.subtotal+","+this.iva+","+this.total+",'"+this.observaciones+");";
-//        System.out.println("Registro de cliente: "+sql);
-//        if (BD.ejecutarSQL(sql)) {
+        String sql = "insert into pedidos (idCliente,idEstilo,fecha,fechaCliente,fechaInterna,tipoTalla,"
+                + "precio,subtotal,iva,total,observaciones,codigoBarras) "
+                + "values ("+this.idCliente+", "+this.idEstilo+",'"+this.fecha+"','"+this.fechaCliente+"', '"+this.fechaInterna+"', "
+                + "'"+this.tipoTalla+"',"+this.precio+","+this.subtotal+","+this.iva+","+this.total+",'"+this.observaciones+"','-');";
+        System.out.println("Registro de Pedido: "+sql);
+        if (BD.ejecutarSQL(sql)) {
             return true;
-//        }else{
-//            return false;
-//        }
+        }else{
+            return false;
+        }
     }
     
     public void getIdClienteFromBD(String nombre){
@@ -300,7 +302,7 @@ public class Pedidos {
             while (rs.next()) {
                 this.idCliente = Integer.parseInt(rs.getString("idCliente"));
             }
-            BD.cerrarConexion();
+            //BD.cerrarConexion();
         } catch (Exception e) {
             System.out.println("Excepción: "+e);
             JOptionPane.showMessageDialog(null, "Error al obtener el id del cliente",
