@@ -50,6 +50,7 @@ public class Pedidos {
     double total;
     String observaciones;
     String tipoTalla;
+    public static List<JTextField> txtFieldTallas;
     
     ResultSet rs;
     ResultSetMetaData rsm;
@@ -124,6 +125,10 @@ public class Pedidos {
     public String getNombreEstilo() {
         return nombreEstilo;
     }
+    
+    public static List<JTextField> getTxtFieldTallas() {
+        return txtFieldTallas;
+    }
 
     public void setIdPedido(int idPedido) {
         this.idPedido = idPedido;
@@ -192,6 +197,11 @@ public class Pedidos {
     public void setNombreEstilo(String nombreEstilo) {
         this.nombreEstilo = nombreEstilo;
     }
+        
+    public static void setTxtFieldTallas(List<JTextField> txtFieldTallas) {
+        Pedidos.txtFieldTallas = txtFieldTallas;
+    }
+
     
     public void llenaPanelTallas(String src){
         try {
@@ -268,16 +278,17 @@ public class Pedidos {
     
     public boolean RegistraPedido(){
         getIdClienteFromBD(this.nombreCliente);
-        String sql = "insert into pedidos (idCliente,idEstilo,fecha,fechaCliente,fechaInterna,tipoTalla,"
-                + "precio,subtotal,iva,total,observaciones,) "
-                + "values ("+this.idCliente+", "+this.idEstilo+",'"+this.fecha+"','"+this.fechaCliente+"', '"+this.fechaInterna+"', "
-                + "'"+this.tipoTalla+"',"+this.precio+","+this.subtotal+","+this.iva+","+this.total+",'"+this.observaciones+");";
-        System.out.println("Registro de cliente: "+sql);
-        if (BD.ejecutarSQL(sql)) {
+        System.out.println("idCliente: "+this.idCliente);
+//        String sql = "insert into pedidos (idCliente,idEstilo,fecha,fechaCliente,fechaInterna,tipoTalla,"
+//                + "precio,subtotal,iva,total,observaciones,) "
+//                + "values ("+this.idCliente+", "+this.idEstilo+",'"+this.fecha+"','"+this.fechaCliente+"', '"+this.fechaInterna+"', "
+//                + "'"+this.tipoTalla+"',"+this.precio+","+this.subtotal+","+this.iva+","+this.total+",'"+this.observaciones+");";
+//        System.out.println("Registro de cliente: "+sql);
+//        if (BD.ejecutarSQL(sql)) {
             return true;
-        }else{
-            return false;
-        }
+//        }else{
+//            return false;
+//        }
     }
     
     public void getIdClienteFromBD(String nombre){
