@@ -307,7 +307,7 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
         panelMateriales.setLayout(new java.awt.GridLayout(0, 3));
         jScrollPane4.setViewportView(panelMateriales);
 
-        panelProcesos.setLayout(new java.awt.GridLayout(0, 2));
+        panelProcesos.setLayout(new java.awt.GridLayout(0, 1));
         jScrollPane5.setViewportView(panelProcesos);
 
         jLabel2.setText("Materiales");
