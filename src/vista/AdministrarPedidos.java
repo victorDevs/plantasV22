@@ -160,7 +160,7 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/busqueda.png"))); // NOI18N
         jButton1.setText("Buscar");
 
-        jCBBuscarPor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Folio", "Estilo", "Cliente", "Fecha", "Fecha Interna", "Fecha Cliente", "Precio" }));
+        jCBBuscarPor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Folio", "Estilo", "Cliente", "Fecha", "Fecha Interna", "Fecha Cliente", "Precio", "Estatus", "Rango Precios" }));
 
         jLabel2.setText("Buscar por");
 

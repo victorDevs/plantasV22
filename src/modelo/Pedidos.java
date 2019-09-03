@@ -294,9 +294,9 @@ public class Pedidos {
         getIdClienteFromBD(this.nombreCliente);
         System.out.println("idCliente: "+this.idCliente);
         String sql = "insert into pedidos (idCliente,idEstilo,fecha,fechaCliente,fechaInterna,tipoTalla,"
-                + "precio,subtotal,iva,total,observaciones,codigoBarras) "
+                + "precio,subtotal,iva,total,observaciones,codigoBarras,estatus) "
                 + "values ("+this.idCliente+", "+this.idEstilo+",'"+this.fecha+"','"+this.fechaCliente+"', '"+this.fechaInterna+"', "
-                + "'"+this.tipoTalla+"',"+this.precio+","+this.subtotal+","+this.iva+","+this.total+",'"+this.observaciones+"','-');";
+                + "'"+this.tipoTalla+"',"+this.precio+","+this.subtotal+","+this.iva+","+this.total+",'"+this.observaciones+"','-','"+this.estatus+"');";
         System.out.println("Registro de Pedido: "+sql);
         if (BD.ejecutarSQL(sql)) {
             return true;
@@ -331,12 +331,12 @@ public class Pedidos {
             btnEliminar.setName("elimi");
             
             if (BD.conectarBD()) {
-                String sql = "select idPedido,fecha,fechaInterna,fechacliente,CONCAT('$ ',round(precio,2))as precio,CONCAT('$ ',round(subtotal,2)) as subtotal,CONCAT('$ ',round(iva,2)) as iva,CONCAT('$',round(total,2)) as total,observaciones from pedidos";
+                String sql = "select idPedido,fecha,fechaInterna,fechacliente,CONCAT('$ ',round(precio,2))as precio,CONCAT('$ ',round(subtotal,2)) as subtotal,CONCAT('$ ',round(iva,2)) as iva,CONCAT('$ ',round(total,2)) as total,observaciones,estatus from pedidos";
                 rs = BD.ejecutarSQLSelect(sql);
                 rsm = rs.getMetaData();
                 
                 while (rs.next()) {                
-                    Object nuev[] =  {rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),btnModificar,btnEliminar};
+                    Object nuev[] =  {rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),btnModificar,btnEliminar};
                     dtm.addRow(nuev);
                 }
             } else {
