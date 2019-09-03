@@ -5,12 +5,16 @@
  */
 package modelo;
 
+import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.DefaultComboBoxModel;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import persistencia.BD;
@@ -75,12 +79,52 @@ public class Procesos {
     public void llenaPanelProcesos(){
         try {
             if (BD.conectarBD()) {
-                String sql = "select idProceso,nombre from procesos";
+                String sql = "select idProceso,nombre,area from procesos";
                 rs = BD.ejecutarSQLSelect(sql);
                 rsm = rs.getMetaData();
                 JRadioButton  radio = null;
-                while (rs.next()) { 
+                JLabel  label = null;
+                ArrayList flagArea = null;
+                flagArea = new ArrayList();
+                while (rs.next()) {
+                    if(flagArea.indexOf(rs.getString("area")) < 0){
+                        label = new JLabel(" ***** AREA "+rs.getString("area")+" ***** ");
+                        CatalogoEstilos.panelProcesos.add(label);
+                        flagArea.add(rs.getString("area"));
+                    }
                     radio = new JRadioButton(rs.getString("nombre"));
+                    radio.setName(rs.getString("idProceso"));
+                    radio.addMouseListener(new MouseListener(){
+                        @Override
+                        public void mouseClicked(MouseEvent me) {
+                            if(me.getClickCount() == 1){
+                                JRadioButton comp = (JRadioButton) me.getSource();
+                                if(comp.isSelected()){
+                                    if(18 == Integer.parseInt(comp.getName())){
+                                        System.out.println("stateChanged:" + comp.getText());
+                                        String num = JOptionPane.showInputDialog("Por favor, escribe la cantidad de pulidos");
+                                        String numVal = num == null ? "" : num;
+                                        System.out.println(numVal);
+                                        if(numVal.isEmpty()){
+                                            comp.setSelected(false);
+                                            JOptionPane.showMessageDialog(null, "No puede dejar el número de pulidos en 0, por favor intente de nuevo.",
+                                                "Error de conexión",JOptionPane.WARNING_MESSAGE);
+                                        }else{
+                                            JOptionPane.showMessageDialog(null, "Número de pulidos " + numVal);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        @Override
+                        public void mousePressed(MouseEvent me) {}
+                        @Override
+                        public void mouseReleased(MouseEvent me) {}
+                        @Override
+                        public void mouseEntered(MouseEvent me) {}
+                        @Override
+                        public void mouseExited(MouseEvent me) {}
+                    });
                     CatalogoEstilos.panelProcesos.add(radio);
                     CatalogoEstilos.radiosProcesos.add(radio);
                     CatalogoEstilos.panelProcesos.updateUI();
