@@ -5,6 +5,10 @@
  */
 package vista;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Luis
@@ -17,6 +21,7 @@ public class PagosPorDestajo extends javax.swing.JDialog {
     public PagosPorDestajo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        llenaComboNumSemanas(jcbNumSemana);
     }
 
     /**
@@ -31,10 +36,10 @@ public class PagosPorDestajo extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
+        jcbNumSemana = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pagos por Destajo");
@@ -46,18 +51,18 @@ public class PagosPorDestajo extends javax.swing.JDialog {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Trabajador", "Proceso", "Tallas", "Precio", "Total"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel2.setText("Fecha ");
+        jLabel2.setText("# Semana");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -74,8 +79,8 @@ public class PagosPorDestajo extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
+                        .addComponent(jcbNumSemana, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
                         .addComponent(jButton1)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
@@ -87,8 +92,8 @@ public class PagosPorDestajo extends javax.swing.JDialog {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2))
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
+                        .addComponent(jcbNumSemana, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton1))
                 .addGap(34, 34, 34)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -140,13 +145,41 @@ public class PagosPorDestajo extends javax.swing.JDialog {
         });
     }
 
+    
+     public void llenaComboNumSemanas(JComboBox combo){
+        DefaultComboBoxModel comboSemanaNum = new DefaultComboBoxModel();
+        try {
+            
+            for(int i =0; i<48; i++){
+                comboSemanaNum.addElement(i+1);
+                combo.setModel(comboSemanaNum);
+            }
+//            BD.conectarBD();
+//            String sql = "select * from clientes";
+//            rs = BD.ejecutarSQLSelect(sql);
+//            rsm = rs.getMetaData();
+//            combo.setModel(comboCliente);
+//            comboCliente.addElement("-- Seleccione --");
+//            while (rs.next()) {
+//                this.idCliente = Integer.parseInt(rs.getString("idCliente"));
+//                this.nombre = rs.getString("nombre");
+//                comboCliente.addElement(rs.getObject("nombre"));
+//                combo.setModel(comboCliente);
+//            }
+//            BD.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Excepción: "+e);
+            JOptionPane.showMessageDialog(null, "Error al mostrar el listado del número de semanas",
+                    "Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JComboBox<String> jcbNumSemana;
     // End of variables declaration//GEN-END:variables
 }

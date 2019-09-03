@@ -7,6 +7,7 @@ package vista;
 
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
+import java.awt.Frame;
 import javax.swing.Box;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -207,6 +208,11 @@ public class Main extends javax.swing.JFrame {
         menuReportes.add(jMenuItem4);
 
         jMenuItem5.setText("Pagos por destajo");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         menuReportes.add(jMenuItem5);
 
         jMenuBar1.add(menuReportes);
@@ -327,6 +333,15 @@ public class Main extends javax.swing.JFrame {
             //catMateriales.dispose();
         }
     }//GEN-LAST:event_subMenuCerrarSesionActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        Frame frame = JOptionPane.getFrameForComponent(this);
+        PagosPorDestajo pagosPorDestajo = new PagosPorDestajo(frame,true);
+        Dimension desktopSize = Main.jDesktopMain.getSize();
+        Dimension FrameSize = pagosPorDestajo.getSize();
+        pagosPorDestajo.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+        pagosPorDestajo.show();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments

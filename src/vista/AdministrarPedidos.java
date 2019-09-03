@@ -24,6 +24,7 @@ import modelo.Clientes;
 import modelo.Pedidos;
 import modelo.Proveedores;
 import persistencia.BD;
+import persistencia.FormatoColorTabla;
 import persistencia.MetodosGlobales;
 import persistencia.validaJframeAbreUnaVez;
 
@@ -55,6 +56,9 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
     public AdministrarPedidos() {
         //this.validajFraAbreUnaVez = new validaJframeAbreUnaVez(Main.jDesktopMain);
         initComponents();
+        
+        jTableAdminPedidos.setDefaultRenderer(Object.class, new FormatoColorTabla());
+        
         MetodosGlobales.LimpiaTabla(jTableAdminPedidos);
         pedidos.TablaConsultaPedidos();
         
@@ -101,7 +105,6 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jDCFechaFin = new com.toedter.calendar.JDateChooser();
-        jButton2 = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Administrador de Pedidos");
@@ -120,14 +123,14 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Folio", "Fecha", "Fecha Int.", "Fecha Cli.", "Precio", "Subtotal", "IVA", "Total", "Observaciones", "Editar", "Eliminar"
+                "Folio", "Fecha", "Fecha Int.", "Fecha Cli.", "Precio", "Subtotal", "IVA", "Total", "Observaciones", "Estatus", "Editar", "Eliminar"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -146,10 +149,12 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTableAdminPedidos);
         if (jTableAdminPedidos.getColumnModel().getColumnCount() > 0) {
             jTableAdminPedidos.getColumnModel().getColumn(0).setMinWidth(10);
-            jTableAdminPedidos.getColumnModel().getColumn(9).setMinWidth(60);
-            jTableAdminPedidos.getColumnModel().getColumn(9).setMaxWidth(60);
+            jTableAdminPedidos.getColumnModel().getColumn(9).setMinWidth(70);
+            jTableAdminPedidos.getColumnModel().getColumn(9).setMaxWidth(70);
             jTableAdminPedidos.getColumnModel().getColumn(10).setMinWidth(60);
             jTableAdminPedidos.getColumnModel().getColumn(10).setMaxWidth(60);
+            jTableAdminPedidos.getColumnModel().getColumn(11).setMinWidth(60);
+            jTableAdminPedidos.getColumnModel().getColumn(11).setMaxWidth(60);
         }
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/busqueda.png"))); // NOI18N
@@ -162,14 +167,6 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
         jLabel3.setText("Inicio");
 
         jLabel4.setText("Fin");
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/efectivo.png"))); // NOI18N
-        jButton2.setText("Pagos por Destajo");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -199,12 +196,8 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
                                 .addGap(10, 10, 10)
                                 .addComponent(jDCFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 301, Short.MAX_VALUE)))
+                        .addGap(0, 378, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,13 +214,11 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jDCFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addGap(49, 49, 49))
         );
 
         pack();
@@ -263,15 +254,6 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
         catPedido.show();
     }//GEN-LAST:event_jLabel1MouseClicked
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Frame frame = JOptionPane.getFrameForComponent(this);
-        PagosPorDestajo pagosPorDestajo = new PagosPorDestajo(frame,true);
-        Dimension desktopSize = Main.jDesktopMain.getSize();
-        Dimension FrameSize = pagosPorDestajo.getSize();
-        pagosPorDestajo.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
-        pagosPorDestajo.show();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     public void LimpiaTablaClientes(){
         try {
             DefaultTableModel modelo = (DefaultTableModel)jTableAdminPedidos.getModel();
@@ -300,7 +282,6 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jCBBuscarPor;
     private com.toedter.calendar.JDateChooser jDCFechaFin;
     private com.toedter.calendar.JDateChooser jDateChooser1;
