@@ -18,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import persistencia.BD;
 import persistencia.MetodosGlobales;
+import persistencia.VariablesGlobales;
 import vista.CatalogoEstilos;
 
 /**
@@ -162,8 +163,14 @@ public class Estilos {
     }
     
     public boolean registrarEstiloProceso(){
-        String sql = "insert into estilos_procesos (idEstilo, proceso) "
-                + "values ("+this.idEstilo+",'"+this.proceso+"');";
+        String sql = "";
+        if(this.idEstilo == 18){
+            sql = "insert into estilos_procesos (idEstilo, proceso, reprocesos) "
+                    + "values ("+this.idEstilo+",'"+this.proceso+"',"+VariablesGlobales.numPulidos+");";
+        }else{
+            sql = "insert into estilos_procesos (idEstilo, proceso, reprocesos) "
+                + "values ("+this.idEstilo+",'"+this.proceso+"', 1);";
+        }
         if (BD.ejecutarSQL(sql)) {
             return true;
         }else{
