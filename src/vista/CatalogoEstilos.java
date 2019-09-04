@@ -12,6 +12,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -754,7 +755,12 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtBuscarMaterialKeyPressed
 
     private void txtBuscarProcesosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarProcesosKeyPressed
-        pro.buscarProcesosCheckBox(txtBuscarProcesos.getText());
+        try {
+            pro.buscarProcesosCheckBox(txtBuscarProcesos.getText());
+        } catch (SQLException ex) {
+            System.out.println("Error en la búsqeuda de procesos: "+ex);
+            Logger.getLogger(CatalogoEstilos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_txtBuscarProcesosKeyPressed
 
     public void LimpiaTablaEstilos(JTable dataTable){
