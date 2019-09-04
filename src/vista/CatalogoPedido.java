@@ -350,7 +350,7 @@ public class CatalogoPedido extends javax.swing.JDialog {
         ArrayList arrayListTallas = new ArrayList();
         String estilo = (String) jCBEstilos.getSelectedItem();
         String cliente = (String) jCBClientes.getSelectedItem();
-        String tipoTalla = (String) jCBClientes.getSelectedItem();
+        String tipoTalla = (String) jCBTipoTallas.getSelectedItem();
         Date date1 = jDCFecha1.getDate();
         Date dateInterna = jDCFechaInterna.getDate();
         Date dateCliente = jDCFechaCliente.getDate();
