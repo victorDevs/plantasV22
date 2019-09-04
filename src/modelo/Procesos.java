@@ -11,6 +11,7 @@ import java.awt.event.MouseListener;
 import javax.swing.DefaultComboBoxModel;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JComboBox;
@@ -18,7 +19,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import persistencia.BD;
+import persistencia.VariablesGlobales;
 import vista.CatalogoEstilos;
+import static vista.CatalogoEstilos.radiosProcesos;
 
 /**
  *
@@ -103,14 +106,15 @@ public class Procesos {
                                     if(18 == Integer.parseInt(comp.getName())){
                                         System.out.println("stateChanged:" + comp.getText());
                                         String num = JOptionPane.showInputDialog("Por favor, escribe la cantidad de pulidos");
-                                        String numVal = num == null ? "" : num;
+                                        String numVal = num == null ? "1" : num;
                                         System.out.println(numVal);
                                         if(numVal.isEmpty()){
                                             comp.setSelected(false);
                                             JOptionPane.showMessageDialog(null, "No puede dejar el número de pulidos en 0, por favor intente de nuevo.",
                                                 "Error de conexión",JOptionPane.WARNING_MESSAGE);
                                         }else{
-                                            JOptionPane.showMessageDialog(null, "Número de pulidos " + numVal);
+                                            VariablesGlobales.numPulidos = Integer.parseInt(numVal);
+                                            JOptionPane.showMessageDialog(null, "Número de pulidos " + VariablesGlobales.numPulidos);
                                         }
                                     }
                                 }
@@ -141,20 +145,42 @@ public class Procesos {
         }
     }
     
-     public void buscarProcesosCheckBox(String nombreProcesos){
+     public void buscarProcesosCheckBox(String nombreProcesos) throws SQLException{
         try {
             if (BD.conectarBD()) {
-                String sql = "select idProceso,nombre from procesos where nombre like '%"+nombreProcesos.trim()+"%'";
+                String sql = "";
+                if(nombreProcesos.isEmpty()){
+                    sql = "select idProceso,nombre,area from procesos;";
+                }else{
+                    sql = "select idProceso,nombre,area from procesos where nombre like '%"+nombreProcesos.trim()+"%'";
+                }
+//                System.out.println("sql: "+sql);
                 rs = BD.ejecutarSQLSelect(sql);
                 rsm = rs.getMetaData();
                 JRadioButton  radio = null;
                 CatalogoEstilos.panelProcesos.removeAll();
                 CatalogoEstilos.radiosProcesos.remove(0);
+                JLabel  label = null;
+                ArrayList flagArea = null;
+                flagArea = new ArrayList();
                 while (rs.next()) { 
+                    if(flagArea.indexOf(rs.getString("area")) < 0){
+                        label = new JLabel(" ***** AREA "+rs.getString("area")+" ***** ");
+                        CatalogoEstilos.panelProcesos.add(label);
+                        flagArea.add(rs.getString("area"));
+                    }
                     radio = new JRadioButton(rs.getString("nombre"));
-                    CatalogoEstilos.panelProcesos.add(radio);
-                    CatalogoEstilos.radiosProcesos.add(radio);
-                    CatalogoEstilos.panelProcesos.updateUI();
+                    for (int i = 0; i < radiosProcesos.size(); i++) {
+                        if(CatalogoEstilos.radiosProcesos.get(i).getText().equals(rs.getString("nombre"))){
+                            radio = radiosProcesos.get(i);
+                        }
+                    }
+                    System.out.println("radio.getText(): "+radio.getText());
+                    if(!radio.getText().equals("")){
+                        CatalogoEstilos.panelProcesos.add(radio);
+                        CatalogoEstilos.radiosProcesos.add(radio);
+                        CatalogoEstilos.panelProcesos.updateUI();
+                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos plantasbd",
