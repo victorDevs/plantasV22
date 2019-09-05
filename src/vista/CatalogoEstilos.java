@@ -512,7 +512,7 @@ public class CatalogoEstilos extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(true);
         btnModifyPersonal.setEnabled(true);
         btnLimpiar.setEnabled(true);
-        txtPrecio.setEditable(false);
+//        txtPrecio.setEditable(false);
         
         if (evt.getClickCount() == 1) {
             
