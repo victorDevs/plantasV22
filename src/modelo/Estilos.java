@@ -164,13 +164,14 @@ public class Estilos {
     
     public boolean registrarEstiloProceso(){
         String sql = "";
-        if(this.idEstilo == 18){
+        if("Pulido".equals(this.proceso)){
             sql = "insert into estilos_procesos (idEstilo, proceso, reprocesos) "
                     + "values ("+this.idEstilo+",'"+this.proceso+"',"+VariablesGlobales.numPulidos+");";
         }else{
             sql = "insert into estilos_procesos (idEstilo, proceso, reprocesos) "
                 + "values ("+this.idEstilo+",'"+this.proceso+"', 1);";
         }
+//        System.out.println(this.proceso+"  -  "+sql);
         if (BD.ejecutarSQL(sql)) {
             return true;
         }else{
