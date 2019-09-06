@@ -280,4 +280,28 @@ public class Personal {
             BD.cerrarConexion();
         }
     }
+     
+       public void llenaComboPersonal(JComboBox combo){
+        DefaultComboBoxModel comboPersonal = new DefaultComboBoxModel();
+        try {
+            BD.conectarBD();
+            String sql = "select idPersonal,CONCAT(nombre,' ',apellidoPaterno) as nombre from personal";
+            rs = BD.ejecutarSQLSelect(sql);
+            rsm = rs.getMetaData();
+            combo.setModel(comboPersonal);
+            comboPersonal.addElement("-- Seleccione Trabajador--");
+            while (rs.next()) {
+                this.idPersonal = Integer.parseInt(rs.getString("idPersonal"));
+                this.nombre = rs.getString("nombre");
+                comboPersonal.addElement(rs.getObject("nombre"));
+                combo.setModel(comboPersonal);
+            }
+            BD.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Excepción: "+e);
+            JOptionPane.showMessageDialog(null, "Error al mostrar el listado de personal",
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            BD.cerrarConexion();
+        }
+    }
 }
