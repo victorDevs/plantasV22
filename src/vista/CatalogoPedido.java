@@ -28,6 +28,7 @@ public class CatalogoPedido extends javax.swing.JDialog {
     Pedidos ped = new Pedidos();
     Estilos est = new Estilos();
     Personal per = new Personal();
+
     
     MetodosGlobales metodosGlobales = new MetodosGlobales();
     public static List<JTextField> txtFieldTallas;
@@ -40,7 +41,7 @@ public class CatalogoPedido extends javax.swing.JDialog {
         
         cli.llenaComboClientes(jCBClientes);
         est.llenaComboEstilos(jCBEstilos);
-        per.llenaComboPersonal(jcbPersonal);
+        
         ped.llenaPanelTallas("Nacional",jPanelTallas,txtFieldTallas);
         jTxtSubTotal.setEditable(false);
         jTxtIva.setEditable(false);
@@ -96,6 +97,11 @@ public class CatalogoPedido extends javax.swing.JDialog {
         jCBClientes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jCBEstilos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCBEstilos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBEstilosActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Estilo");
 
@@ -211,6 +217,11 @@ public class CatalogoPedido extends javax.swing.JDialog {
         jcbEstatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona el Estatus", "Proceso", "Entregado", "Cancelado" }));
 
         jcbPersonal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbPersonal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbPersonalActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -531,6 +542,22 @@ public class CatalogoPedido extends javax.swing.JDialog {
         //        }
     }//GEN-LAST:event_btnModifyClienteActionPerformed
 
+    private void jCBEstilosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBEstilosActionPerformed
+        if(jCBEstilos.getSelectedIndex()==0){
+            per.setEstilo("");
+            per.setProceso("");
+            per.setIdEstilo(0);
+        }else{
+            per.setEstilo(jCBEstilos.getSelectedItem().toString());//MANDA EL NOMBRE DEL ESTILO PARA PODER OBTENER EL NOMBRE DEL PROCESO DEL ESTILO
+        }
+        per.llenaComboPersonal(jcbPersonal);//LLENA TODO EL COMBO DE PERSONAL
+    }//GEN-LAST:event_jCBEstilosActionPerformed
+
+    private void jcbPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbPersonalActionPerformed
+        per.setNombre(jcbPersonal.getSelectedItem().toString());
+        per.obtieneIdPersonalCombo();
+    }//GEN-LAST:event_jcbPersonalActionPerformed
+
        public static void LimpiaCampos(){
 //        jTxtNombreCliente.setText(null);
 //        jTxtDomicilio.setText(null);
@@ -585,7 +612,7 @@ public class CatalogoPedido extends javax.swing.JDialog {
     private javax.swing.JButton btnModifyCliente;
     private javax.swing.JButton jBtnCalcTotales;
     private javax.swing.JComboBox<String> jCBClientes;
-    private javax.swing.JComboBox<String> jCBEstilos;
+    public static javax.swing.JComboBox<String> jCBEstilos;
     private javax.swing.JComboBox<String> jCBTipoTallas;
     private com.toedter.calendar.JDateChooser jDCFecha1;
     private com.toedter.calendar.JDateChooser jDCFechaCliente;
@@ -609,6 +636,6 @@ public class CatalogoPedido extends javax.swing.JDialog {
     public static javax.swing.JTextField jTxtSubTotal;
     public static javax.swing.JTextField jTxtTotal;
     private javax.swing.JComboBox<String> jcbEstatus;
-    private javax.swing.JComboBox<String> jcbPersonal;
+    public static javax.swing.JComboBox<String> jcbPersonal;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.ResultSet;
@@ -17,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import persistencia.BD;
 import persistencia.MetodosGlobales;
+import vista.CatalogoPedido;
 import vista.CatalogoPersonal;
 
 /**
@@ -37,9 +39,13 @@ public class Personal {
     String FechaRegistro;
     String horaRegistro;
     
+    int idEstilo;
+    String estilo;
+    
     ResultSet rs;
     ResultSetMetaData rsm;
     DefaultTableModel dtm; 
+
 
     public int getIdPersonal() {
         return idPersonal;
@@ -88,8 +94,16 @@ public class Personal {
     public String getHoraRegistro() {
         return horaRegistro;
     }
-    
 
+    public int getIdEstilo() {
+        return idEstilo;
+    }
+
+    public String getEstilo() {
+        return estilo;
+    }
+    
+    
     public void setIdPersonal(int idPersonal) {
         this.idPersonal = idPersonal;
     }
@@ -136,6 +150,14 @@ public class Personal {
 
     public void setHoraRegistro(String horaRegistro) {
         this.horaRegistro = horaRegistro;
+    }
+
+    public void setIdEstilo(int idEstilo) {
+        this.idEstilo = idEstilo;
+    }
+
+    public void setEstilo(String estilo) {
+        this.estilo = estilo;
     }
     
     
@@ -281,21 +303,32 @@ public class Personal {
         }
     }
      
-       public void llenaComboPersonal(JComboBox combo){
+    public void llenaComboPersonal(JComboBox combo){       
+        obtieneIdEstilo(this.estilo);//LLAMA EL MÉTODO PARA ENVIAR EL NOMBRE DEL ESTILO Y PODER OBTENER SU IDESTILO
         DefaultComboBoxModel comboPersonal = new DefaultComboBoxModel();
+        
         try {
             BD.conectarBD();
-            String sql = "select idPersonal,CONCAT(nombre,' ',apellidoPaterno) as nombre from personal";
+            String sql = "select idPersonal,CONCAT(nombre,' ',apellidoPaterno) as nombre from personal where proceso = '"+this.proceso+"'";
             rs = BD.ejecutarSQLSelect(sql);
             rsm = rs.getMetaData();
-            combo.setModel(comboPersonal);
-            comboPersonal.addElement("-- Seleccione Trabajador--");
-            while (rs.next()) {
-                this.idPersonal = Integer.parseInt(rs.getString("idPersonal"));
-                this.nombre = rs.getString("nombre");
-                comboPersonal.addElement(rs.getObject("nombre"));
-                combo.setModel(comboPersonal);
+            //combo.setModel(comboPersonal);
+            
+            comboPersonal.addElement("--Seleccione Trabajador--");
+            this.nombre = null;//para reiniciar el nombre y pueda se validado posteriormente para mostrar la leyenda "No hay trabajador"
+            while (rs.next()) {                   
+                    this.idPersonal = Integer.parseInt(rs.getString("idPersonal"));
+                    this.nombre = rs.getString("nombre");
+                    System.out.println("el nombre del personal devuelve: "+this.nombre);
+                    comboPersonal.addElement(rs.getObject("nombre"));
+                    
             }
+            if(this.nombre == null){
+                comboPersonal.addElement("No hay trabajador");
+            }
+            
+            combo.setModel(comboPersonal);
+            
             BD.cerrarConexion();
         } catch (Exception e) {
             System.out.println("Excepción: "+e);
@@ -303,5 +336,68 @@ public class Personal {
                     "Error",JOptionPane.ERROR_MESSAGE);
             BD.cerrarConexion();
         }
+    }
+       
+       public String obtieneIdEstilo(String estilo){
+           String sql = "";
+           try {
+                BD.conectarBD();
+                sql = "select idEstilo from estilos where estilo='"+estilo+"'";
+                rs = BD.ejecutarSQLSelect(sql);
+                rsm = rs.getMetaData();
+                
+                while (rs.next()) {
+                    this.idEstilo = Integer.parseInt(rs.getString("idEstilo"));
+                }
+                obtenerProcesoEstilo();//LLAMA AL MÉTODO PARA PODER OBTENER EL NOMBRE DEL PROCESO
+                BD.cerrarConexion();
+           } catch (Exception e) {
+               System.out.println("Excepción obtenerEstilo: "+e);
+            JOptionPane.showMessageDialog(null, "Error al mostrar el listado de idEstilo",
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            BD.cerrarConexion();
+           }
+           
+           return sql;
+       }
+       
+       public void obtenerProcesoEstilo(){
+            String sql="";
+           try {
+                BD.conectarBD();
+                sql = "select idEstilo,proceso from estilos_procesos where idEstilo="+this.idEstilo;
+                rs = BD.ejecutarSQLSelect(sql);
+                rsm = rs.getMetaData();
+                while (rs.next()) {
+                    this.proceso = rs.getString("proceso");
+                }
+           } catch (Exception e) {
+               System.out.println("Excepción obtenerEstilo: "+e);
+                JOptionPane.showMessageDialog(null, "Error al mostrar el listado de procesos en personal",
+                        "Error",JOptionPane.ERROR_MESSAGE);
+                BD.cerrarConexion();
+           }
+       }
+       
+       public void obtieneIdPersonalCombo(){//AL MOMENTO DE SELECCIONAR EL COMBO DEL PERSONAL DEVUELVE EL ID DEL PERSONAL SELECCIONADO
+        
+           try {
+                BD.conectarBD();
+                String sql =  "select idPersonal, CONCAT(nombre,' ',apellidoPaterno) as nombre from personal where CONCAT(nombre,' ',apellidoPaterno) ='"+this.nombre+"'";
+                rs = BD.ejecutarSQLSelect(sql);
+                rsm = rs.getMetaData();
+                
+                while (rs.next()) {
+                    this.idPersonal = Integer.parseInt(rs.getString("idPersonal"));
+                    System.out.println("Id personal seleccionado: "+this.idPersonal);
+                }
+                obtenerProcesoEstilo();//LLAMA AL MÉTODO PARA PODER OBTENER EL NOMBRE DEL PROCESO
+                BD.cerrarConexion();
+           } catch (Exception e) {
+               System.out.println("Excepción obtenerEstilo: "+e);
+            JOptionPane.showMessageDialog(null, "Error al mostrar el listado de idPersonalCombo",
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            BD.cerrarConexion();
+           } 
     }
 }
