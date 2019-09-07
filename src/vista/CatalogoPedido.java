@@ -218,6 +218,11 @@ public class CatalogoPedido extends javax.swing.JDialog {
         });
 
         jcbEstatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona el Estatus", "Proceso", "Entregado", "Cancelado" }));
+        jcbEstatus.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcbEstatusItemStateChanged(evt);
+            }
+        });
 
         jcbPersonal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jcbPersonal.addActionListener(new java.awt.event.ActionListener() {
@@ -565,6 +570,10 @@ public class CatalogoPedido extends javax.swing.JDialog {
         per.setNombre(jcbPersonal.getSelectedItem().toString());
         per.obtieneIdPersonalCombo();
     }//GEN-LAST:event_jcbPersonalActionPerformed
+
+    private void jcbEstatusItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbEstatusItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbEstatusItemStateChanged
 
        public static void LimpiaCampos(){
 //        jTxtNombreCliente.setText(null);
