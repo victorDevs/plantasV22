@@ -5,9 +5,13 @@
  */
 package vista;
 
+import java.awt.Dimension;
+import java.awt.Frame;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import modelo.ReporPagoPorDestajo;
+import persistencia.MetodosGlobales;
 
 /**
  *
@@ -15,13 +19,17 @@ import javax.swing.JOptionPane;
  */
 public class PagosPorDestajo extends javax.swing.JDialog {
 
-    /**
-     * Creates new form PagosPorDestajo
-     */
+    ReporPagoPorDestajo reporPagoDesta = new ReporPagoPorDestajo();
+    
     public PagosPorDestajo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         llenaComboNumSemanas(jcbNumSemana);
+        
+        MetodosGlobales.LimpiaTabla(jTablePrincipalPagosDestajo);
+        reporPagoDesta.TablaPrincipalConsultaPagoPorDestajo();
+        
+        
     }
 
     /**
@@ -37,7 +45,7 @@ public class PagosPorDestajo extends javax.swing.JDialog {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTablePrincipalPagosDestajo = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jcbNumSemana = new javax.swing.JComboBox<>();
 
@@ -49,7 +57,7 @@ public class PagosPorDestajo extends javax.swing.JDialog {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/busqueda.png"))); // NOI18N
         jButton1.setText("Buscar");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTablePrincipalPagosDestajo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -68,7 +76,12 @@ public class PagosPorDestajo extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jTablePrincipalPagosDestajo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTablePrincipalPagosDestajoMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTablePrincipalPagosDestajo);
 
         jLabel2.setText("# Semana");
 
@@ -110,6 +123,17 @@ public class PagosPorDestajo extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTablePrincipalPagosDestajoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePrincipalPagosDestajoMouseClicked
+       if(evt.getClickCount() ==2){
+        Frame frame = JOptionPane.getFrameForComponent(this);
+        DetallesPagoPorDestajo detallePagoDesta = new DetallesPagoPorDestajo(frame,true);
+        Dimension desktopSize = Main.jDesktopMain.getSize();
+        Dimension FrameSize = detallePagoDesta.getSize();
+        detallePagoDesta.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+        detallePagoDesta.show();
+       }
+    }//GEN-LAST:event_jTablePrincipalPagosDestajoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -186,7 +210,7 @@ public class PagosPorDestajo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    public static javax.swing.JTable jTablePrincipalPagosDestajo;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JComboBox<String> jcbNumSemana;
     // End of variables declaration//GEN-END:variables

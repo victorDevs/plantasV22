@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import modelo.Clientes;
@@ -32,17 +33,19 @@ public class CatalogoPedido extends javax.swing.JDialog {
     
     MetodosGlobales metodosGlobales = new MetodosGlobales();
     public static List<JTextField> txtFieldTallas;
+    public static List<JLabel> labelTallas;
     
      
     public CatalogoPedido(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         txtFieldTallas = new ArrayList<>();
+        labelTallas = new ArrayList<>();
         initComponents();
         
         cli.llenaComboClientes(jCBClientes);
         est.llenaComboEstilos(jCBEstilos);
         
-        ped.llenaPanelTallas("Nacional",jPanelTallas,txtFieldTallas);
+        ped.llenaPanelTallas("Nacional",jPanelTallas,txtFieldTallas,labelTallas);
         jTxtSubTotal.setEditable(false);
         jTxtIva.setEditable(false);
         jTxtTotal.setEditable(false);
@@ -407,7 +410,12 @@ public class CatalogoPedido extends javax.swing.JDialog {
                 ped.setEstatus(jcbEstatus.getSelectedItem().toString());
                 
                 try {
-                    ped.RegistraPedido();
+                    ped.RegistraPedido(per.getIdPersonal());
+                    for (int i = 0; i < txtFieldTallas.size()-1; i++) {
+                        if(!txtFieldTallas.get(i).getText().equals("")){
+                            ped.registrarTallas(Double.parseDouble(labelTallas.get(i).getText()),Integer.parseInt(txtFieldTallas.get(i).getText()));
+                        }
+                    }
                     JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
                         "Aviso",JOptionPane.INFORMATION_MESSAGE);
 
@@ -466,7 +474,7 @@ public class CatalogoPedido extends javax.swing.JDialog {
                 //System.out.println(evt.getItem().toString());
         jPanelTallas.removeAll();
         jPanelTallas.updateUI();
-        ped.llenaPanelTallas(evt.getItem().toString(),jPanelTallas,txtFieldTallas);
+        ped.llenaPanelTallas(evt.getItem().toString(),jPanelTallas,txtFieldTallas,labelTallas);
     }//GEN-LAST:event_jCBTipoTallasItemStateChanged
 
     private void jCBTipoTallasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCBTipoTallasMouseClicked

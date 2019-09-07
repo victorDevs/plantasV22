@@ -162,10 +162,10 @@ public class Personal {
     
     
     public boolean RegistraPersonal() throws SQLException{
-        String sql = "insert into personal (nombre,apellidoPaterno,apellidoMaterno,fechaNacimiento,domicilio,telefono,correo,proceso,observaciones) "
+        String sql = "insert into personal (nombre,apellidoPaterno,apellidoMaterno,fechaNacimiento,domicilio,telefono,correo,proceso,observaciones,estatus) "
                 + "values ('"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', '"+MetodosGlobales.aceptarComillaSimple(this.apellidoPaterno)+"','"+MetodosGlobales.aceptarComillaSimple(this.apellidoMaterno)+"','"
                 +this.fechaNacimiento+"','"+MetodosGlobales.aceptarComillaSimple(this.Domicilio)+"','"+this.telefono+"','"+this.correo+"','"
-                +this.proceso+"','"+this.observaciones+"');";
+                +this.proceso+"','"+this.observaciones+"','desocupado');";
 //        System.out.println("Registro de personal: "+sql);
         if (BD.ejecutarSQL(sql)) {
 //            sql = "SELECT LAST_INSERT_ID();";

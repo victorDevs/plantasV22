@@ -70,6 +70,8 @@ public class Pedidos {
     //CREAMOS ESTOS BOTONES PARA ANEXARLOS A LA TABLA DE PEDIDOS
      JButton btnModificar = new JButton(iconModif);
      JButton btnEliminar = new JButton(iconElimina);
+     
+     Personal personal = new Personal();
 
     public int getIdPedido() {
         return idPedido;
@@ -216,7 +218,7 @@ public class Pedidos {
     }
 
     
-    public void llenaPanelTallas(String src, JPanel panel,List<JTextField> txtFieldTallas){
+    public void llenaPanelTallas(String src, JPanel panel,List<JTextField> txtFieldTallas,List<JLabel> labelTallas){
         try {
             if (BD.conectarBD()) {
                 int sizeArray = 0;
@@ -265,6 +267,7 @@ public class Pedidos {
                         });
                         panel.add(txtField);
                         txtFieldTallas.add(txtField);
+                        labelTallas.add(jLabelTalla);
                         panel.updateUI();
                         begin = begin + punto;
                     }
@@ -290,12 +293,12 @@ public class Pedidos {
         }
     }
     
-    public boolean RegistraPedido(){
+    public boolean RegistraPedido(int idPersonal){
         getIdClienteFromBD(this.nombreCliente);
         System.out.println("idCliente: "+this.idCliente);
-        String sql = "insert into pedidos (idCliente,idEstilo,fecha,fechaCliente,fechaInterna,tipoTalla,"
+        String sql = "insert into pedidos (idPersonal,idCliente,idEstilo,fecha,fechaCliente,fechaInterna,tipoTalla,"
                 + "precio,subtotal,iva,total,observaciones,codigoBarras,estatus) "
-                + "values ("+this.idCliente+", "+this.idEstilo+",'"+this.fecha+"','"+this.fechaCliente+"', '"+this.fechaInterna+"', "
+                + "values ("+idPersonal+","+this.idCliente+", "+this.idEstilo+",'"+this.fecha+"','"+this.fechaCliente+"', '"+this.fechaInterna+"', "
                 + "'"+this.tipoTalla+"',"+this.precio+","+this.subtotal+","+this.iva+","+this.total+",'"+this.observaciones+"','-','"+this.estatus+"');";
         System.out.println("Registro de Pedido: "+sql);
         if (BD.ejecutarSQL(sql)) {
@@ -346,6 +349,36 @@ public class Pedidos {
             }            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error al mostrar lo datos en la tabla pedidos: "+e, 
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            BD.cerrarConexion();
+        }
+    }
+      
+    public boolean registrarTallas(double tallas,int cantidad){
+        tomarMaxIdPedido();
+        String sql = "insert into tallas (idPedido,talla,cantidad) "
+                + "values ("+this.idPedido+","+tallas+","+cantidad+");";
+        System.out.println("Registro de talla: "+sql);
+        if (BD.ejecutarSQL(sql)) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+     public void tomarMaxIdPedido(){
+        try {
+            BD.conectarBD();
+            String sql = "select max(idPedido)as idPedido from pedidos";
+            rs = BD.ejecutarSQLSelect(sql);
+            rsm = rs.getMetaData();
+            while (rs.next()) {
+                this.idPedido = rs.getInt("idPedido");
+            }
+            //BD.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Excepción: "+e);
+            JOptionPane.showMessageDialog(null, "Error al obtener el id mayor de pedidos",
                     "Error",JOptionPane.ERROR_MESSAGE);
             BD.cerrarConexion();
         }
