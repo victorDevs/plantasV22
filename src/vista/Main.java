@@ -42,6 +42,7 @@ public class Main extends javax.swing.JFrame {
 //        setTimeout(() -> validajFraAbreUnaVez.abrirInternalFramePersonal(CatalogoEstilos.getInstancia()), 500);
 //        setTimeout(() -> validajFraAbreUnaVez.abrirInternalFramePersonal(CatalogoPersonal.getInstancia()), 500);
 //        setTimeout(() -> validajFraAbreUnaVez.abrirInternalFramePersonal(CatalogoPedidos.getInstancia()), 500);
+//        setTimeout(() -> validajFraAbreUnaVez.abrirInternalFramePersonal(AdministrarPedidos.getInstancia()), 500);
         
         
         
