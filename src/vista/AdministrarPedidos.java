@@ -62,6 +62,11 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
         MetodosGlobales.LimpiaTabla(jTableAdminPedidos);
         pedidos.TablaConsultaPedidos();
         
+//        jDCFechaIni.setVisible(false);
+//        jDCFechaFin.setVisible(false);
+//        jLbInicio.setVisible(false);
+//        jLbFin.setVisible(false);
+        
         
 //        btnEliminar.setEnabled(false);
 //        btnModifyCliente.setEnabled(false);
@@ -100,11 +105,15 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
         jTableAdminPedidos = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jCBBuscarPor = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDCFechaIni = new com.toedter.calendar.JDateChooser();
+        jLbInicio = new javax.swing.JLabel();
+        jLbFin = new javax.swing.JLabel();
+        jDCFechaFin = new com.toedter.calendar.JDateChooser();
+        jCBBuscarPor1 = new javax.swing.JComboBox<>();
+        jTxtPecioIni = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jDCFechaFin = new com.toedter.calendar.JDateChooser();
+        jTxtPrecioFin = new javax.swing.JTextField();
 
         setClosable(true);
         setTitle("Administrador de Pedidos");
@@ -159,14 +168,33 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/busqueda.png"))); // NOI18N
         jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jCBBuscarPor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Folio", "Estilo", "Cliente", "Fecha", "Fecha Interna", "Fecha Cliente", "Precio", "Estatus", "Rango Precios" }));
+        jCBBuscarPor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Buscar por --", "Folio", "Estilo", "Cliente" }));
+        jCBBuscarPor.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCBBuscarPorItemStateChanged(evt);
+            }
+        });
 
-        jLabel2.setText("Buscar por");
+        jLbInicio.setText("Inicio");
 
-        jLabel3.setText("Inicio");
+        jLbFin.setText("Fin");
 
-        jLabel4.setText("Fin");
+        jCBBuscarPor1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Estatus --", "Proceso", "Cancelado", "Entregado" }));
+        jCBBuscarPor1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCBBuscarPor1ItemStateChanged(evt);
+            }
+        });
+
+        jLabel3.setText("Precio inicial");
+
+        jLabel4.setText("Precio final");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -182,21 +210,30 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
+                                .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTxtPecioIni, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTxtPrecioFin, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jCBBuscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jTxtBuscador, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel3)
+                                .addComponent(jLbInicio)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jDCFechaIni, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel4)
+                                .addComponent(jLbFin)
                                 .addGap(10, 10, 10)
-                                .addComponent(jDCFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 378, Short.MAX_VALUE)))
+                                .addComponent(jDCFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jCBBuscarPor1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 288, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -209,14 +246,21 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jTxtBuscador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jCBBuscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel3))
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jDCFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                        .addComponent(jLbInicio))
+                    .addComponent(jDCFechaIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLbFin)
+                    .addComponent(jDCFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCBBuscarPor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTxtPrecioFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTxtPecioIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49))
         );
@@ -254,6 +298,32 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
         catPedido.show();
     }//GEN-LAST:event_jLabel1MouseClicked
 
+    private void jCBBuscarPorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCBBuscarPorItemStateChanged
+        // TODO add your handling code here:
+//        String filter = evt.getItem().toString();
+//        if(filter.equals("Folio") || filter.equals("Estilo") || filter.equals("Cliente")){
+//            jTxtBuscador.setEnabled(true);
+//            jDCFechaIni.setVisible(false);
+//            jLbInicio.setVisible(false);
+//        }else if(filter.equals("Fecha") || filter.equals("Fecha Interna") || filter.equals("Fecha Cliente")){
+//            jDCFechaIni.setVisible(true);
+//            jLbInicio.setVisible(true);
+////            if(metodosGlobales.validaFecha(jDCFechaIni)==null && metodosGlobales.validaFecha(jDCFechaFin)==null){
+////                
+////            }
+//        }
+    }//GEN-LAST:event_jCBBuscarPorItemStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        pedidos.setFindBy((String) jCBBuscarPor.getSelectedItem());
+        pedidos.setParameter(jTxtBuscador.getText());
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jCBBuscarPor1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCBBuscarPor1ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBBuscarPor1ItemStateChanged
+
     public void LimpiaTablaClientes(){
         try {
             DefaultTableModel modelo = (DefaultTableModel)jTableAdminPedidos.getModel();
@@ -283,14 +353,18 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jCBBuscarPor;
+    private javax.swing.JComboBox<String> jCBBuscarPor1;
     private com.toedter.calendar.JDateChooser jDCFechaFin;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDCFechaIni;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLbFin;
+    private javax.swing.JLabel jLbInicio;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTableAdminPedidos;
     public static javax.swing.JTextField jTxtBuscador;
+    public static javax.swing.JTextField jTxtPecioIni;
+    public static javax.swing.JTextField jTxtPrecioFin;
     // End of variables declaration//GEN-END:variables
 }
