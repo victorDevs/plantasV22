@@ -55,6 +55,8 @@ public class Pedidos {
     double total;
     String observaciones;
     String tipoTalla;
+    String findBy;
+    String parameter;
     public static List<JTextField> txtFieldTallas;
     
     ResultSet rs;
@@ -144,6 +146,14 @@ public class Pedidos {
     public static List<JTextField> getTxtFieldTallas() {
         return txtFieldTallas;
     }
+    
+    public String getFindBy() {
+        return findBy;
+    }
+    
+    public String getParameter() {
+        return parameter;
+    }
 
     public void setIdPedido(int idPedido) {
         this.idPedido = idPedido;
@@ -215,6 +225,14 @@ public class Pedidos {
         
     public static void setTxtFieldTallas(List<JTextField> txtFieldTallas) {
         Pedidos.txtFieldTallas = txtFieldTallas;
+    }
+    
+    public void setFindBy(String findBy) {
+        this.findBy = findBy;
+    }
+    
+    public void setParameter(String parameter) {
+        this.parameter = parameter;
     }
 
     
