@@ -57,6 +57,8 @@ public class Pedidos {
     String tipoTalla;
     String findBy;
     String parameter;
+    String nomCliente;
+    
     public static List<JTextField> txtFieldTallas;
     
     ResultSet rs;
@@ -399,6 +401,36 @@ public class Pedidos {
             JOptionPane.showMessageDialog(null, "Error al obtener el id mayor de pedidos",
                     "Error",JOptionPane.ERROR_MESSAGE);
             BD.cerrarConexion();
+        }
+    }
+     
+    public void consultaPedidos(){
+         try {
+            BD.conectarBD();
+            String sql = "select clientes.nombre, pedidos.fecha,estilos.estilo,pedidos.fechaInterna,personal.nombre,pedidos.fechaCliente,pedidos.precio,"+
+                        "pedidos.subtotal,pedidos.iva,pedidos.total,pedidos.tipoTalla,tallas.talla, tallas.cantidad from pedidos inner join clientes on "+
+                        "clientes.idCliente=pedidos.idCliente inner join estilos on estilos.idEstilo=pedidos.idEstilo inner join personal on " +
+                        "personal.idPersonal=pedidos.idPersonal inner join tallas on tallas.idPedido=pedidos.idPedido where pedidos.idPedido= "+this.idPedido;
+            rs = BD.ejecutarSQLSelect(sql);
+            rsm = rs.getMetaData();
+            while (rs.next()) {                
+                this.nombreCliente = rs.getString("clientes.nombre");
+                 System.out.println("este el nombre del cliente: "+this.nombreCliente);
+//                this.nombre = rs.getString("nombre");
+//                this.apellidoPaterno = rs.getString("apellidoPaterno");
+//                this.apellidoMaterno = rs.getString("apellidoMaterno");
+//                this.fechaNacimiento = rs.getString("fechaNacimiento");
+//                this.Domicilio = rs.getString("domicilio");
+//                this.telefono = rs.getString("telefono");
+//                this.correo = rs.getString("correo");
+//                this.proceso = rs.getString("proceso");
+//                this.observaciones = rs.getString("observaciones");
+//                this.FechaRegistro = rs.getString("DATEONLY");
+//                this.horaRegistro = rs.getString("TIMEONLY");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"No se pudo mostrar la consulta de pedidos en catalogo pedido, vuelve a intentarlo: "+e, 
+                    "Aviso",JOptionPane.WARNING_MESSAGE);
         }
     }
 }

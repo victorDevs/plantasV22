@@ -18,6 +18,7 @@ import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Clientes;
@@ -135,16 +136,9 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
                 "Folio", "Fecha", "Fecha Int.", "Fecha Cli.", "Precio", "Subtotal", "IVA", "Total", "Observaciones", "Estatus", "Editar", "Eliminar"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -284,7 +278,28 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
 //            jTxtContacto.setText(cli.getContacto());
 //            jTxtCorreo.setText(cli.getCorreo());
 //        }
+
+        int column = jTableAdminPedidos.getColumnModel().getColumnIndexAtX(evt.getX());
+        int row = evt.getY()/jTableAdminPedidos.getRowHeight();
+        int fila = jTableAdminPedidos.getSelectedRow();
+        DefaultTableModel dtm = (DefaultTableModel)jTableAdminPedidos.getModel();
         
+        if(row < jTableAdminPedidos.getRowCount() && row >=0 && column < jTableAdminPedidos.getColumnCount() && column >= 0){
+            Object value = jTableAdminPedidos.getValueAt(row, column);
+            if(value instanceof JButton){
+                ((JButton)value).doClick();
+                JButton boton = (JButton) value;
+                if(boton.getName().equals("modif")){
+                    Frame frame = JOptionPane.getFrameForComponent(this);
+                    CatalogoPedido catalogoPedido = new CatalogoPedido(frame,true);
+                    Dimension desktopSize = Main.jDesktopMain.getSize();
+                    Dimension FrameSize = catalogoPedido.getSize();
+                    catalogoPedido.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
+                    catalogoPedido.show();
+                }
+            } 
+            
+        }
     }//GEN-LAST:event_jTableAdminPedidosMouseClicked
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
