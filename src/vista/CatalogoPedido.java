@@ -8,6 +8,8 @@ package vista;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +49,12 @@ public class CatalogoPedido extends javax.swing.JDialog {
         labelTallas = new ArrayList<>();
         initComponents();
         
-        llamaDatosPedido();
+        Date date = new Date();
+//        System.out.println(java.time.LocalDate.now());
+        LocalDateTime ldt = LocalDateTime.now();
+        String currentDate = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH).format(ldt);
+//        System.out.println(DateTimeFormatter.ofPattern("dd-MM/yyyy", Locale.ENGLISH).format(ldt));
+//        llamaDatosPedido();
         
         cli.llenaComboClientes(jCBClientes);
         est.llenaComboEstilos(jCBEstilos);
@@ -56,6 +63,8 @@ public class CatalogoPedido extends javax.swing.JDialog {
         jTxtSubTotal.setEditable(false);
         jTxtIva.setEditable(false);
         jTxtTotal.setEditable(false);
+        jDCFecha1.setText(currentDate);
+        jDCFecha1.setEditable(false);
     }
 
     public void llamaDatosPedido(){
@@ -74,7 +83,7 @@ public class CatalogoPedido extends javax.swing.JDialog {
         }
         
         
-        jDCFecha1.setDate(date);
+        jDCFecha1.setText(ped.getFecha());
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -82,7 +91,6 @@ public class CatalogoPedido extends javax.swing.JDialog {
 
         jLabel13 = new javax.swing.JLabel();
         jCBClientes = new javax.swing.JComboBox<>();
-        jDCFecha1 = new com.toedter.calendar.JDateChooser();
         jCBEstilos = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jDCFechaInterna = new com.toedter.calendar.JDateChooser();
@@ -105,11 +113,12 @@ public class CatalogoPedido extends javax.swing.JDialog {
         jLabel12 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jCBTipoTallas = new javax.swing.JComboBox<>();
-        jTxtPrecio = new javax.swing.JTextField();
+        jDCFecha1 = new javax.swing.JTextField();
         jBtnCalcTotales = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         btnModifyCliente = new javax.swing.JButton();
         jcbPersonal = new javax.swing.JComboBox<>();
+        jTxtPrecio1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Catálogo de Pedidos");
@@ -212,10 +221,9 @@ public class CatalogoPedido extends javax.swing.JDialog {
             }
         });
 
-        jTxtPrecio.setForeground(java.awt.Color.blue);
-        jTxtPrecio.addActionListener(new java.awt.event.ActionListener() {
+        jDCFecha1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTxtPrecioActionPerformed(evt);
+                jDCFecha1ActionPerformed(evt);
             }
         });
 
@@ -240,6 +248,13 @@ public class CatalogoPedido extends javax.swing.JDialog {
         jcbPersonal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbPersonalActionPerformed(evt);
+            }
+        });
+
+        jTxtPrecio1.setForeground(java.awt.Color.blue);
+        jTxtPrecio1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTxtPrecio1ActionPerformed(evt);
             }
         });
 
@@ -278,9 +293,9 @@ public class CatalogoPedido extends javax.swing.JDialog {
                                         .addComponent(jDCFechaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTxtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jTxtPrecio1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(12, 12, 12)
                                         .addComponent(jLabel9)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jTxtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -301,8 +316,8 @@ public class CatalogoPedido extends javax.swing.JDialog {
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jDCFecha1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
+                                        .addComponent(jDCFecha1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jLabel6)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jCBEstilos, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -319,26 +334,30 @@ public class CatalogoPedido extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(54, 54, 54)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jCBEstilos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel6)
-                                .addComponent(jLabel7))
-                            .addComponent(jDCFecha1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jCBClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1)
-                                .addComponent(jLabel13)))
-                        .addComponent(jDCFechaInterna, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jcbPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jCBEstilos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jCBClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jDCFecha1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(2, 2, 2))
+                        .addComponent(jcbPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDCFechaInterna, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(jDCFechaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTxtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jCBTipoTallas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel12))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
                         .addComponent(jLabel11)
                         .addComponent(jTxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -346,9 +365,7 @@ public class CatalogoPedido extends javax.swing.JDialog {
                         .addComponent(jTxtSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel10)
                         .addComponent(jTxtIva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jCBTipoTallas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12))))
+                        .addComponent(jTxtPrecio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(34, 34, 34)
                 .addComponent(jPanelTallas, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -387,13 +404,13 @@ public class CatalogoPedido extends javax.swing.JDialog {
         String estilo = (String) jCBEstilos.getSelectedItem();
         String cliente = (String) jCBClientes.getSelectedItem();
         String tipoTalla = (String) jCBTipoTallas.getSelectedItem();
-        Date date1 = jDCFecha1.getDate();
+//        Date date1 = jDCFecha1.getDate();
         Date dateInterna = jDCFechaInterna.getDate();
         Date dateCliente = jDCFechaCliente.getDate();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        if (cliente.equals("-- Seleccione --") || metodosGlobales.validaFecha(jDCFecha1)==null || estilo.equals("-- Seleccione --")
+        if (cliente.equals("-- Seleccione --") || jDCFecha1.getText().equals(null) || estilo.equals("-- Seleccione --")
             || metodosGlobales.validaFecha(jDCFechaInterna)==null || metodosGlobales.validaFecha(jDCFechaCliente)==null
-            || jTxtPrecio.getText().equals("")
+            || jDCFecha1.getText().equals("")
             || jTxtSubTotal.getText().equals("") || jTxtIva.getText().equals("") || jTxtTotal.equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Llena todos los campos obligatorios",
                 "Aviso",JOptionPane.WARNING_MESSAGE);
@@ -407,14 +424,14 @@ public class CatalogoPedido extends javax.swing.JDialog {
             if(BD.conectarBD()){
                 Pedidos.setTxtFieldTallas(txtFieldTallas);
                 ped.setNombreCliente(cliente);
-                ped.setFecha(sdf.format(date1));
+                ped.setFecha(jDCFecha1.getText());
                 ped.setNombreEstilo(estilo);
 
-                ped.setFecha(sdf.format(date1));
+//                ped.setFecha(sdf.format(date1));
                 ped.setFechaInterna(sdf.format(dateInterna));
                 ped.setFechaCliente(sdf.format(dateCliente));
 
-                ped.setPrecio(Double.parseDouble(jTxtPrecio.getText()));
+                ped.setPrecio(Double.parseDouble(jTxtPrecio1.getText()));
                 ped.setSubtotal(Double.parseDouble(jTxtSubTotal.getText().replace("$", "")));
                 ped.setIva(Double.parseDouble(jTxtIva.getText().replace("$", "")));
                 ped.setTotal(Double.parseDouble(jTxtTotal.getText().replace("$", "")));
@@ -500,21 +517,21 @@ public class CatalogoPedido extends javax.swing.JDialog {
         //        System.out.println(this.getTitle());
     }//GEN-LAST:event_jCBTipoTallasActionPerformed
 
-    private void jTxtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtPrecioActionPerformed
+    private void jDCFecha1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDCFecha1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTxtPrecioActionPerformed
+    }//GEN-LAST:event_jDCFecha1ActionPerformed
 
     private void jBtnCalcTotalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCalcTotalesActionPerformed
         // TODO add your handling code here:
         int totalCantTallas = 0;
-        double precio = !jTxtPrecio.getText().equals("") ? Double.parseDouble(jTxtPrecio.getText()) : 0;
+        double precio = !jTxtPrecio1.getText().equals("") ? Double.parseDouble(jTxtPrecio1.getText()) : 0;
         for (int i = 0; i < txtFieldTallas.size()-1; i++) {
             if(!txtFieldTallas.get(i).getText().equals("")){
                 totalCantTallas += Integer.parseInt(txtFieldTallas.get(i).getText());
             }
         }
         txtFieldTallas.get(txtFieldTallas.size()-1).setText(""+totalCantTallas);
-        if(!jTxtPrecio.getText().equals("")){
+        if(!jDCFecha1.getText().equals("")){
             double subTotal = precio * totalCantTallas;
             jTxtSubTotal.setText("$"+subTotal);
             double iva = subTotal * 0.16;
@@ -579,6 +596,10 @@ public class CatalogoPedido extends javax.swing.JDialog {
         per.obtieneIdPersonalCombo();
     }//GEN-LAST:event_jcbPersonalActionPerformed
 
+    private void jTxtPrecio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtPrecio1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtPrecio1ActionPerformed
+
        public static void LimpiaCampos(){
 //        jTxtNombreCliente.setText(null);
 //        jTxtDomicilio.setText(null);
@@ -635,7 +656,7 @@ public class CatalogoPedido extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> jCBClientes;
     public static javax.swing.JComboBox<String> jCBEstilos;
     private javax.swing.JComboBox<String> jCBTipoTallas;
-    private com.toedter.calendar.JDateChooser jDCFecha1;
+    public static javax.swing.JTextField jDCFecha1;
     private com.toedter.calendar.JDateChooser jDCFechaCliente;
     private com.toedter.calendar.JDateChooser jDCFechaInterna;
     private javax.swing.JLabel jLabel1;
@@ -653,7 +674,7 @@ public class CatalogoPedido extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     public static javax.swing.JTextField jTxtIva;
     private javax.swing.JTextArea jTxtObservaciones;
-    public static javax.swing.JTextField jTxtPrecio;
+    public static javax.swing.JTextField jTxtPrecio1;
     public static javax.swing.JTextField jTxtSubTotal;
     public static javax.swing.JTextField jTxtTotal;
     public static javax.swing.JComboBox<String> jcbPersonal;
