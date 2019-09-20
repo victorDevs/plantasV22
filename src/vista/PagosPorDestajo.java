@@ -24,11 +24,7 @@ public class PagosPorDestajo extends javax.swing.JDialog {
     public PagosPorDestajo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        llenaComboNumSemanas(jcbNumSemana);
-        
-        MetodosGlobales.LimpiaTabla(jTablePrincipalPagosDestajo);
-        reporPagoDesta.TablaPrincipalConsultaPagoPorDestajo();
-        
+        llenaComboNumSemanas(jcbNumSemana);        
         
     }
 
@@ -56,6 +52,11 @@ public class PagosPorDestajo extends javax.swing.JDialog {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/busqueda.png"))); // NOI18N
         jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTablePrincipalPagosDestajo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -65,7 +66,7 @@ public class PagosPorDestajo extends javax.swing.JDialog {
                 {null, null, null, null}
             },
             new String [] {
-                "Folio", "Trabajador", "Precio", "Total"
+                "Folio", "Estilo", "Total Pares", "Destajo $"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -134,6 +135,11 @@ public class PagosPorDestajo extends javax.swing.JDialog {
         detallePagoDesta.show();
        }
     }//GEN-LAST:event_jTablePrincipalPagosDestajoMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       MetodosGlobales.LimpiaTabla(jTablePrincipalPagosDestajo);
+       reporPagoDesta.buscarEstilosPorPersonal();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
