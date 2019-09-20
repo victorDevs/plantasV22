@@ -407,7 +407,7 @@ public class Pedidos {
     public void consultaPedidos(){
          try {
             BD.conectarBD();
-            String sql = "select clientes.nombre, pedidos.fecha,estilos.estilo,pedidos.fechaInterna,personal.nombre,pedidos.fechaCliente,pedidos.precio,"+
+            String sql = "select clientes.nombre, pedidos.dateCreate,estilos.estilo,pedidos.fechaInterna,personal.nombre,pedidos.fechaCliente,pedidos.precio,"+
                         "pedidos.subtotal,pedidos.iva,pedidos.total,pedidos.tipoTalla,tallas.talla, tallas.cantidad from pedidos inner join clientes on "+
                         "clientes.idCliente=pedidos.idCliente inner join estilos on estilos.idEstilo=pedidos.idEstilo inner join personal on " +
                         "personal.idPersonal=pedidos.idPersonal inner join tallas on tallas.idPedido=pedidos.idPedido where pedidos.idPedido= "+this.idPedido;
@@ -415,6 +415,7 @@ public class Pedidos {
             rsm = rs.getMetaData();
             while (rs.next()) {                
                 this.nombreCliente = rs.getString("clientes.nombre");
+                this.fecha = rs.getString("pedidos.dateCreate");
                  System.out.println("este el nombre del cliente: "+this.nombreCliente);
 //                this.nombre = rs.getString("nombre");
 //                this.apellidoPaterno = rs.getString("apellidoPaterno");
