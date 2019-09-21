@@ -123,10 +123,7 @@ public class ReporPagoPorDestajo {
     public void buscarEstilosPorPersonal(){
         try {
             if (BD.conectarBD()) {
-                String sql = "select estilos.idEstilo,estilos.estilo,sum(tallas.cantidad) as totalTallas,round(sum(tallas.cantidad*(procesos.destajo)),2) as totalDes "+
-                        "from pedidos inner join tallas on tallas.idPedido=pedidos.idPedido inner join estilos on estilos.idEstilo=pedidos.idEstilo "+
-                        "inner join estilos_procesos on estilos_procesos.idEstilo=estilos.idEstilo inner join procesos on procesos.nombre=estilos_procesos.proceso "+
-                        "WHERE pedidos.idPersonal =4 group by estilos.idEstilo";
+                String sql = "select estilos.idEstilo,estilos.estilo,sum(tallas.cantidad) as totalTallas,round(sum(tallas.cantidad*(procesos.destajo)),2) as totalDes from pedidos inner join tallas on tallas.idPedido=pedidos.idPedido inner join estilos on estilos.idEstilo=pedidos.idEstilo inner join estilos_procesos on estilos_procesos.idEstilo=estilos.idEstilo inner join procesos on procesos.nombre=estilos_procesos.proceso inner join personal on pedidos.idPersonal=personal.idPersonal WHERE personal.proceso=procesos.nombre and personal.nombre ='victor' group by estilos.idEstilo";
                 rs = BD.ejecutarSQLSelect(sql);
                 rsm = rs.getMetaData();
                 List<Object[]> datos = new ArrayList<Object[]>();
