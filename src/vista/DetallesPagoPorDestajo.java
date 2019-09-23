@@ -5,6 +5,9 @@
  */
 package vista;
 
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import modelo.ReporPagoPorDestajo;
 import persistencia.MetodosGlobales;
 
@@ -20,14 +23,40 @@ public class DetallesPagoPorDestajo extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
-        int fila = PagosPorDestajo.jTablePrincipalPagosDestajo.getSelectedRow();
-        jlblNomtrabajador.setText(PagosPorDestajo.jTablePrincipalPagosDestajo.getValueAt(fila, 1).toString());
-        jlblFolioPersonal.setText(PagosPorDestajo.jTablePrincipalPagosDestajo.getValueAt(fila, 0).toString());
         
-        reporPagoDesta.llenaComboProcesos(jcbProcesos, Integer.parseInt(jlblFolioPersonal.getText()));
+        //PARA CENTRAR LOS DATOS Y ENCABEZADO DEL JTABLE
+        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+        //Centra contenido del jTable
+        tcr.setHorizontalAlignment(SwingConstants.CENTER);
+        jTableDetallePagoDestajo.getColumnModel().getColumn(0).setCellRenderer(tcr);
+        jTableDetallePagoDestajo.getColumnModel().getColumn(1).setCellRenderer(tcr);
+        jTableDetallePagoDestajo.getColumnModel().getColumn(2).setCellRenderer(tcr);
+        //Centra el encabezado del jTable
+        tcr =  ( DefaultTableCellRenderer ) 
+        jTableDetallePagoDestajo.getTableHeader().getDefaultRenderer (); 
+        tcr. setHorizontalAlignment ( JLabel.CENTER );
+        
+        int fila = PagosPorDestajo.jTablePrincipalPagosDestajo.getSelectedRow();
+        reporPagoDesta.setIdEstilo((int)PagosPorDestajo.jTablePrincipalPagosDestajo.getValueAt(fila, 0));//MANDA EL ID DEL ESTILO
+        reporPagoDesta.setIdPersonal((int)PagosPorDestajo.jTablePrincipalPagosDestajo.getValueAt(fila, 1));//MANDA EL ID DEL PERSONAL
         
         MetodosGlobales.LimpiaTabla(jTableDetallePagoDestajo);
-            reporPagoDesta.consultarPorProceso(Integer.parseInt(jlblFolioPersonal.getText()));
+        reporPagoDesta.consultarPorProceso();
+        
+        jlblNomtrabajador.setText(reporPagoDesta.getNombreTrabajador());//LLAMA EL NOMBRE DEL TRABAJADOR/PERSONAL
+        jlblNomEstilo.setText(reporPagoDesta.getNomEstilo());
+        jlblNomProceso.setText(reporPagoDesta.getProceso());
+        jlblTotalPares.setText(PagosPorDestajo.jTablePrincipalPagosDestajo.getValueAt(fila, 3).toString());
+        jlblTipoTalla.setText(reporPagoDesta.getTipoTalla());
+        jlblDestajo.setText("$ "+Double.toString(reporPagoDesta.getDestajo()));
+        jlblTotalPagar.setText(PagosPorDestajo.jTablePrincipalPagosDestajo.getValueAt(fila, 4).toString());
+        
+
+        
+       
+        
+        
+        
     }
 
     /**
@@ -42,19 +71,19 @@ public class DetallesPagoPorDestajo extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableDetallePagoDestajo = new javax.swing.JTable();
         jlblNomtrabajador = new javax.swing.JLabel();
-        jcbProcesos = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jlblPrecioDestajo = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jlblTotal = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jlblFolioPersonal = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jlblTotalPagar = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jlblFolioPedido = new javax.swing.JLabel();
         jlblTipoTalla = new javax.swing.JLabel();
         jbtnOK = new javax.swing.JButton();
+        jlblEstilo = new javax.swing.JLabel();
+        jlblNomEstilo = new javax.swing.JLabel();
+        jlblNomProceso = new javax.swing.JLabel();
+        jlblTotalPares = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jlblDestajo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Detalle Pago por Destajo");
@@ -86,51 +115,28 @@ public class DetallesPagoPorDestajo extends javax.swing.JDialog {
             jTableDetallePagoDestajo.getColumnModel().getColumn(2).setMaxWidth(60);
         }
 
-        jlblNomtrabajador.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jlblNomtrabajador.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jlblNomtrabajador.setText("Nombre del trabajador");
         jlblNomtrabajador.setEnabled(false);
 
-        jcbProcesos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jcbProcesos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jcbProcesosMouseClicked(evt);
-            }
-        });
-        jcbProcesos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbProcesosActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText("proceso");
-
-        jLabel3.setText("Destajo");
-
-        jlblPrecioDestajo.setText("Precio del destajo");
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel2.setText("Proceso:");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 102, 0));
-        jLabel5.setText("Total");
+        jLabel5.setText("Total a pagar");
 
-        jlblTotal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jlblTotal.setForeground(new java.awt.Color(255, 102, 0));
-        jlblTotal.setText("$");
+        jlblTotalPagar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jlblTotalPagar.setForeground(new java.awt.Color(255, 102, 0));
+        jlblTotalPagar.setText("$");
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel7.setText("Folio");
-        jLabel7.setEnabled(false);
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel6.setText("Total de pares:");
 
-        jlblFolioPersonal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jlblFolioPersonal.setText("num");
-        jlblFolioPersonal.setEnabled(false);
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel4.setText("Tipo de talla:");
 
-        jLabel1.setText("Folio del pedido");
-
-        jLabel4.setText("Tipo de talla");
-
-        jlblFolioPedido.setText("num");
-
-        jlblTipoTalla.setText("tipo");
+        jlblTipoTalla.setText("Muestra tipo");
 
         jbtnOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ok.png"))); // NOI18N
         jbtnOK.setText("Ok");
@@ -140,94 +146,102 @@ public class DetallesPagoPorDestajo extends javax.swing.JDialog {
             }
         });
 
+        jlblEstilo.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jlblEstilo.setText("Estilo:");
+
+        jlblNomEstilo.setText("Nombre del estilo");
+
+        jlblNomProceso.setText("Nombre proceso");
+
+        jlblTotalPares.setText("Muestra total pares");
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("Pecio destajo:");
+
+        jlblDestajo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jlblDestajo.setText("Muestra precio");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(jlblPrecioDestajo))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jlblFolioPedido))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jlblTipoTalla))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jcbProcesos, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlblNomProceso))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(jlblTotal)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                        .addComponent(jlblEstilo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlblNomEstilo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlblTotalPares))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlblTipoTalla))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jlblDestajo)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35))
+                .addGap(33, 33, 33))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jlblNomtrabajador)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jlblFolioPersonal))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbtnOK, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(jlblNomtrabajador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbtnOK, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(212, 212, 212))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addComponent(jlblTotalPagar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addComponent(jlblNomtrabajador)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jlblNomtrabajador))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jlblFolioPersonal))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jcbProcesos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
+                            .addComponent(jlblEstilo)
+                            .addComponent(jlblNomEstilo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlblNomProceso)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jlblFolioPedido))
-                        .addGap(11, 11, 11)
+                            .addComponent(jLabel6)
+                            .addComponent(jlblTotalPares))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(jlblTipoTalla))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jlblPrecioDestajo))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jlblTotal))
-                        .addGap(27, 27, 27)))
+                            .addComponent(jLabel1)
+                            .addComponent(jlblDestajo))))
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jlblTotalPagar))
+                .addGap(22, 22, 22)
                 .addComponent(jbtnOK)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -236,16 +250,6 @@ public class DetallesPagoPorDestajo extends javax.swing.JDialog {
     private void jbtnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnOKActionPerformed
         this.dispose();
     }//GEN-LAST:event_jbtnOKActionPerformed
-
-    private void jcbProcesosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProcesosActionPerformed
-        
-            
-        
-    }//GEN-LAST:event_jcbProcesosActionPerformed
-
-    private void jcbProcesosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbProcesosMouseClicked
-        
-    }//GEN-LAST:event_jcbProcesosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -292,19 +296,19 @@ public class DetallesPagoPorDestajo extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTableDetallePagoDestajo;
     private javax.swing.JButton jbtnOK;
-    private javax.swing.JComboBox<String> jcbProcesos;
-    private javax.swing.JLabel jlblFolioPedido;
-    private javax.swing.JLabel jlblFolioPersonal;
+    private javax.swing.JLabel jlblDestajo;
+    private javax.swing.JLabel jlblEstilo;
+    private javax.swing.JLabel jlblNomEstilo;
+    private javax.swing.JLabel jlblNomProceso;
     private javax.swing.JLabel jlblNomtrabajador;
-    private javax.swing.JLabel jlblPrecioDestajo;
     private javax.swing.JLabel jlblTipoTalla;
-    private javax.swing.JLabel jlblTotal;
+    private javax.swing.JLabel jlblTotalPagar;
+    private javax.swing.JLabel jlblTotalPares;
     // End of variables declaration//GEN-END:variables
 }

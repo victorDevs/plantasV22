@@ -7,6 +7,7 @@ package vista;
 
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.event.KeyEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -38,7 +39,7 @@ public class PagosPorDestajo extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jtxtNombreTrabajador = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablePrincipalPagosDestajo = new javax.swing.JTable();
@@ -50,6 +51,12 @@ public class PagosPorDestajo extends javax.swing.JDialog {
 
         jLabel1.setText("Nombre del Tabajador");
 
+        jtxtNombreTrabajador.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtxtNombreTrabajadorKeyPressed(evt);
+            }
+        });
+
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/busqueda.png"))); // NOI18N
         jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -60,17 +67,17 @@ public class PagosPorDestajo extends javax.swing.JDialog {
 
         jTablePrincipalPagosDestajo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Folio", "Estilo", "Total Pares", "Destajo $"
+                "Folio Estilo", "Folio Trabajador", "Estilo", "Total Pares", "Destajo $"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -97,7 +104,7 @@ public class PagosPorDestajo extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtxtNombreTrabajador, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -113,7 +120,7 @@ public class PagosPorDestajo extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtxtNombreTrabajador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2)
                         .addComponent(jcbNumSemana, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton1))
@@ -127,6 +134,7 @@ public class PagosPorDestajo extends javax.swing.JDialog {
 
     private void jTablePrincipalPagosDestajoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePrincipalPagosDestajoMouseClicked
        if(evt.getClickCount() ==2){
+           
         Frame frame = JOptionPane.getFrameForComponent(this);
         DetallesPagoPorDestajo detallePagoDesta = new DetallesPagoPorDestajo(frame,true);
         Dimension desktopSize = Main.jDesktopMain.getSize();
@@ -137,9 +145,20 @@ public class PagosPorDestajo extends javax.swing.JDialog {
     }//GEN-LAST:event_jTablePrincipalPagosDestajoMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       MetodosGlobales.LimpiaTabla(jTablePrincipalPagosDestajo);
-       reporPagoDesta.buscarEstilosPorPersonal();
+        reporPagoDesta.setNombreTrabajador(jtxtNombreTrabajador.getText());
+        
+        MetodosGlobales.LimpiaTabla(jTablePrincipalPagosDestajo);
+        reporPagoDesta.buscarEstilosPorPersonal();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jtxtNombreTrabajadorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtNombreTrabajadorKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            reporPagoDesta.setNombreTrabajador(jtxtNombreTrabajador.getText());
+        
+            MetodosGlobales.LimpiaTabla(jTablePrincipalPagosDestajo);
+            reporPagoDesta.buscarEstilosPorPersonal();
+        }
+    }//GEN-LAST:event_jtxtNombreTrabajadorKeyPressed
 
     /**
      * @param args the command line arguments
@@ -217,7 +236,7 @@ public class PagosPorDestajo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTablePrincipalPagosDestajo;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JComboBox<String> jcbNumSemana;
+    private javax.swing.JTextField jtxtNombreTrabajador;
     // End of variables declaration//GEN-END:variables
 }
