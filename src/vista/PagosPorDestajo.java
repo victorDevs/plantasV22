@@ -67,17 +67,17 @@ public class PagosPorDestajo extends javax.swing.JDialog {
 
         jTablePrincipalPagosDestajo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Folio Estilo", "Folio Trabajador", "Estilo", "Total Pares", "Destajo $"
+                "Folio", "Estilo", "Total Pares", "Destajo $"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

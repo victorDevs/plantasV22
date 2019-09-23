@@ -37,8 +37,7 @@ public class DetallesPagoPorDestajo extends javax.swing.JDialog {
         tcr. setHorizontalAlignment ( JLabel.CENTER );
         
         int fila = PagosPorDestajo.jTablePrincipalPagosDestajo.getSelectedRow();
-        reporPagoDesta.setIdEstilo((int)PagosPorDestajo.jTablePrincipalPagosDestajo.getValueAt(fila, 0));//MANDA EL ID DEL ESTILO
-        reporPagoDesta.setIdPersonal((int)PagosPorDestajo.jTablePrincipalPagosDestajo.getValueAt(fila, 1));//MANDA EL ID DEL PERSONAL
+        reporPagoDesta.setIdPedido((int)PagosPorDestajo.jTablePrincipalPagosDestajo.getValueAt(fila, 0));//MANDA EL ID DEL PEDIDO
         
         MetodosGlobales.LimpiaTabla(jTableDetallePagoDestajo);
         reporPagoDesta.consultarPorProceso();
@@ -46,10 +45,10 @@ public class DetallesPagoPorDestajo extends javax.swing.JDialog {
         jlblNomtrabajador.setText(reporPagoDesta.getNombreTrabajador());//LLAMA EL NOMBRE DEL TRABAJADOR/PERSONAL
         jlblNomEstilo.setText(reporPagoDesta.getNomEstilo());
         jlblNomProceso.setText(reporPagoDesta.getProceso());
-        jlblTotalPares.setText(PagosPorDestajo.jTablePrincipalPagosDestajo.getValueAt(fila, 3).toString());
+        jlblTotalPares.setText(PagosPorDestajo.jTablePrincipalPagosDestajo.getValueAt(fila, 2).toString());
         jlblTipoTalla.setText(reporPagoDesta.getTipoTalla());
         jlblDestajo.setText("$ "+Double.toString(reporPagoDesta.getDestajo()));
-        jlblTotalPagar.setText(PagosPorDestajo.jTablePrincipalPagosDestajo.getValueAt(fila, 4).toString());
+        jlblTotalPagar.setText(PagosPorDestajo.jTablePrincipalPagosDestajo.getValueAt(fila, 3).toString());
         
 
         

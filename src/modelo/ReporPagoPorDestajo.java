@@ -33,6 +33,7 @@ public class ReporPagoPorDestajo {
     String tipoTalla;
     int idPersonal;
     double destajo;
+    int idPedido;
 
     public String getProceso() {
         return proceso;
@@ -89,6 +90,14 @@ public class ReporPagoPorDestajo {
     public void setDestajo(double destajo) {
         this.destajo = destajo;
     }
+
+    public int getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(int idPedido) {
+        this.idPedido = idPedido;
+    }
     
     
     public void TablaPrincipalConsultaPagoPorDestajo(){
@@ -129,7 +138,7 @@ public class ReporPagoPorDestajo {
                 String sql = "select concat(personal.nombre,' ',personal.apellidoPaterno,' ',personal.apellidoMaterno) as nombre, estilos.estilo,"+
                         "procesos.nombre,procesos.destajo,tallas.talla, tallas.cantidad, pedidos.tipoTalla from tallas inner join pedidos on tallas.idPedido=pedidos.idPedido "+
                         "inner join personal on pedidos.idPersonal=personal.idPersonal inner join estilos on pedidos.idEstilo=estilos.idEstilo inner join procesos "+
-                        "on personal.proceso=procesos.nombre where pedidos.idEstilo = "+this.idEstilo+" and pedidos.idPersonal="+this.idPersonal+" group by tallas.talla";
+                        "on personal.proceso=procesos.nombre where pedidos.idPedido = "+this.idPedido+" group by tallas.talla";
                 rs = BD.ejecutarSQLSelect(sql);
                 rsm = rs.getMetaData();
                 //List<Object[]> datos = new ArrayList<Object[]>();
@@ -170,7 +179,7 @@ public class ReporPagoPorDestajo {
         int existenDatos=0;
         try {
             if (BD.conectarBD()) {
-                String sql = "select pedidos.idEstilo,pedidos.idPersonal,estilos.estilo,sum(tallas.cantidad) as totalTallas,concat('$ ',round(sum(tallas.cantidad*(procesos.destajo)),2)) as totalDes "+
+                String sql = "select pedidos.idPedido,estilos.estilo,sum(tallas.cantidad) as totalTallas,concat('$ ',round(sum(tallas.cantidad*(procesos.destajo)),2)) as totalDes "+
                         "from pedidos inner join tallas on tallas.idPedido=pedidos.idPedido inner join estilos on estilos.idEstilo=pedidos.idEstilo "+
                         "inner join estilos_procesos on estilos_procesos.idEstilo=estilos.idEstilo inner join procesos on procesos.nombre=estilos_procesos.proceso "+
                         "inner join personal on pedidos.idPersonal=personal.idPersonal WHERE personal.proceso=procesos.nombre and (personal.nombre like '"+this.nombreTrabajador+"%' "+
