@@ -26,7 +26,7 @@ public class DetallesPagoPorDestajo extends javax.swing.JDialog {
         
         //PARA CENTRAR LOS DATOS Y ENCABEZADO DEL JTABLE
         DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
-        //Centra contenido del jTable
+        //Centra el contenido del jTable
         tcr.setHorizontalAlignment(SwingConstants.CENTER);
         jTableDetallePagoDestajo.getColumnModel().getColumn(0).setCellRenderer(tcr);
         jTableDetallePagoDestajo.getColumnModel().getColumn(1).setCellRenderer(tcr);
