@@ -522,7 +522,7 @@ public class Usuarios {
         DefaultComboBoxModel comboPerfil = new DefaultComboBoxModel();
         try {
             BD.conectarBD();
-            String sql = "select idPerfil,nombre from perfiles";
+            String sql = "select idPerfil,nombre from perfiles order by nombre ASC";
             rs = BD.ejecutarSQLSelect(sql);
             rsm = rs.getMetaData();
             combo.setModel(comboPerfil);
@@ -535,15 +535,15 @@ public class Usuarios {
                 combo.setModel(comboPerfil);
             }
             if(ventana.equals("agregar")){//valida que jDialog se abrio
-            comboPerfil.addElement("REGISTRAR PERFIL");
-            comboPerfil.addElement("ELIMINAR PERFIL");
-            combo.setModel(comboPerfil);
+                comboPerfil.addElement("REGISTRAR PERFIL");
+                comboPerfil.addElement("ELIMINAR PERFIL");
+                combo.setModel(comboPerfil);
             }
             
             BD.cerrarConexion();
         } catch (Exception e) {
             System.out.println("Excepción: "+e);
-            JOptionPane.showMessageDialog(null, "Error al mostrar el listado de procesos",
+            JOptionPane.showMessageDialog(null, "Error al mostrar el listado de perfiles",
                     "Error",JOptionPane.ERROR_MESSAGE);
             BD.cerrarConexion();
         }

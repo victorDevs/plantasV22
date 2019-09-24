@@ -86,6 +86,7 @@ public class Main extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         subMenuUsuarios = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         subMenuSalir = new javax.swing.JMenuItem();
         subMenuCerrarSesion = new javax.swing.JMenuItem();
         menuCatalogos = new javax.swing.JMenu();
@@ -124,6 +125,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jMenu1.add(subMenuUsuarios);
+
+        jMenuItem6.setText("Asignar Pedidos");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem6);
 
         subMenuSalir.setText("Salir");
         subMenuSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -344,6 +353,10 @@ public class Main extends javax.swing.JFrame {
         pagosPorDestajo.show();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        validajFraAbreUnaVez.abrirInternalFrameAsignarPedidos(AsignarPedidos.getInstancia());
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -391,6 +404,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     public static javax.swing.JMenu menuCatalogos;
     public static javax.swing.JMenu menuNomUsuario;
     public static javax.swing.JMenu menuReportes;

@@ -53,6 +53,7 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jCBPerfil = new javax.swing.JComboBox<>();
         jTxtNombre = new javax.swing.JTextField();
@@ -580,11 +581,27 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jbtnBuscar)
+                .addGap(43, 43, 43))
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jCBPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel3)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(47, 47, 47)
@@ -596,34 +613,7 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTxtRepeContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCBPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jbtnBuscar)
-                .addGap(19, 19, 19))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTxtRepeContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(283, 283, 283)
                         .addComponent(jbtnAgregar)
@@ -632,8 +622,14 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
                         .addGap(60, 60, 60)
                         .addComponent(jbtnEliminar)
                         .addGap(61, 61, 61)
-                        .addComponent(jbtnLimpiar)))
-                .addContainerGap(61, Short.MAX_VALUE))
+                        .addComponent(jbtnLimpiar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1169, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1413,8 +1409,146 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
                 Dimension FrameSize = eliminarPerfil.getSize();
                 eliminarPerfil.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
                 eliminarPerfil.show(); 
+            }else{
+                if(jCBPerfil.getSelectedItem().equals("Encargado de Área")){
+                    //PARA MATERIALES
+                    jcbMaterialTodo.setSelected(false);
+                    jcbMaterialRegistrar.setSelected(false);
+                    jcbMaterialEditar.setSelected(false);
+                    jcbMaterialConsultar.setSelected(false);
+                    jcbMaterialEliminar.setSelected(false);
+
+                    jcbMaterialTodo.setEnabled(false);
+                    jcbMaterialRegistrar.setEnabled(false);
+                    jcbMaterialEditar.setEnabled(false);
+                    jcbMaterialConsultar.setEnabled(false);
+                    jcbMaterialEliminar.setEnabled(false);
+
+                    //PARA PROVEEDORES
+                    jcbProveedorTodo.setSelected(false);
+                    jcbProveedorRegistrar.setSelected(false);
+                    jcbProveedorEditar.setSelected(false);
+                    jcbProveedorConsultar.setSelected(false);
+                    jcbProveedorEliminar.setSelected(false);
+
+                    jcbProveedorTodo.setEnabled(false);
+                    jcbProveedorRegistrar.setEnabled(false);
+                    jcbProveedorEditar.setEnabled(false);
+                    jcbProveedorConsultar.setEnabled(false);
+                    jcbProveedorEliminar.setEnabled(false);
+
+                    //PARA CLIENTE
+                    jcbClienteTodo.setSelected(false);
+                    jcbClienteRegistrar.setSelected(false);
+                    jcbClienteEditar.setSelected(false);
+                    jcbClienteConsultar.setSelected(false);
+                    jcbClienteEliminar.setSelected(false);
+
+                    jcbClienteTodo.setEnabled(false);
+                    jcbClienteRegistrar.setEnabled(false);
+                    jcbClienteEditar.setEnabled(false);
+                    jcbClienteConsultar.setEnabled(false);
+                    jcbClienteEliminar.setEnabled(false);
+
+                    //PARA PERSONAL
+                    jcbPersonalTodo.setSelected(false);
+                    jcbPersonalRegistrar.setSelected(false);
+                    jcbPersonalEditar.setSelected(false);      
+                    jcbPersonalConsultar.setSelected(false);
+                    jcbPersonalEliminar.setSelected(false);
+
+                    jcbPersonalTodo.setEnabled(false);
+                    jcbPersonalRegistrar.setEnabled(false);
+                    jcbPersonalEditar.setEnabled(false);      
+                    jcbPersonalConsultar.setEnabled(false);
+                    jcbPersonalEliminar.setEnabled(false);
+
+                    //PARA PEDIDOS
+                    jcbPedidoTodo.setSelected(false);
+                    jcbPedidoRegistrar.setSelected(false);
+                    jcbPedidoEditar.setSelected(false);      
+                    jcbPedidoConsultar.setSelected(false);
+                    jcbPedidoEliminar.setSelected(false);
+
+                    jcbPedidoTodo.setEnabled(false);
+                    jcbPedidoRegistrar.setEnabled(false);
+                    jcbPedidoEditar.setEnabled(false);      
+                    jcbPedidoConsultar.setEnabled(false);
+                    jcbPedidoEliminar.setEnabled(false);
+
+                    //PARA ESTILOS
+                    jcbEstiloTodo.setSelected(false);
+                    jcbEstiloRegistrar.setSelected(false);
+                    jcbEstiloEditar.setSelected(false);      
+                    jcbEstiloConsultar.setSelected(false);
+                    jcbEstiloEliminar.setSelected(false);
+
+                    jcbEstiloTodo.setEnabled(false);
+                    jcbEstiloRegistrar.setEnabled(false);
+                    jcbEstiloEditar.setEnabled(false);      
+                    jcbEstiloConsultar.setEnabled(false);
+                    jcbEstiloEliminar.setEnabled(false);
+
+                    //PARA USUARIOS
+                    jcbUsuarioTodo.setSelected(false);
+                    jcbUsuarioRegistrar.setSelected(false);
+                    jcbUsuarioEditar.setSelected(false);      
+                    jcbUsuarioConsultar.setSelected(false);
+                    jcbUsuarioEliminar.setSelected(false);
+
+                    jcbUsuarioTodo.setEnabled(false);
+                    jcbUsuarioRegistrar.setEnabled(false);
+                    jcbUsuarioEditar.setEnabled(false);      
+                    jcbUsuarioConsultar.setEnabled(false);
+                    jcbUsuarioEliminar.setEnabled(false);
+                }else{
+                    //PARA MATERIALES
+                    jcbMaterialTodo.setEnabled(true);
+                    jcbMaterialRegistrar.setEnabled(true);
+                    jcbMaterialEditar.setEnabled(true);
+                    jcbMaterialConsultar.setEnabled(true);
+                    jcbMaterialEliminar.setEnabled(true);
+                    //PARAPROVEEDORES
+                    jcbProveedorTodo.setEnabled(true);
+                    jcbProveedorRegistrar.setEnabled(true);
+                    jcbProveedorEditar.setEnabled(true);
+                    jcbProveedorConsultar.setEnabled(true);
+                    jcbProveedorEliminar.setEnabled(true);
+                    //PARA CLIENTES
+                    jcbClienteTodo.setEnabled(true);
+                    jcbClienteRegistrar.setEnabled(true);
+                    jcbClienteEditar.setEnabled(true);
+                    jcbClienteConsultar.setEnabled(true);
+                    jcbClienteEliminar.setEnabled(true);
+                    //PARA PERSONAL
+                    jcbPersonalTodo.setEnabled(true);
+                    jcbPersonalRegistrar.setEnabled(true);
+                    jcbPersonalEditar.setEnabled(true);      
+                    jcbPersonalConsultar.setEnabled(true);
+                    jcbPersonalEliminar.setEnabled(true);
+                    //PARA PEDIDOS
+                    jcbPedidoTodo.setEnabled(true);
+                    jcbPedidoRegistrar.setEnabled(true);
+                    jcbPedidoEditar.setEnabled(true);      
+                    jcbPedidoConsultar.setEnabled(true);
+                    jcbPedidoEliminar.setEnabled(true);
+                    //PARA ESTILOS
+                    jcbEstiloTodo.setEnabled(true);
+                    jcbEstiloRegistrar.setEnabled(true);
+                    jcbEstiloEditar.setEnabled(true);      
+                    jcbEstiloConsultar.setEnabled(true);
+                    jcbEstiloEliminar.setEnabled(true);
+                    //PARA USUARIOS
+                    jcbUsuarioTodo.setEnabled(true);
+                    jcbUsuarioRegistrar.setEnabled(true);
+                    jcbUsuarioEditar.setEnabled(true);      
+                    jcbUsuarioConsultar.setEnabled(true);
+                    jcbUsuarioEliminar.setEnabled(true);
+                }
             }
         }
+        
+        
         
     }//GEN-LAST:event_jCBPerfilActionPerformed
 
@@ -1606,6 +1740,7 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     public static javax.swing.JComboBox<String> jCBPerfil;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
