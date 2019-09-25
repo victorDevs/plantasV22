@@ -133,11 +133,11 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Folio", "Fecha", "Fecha Int.", "Fecha Cli.", "Precio", "Subtotal", "IVA", "Total", "Observaciones", "Estatus", "Editar", "Eliminar"
+                "Folio", "Fecha", "Cliente", "Orden Cliente", "Estilo", "T. Pares", "Fecha Int.", "Fecha Cli.", "Precio", "Subtotal", "IVA", "Total", "Observaciones", "Estatus", "Editar", "Eliminar"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -151,13 +151,18 @@ public class AdministrarPedidos extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTableAdminPedidos);
         if (jTableAdminPedidos.getColumnModel().getColumnCount() > 0) {
-            jTableAdminPedidos.getColumnModel().getColumn(0).setMinWidth(10);
-            jTableAdminPedidos.getColumnModel().getColumn(9).setMinWidth(70);
-            jTableAdminPedidos.getColumnModel().getColumn(9).setMaxWidth(70);
-            jTableAdminPedidos.getColumnModel().getColumn(10).setMinWidth(60);
-            jTableAdminPedidos.getColumnModel().getColumn(10).setMaxWidth(60);
-            jTableAdminPedidos.getColumnModel().getColumn(11).setMinWidth(60);
-            jTableAdminPedidos.getColumnModel().getColumn(11).setMaxWidth(60);
+            jTableAdminPedidos.getColumnModel().getColumn(0).setMinWidth(40);
+            jTableAdminPedidos.getColumnModel().getColumn(0).setMaxWidth(40);
+            jTableAdminPedidos.getColumnModel().getColumn(1).setMinWidth(70);
+            jTableAdminPedidos.getColumnModel().getColumn(1).setMaxWidth(70);
+            jTableAdminPedidos.getColumnModel().getColumn(2).setMinWidth(100);
+            jTableAdminPedidos.getColumnModel().getColumn(2).setMaxWidth(100);
+            jTableAdminPedidos.getColumnModel().getColumn(13).setMinWidth(70);
+            jTableAdminPedidos.getColumnModel().getColumn(13).setMaxWidth(70);
+            jTableAdminPedidos.getColumnModel().getColumn(14).setMinWidth(60);
+            jTableAdminPedidos.getColumnModel().getColumn(14).setMaxWidth(60);
+            jTableAdminPedidos.getColumnModel().getColumn(15).setMinWidth(60);
+            jTableAdminPedidos.getColumnModel().getColumn(15).setMaxWidth(60);
         }
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/busqueda.png"))); // NOI18N
