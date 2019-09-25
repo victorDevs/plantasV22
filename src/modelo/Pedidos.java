@@ -58,7 +58,8 @@ public class Pedidos {
     String findBy;
     String parameter;
     String nomCliente;
-    
+    int noLiberado; // 1: liberado - 0: No Liberado
+
     public static List<JTextField> txtFieldTallas;
     
     ResultSet rs;
@@ -156,6 +157,10 @@ public class Pedidos {
     public String getParameter() {
         return parameter;
     }
+    
+    public int getNoLiberado() {
+        return noLiberado;
+    }
 
     public void setIdPedido(int idPedido) {
         this.idPedido = idPedido;
@@ -237,6 +242,9 @@ public class Pedidos {
         this.parameter = parameter;
     }
 
+    public void setNoLiberado(int noLiberado) {
+        this.noLiberado = noLiberado;
+    }
     
     public void llenaPanelTallas(String src, JPanel panel,List<JTextField> txtFieldTallas,List<JLabel> labelTallas){
         try {
@@ -317,9 +325,9 @@ public class Pedidos {
         getIdClienteFromBD(this.nombreCliente);
         System.out.println("idCliente: "+this.idCliente);
         String sql = "insert into pedidos (idPersonal,idCliente,idEstilo,fecha,fechaCliente,fechaInterna,tipoTalla,"
-                + "precio,subtotal,iva,total,observaciones,codigoBarras,estatus) "
+                + "precio,subtotal,iva,total,observaciones,codigoBarras,estatus,liberado) "
                 + "values ("+idPersonal+","+this.idCliente+", "+this.idEstilo+",'"+this.fecha+"','"+this.fechaCliente+"', '"+this.fechaInterna+"', "
-                + "'"+this.tipoTalla+"',"+this.precio+","+this.subtotal+","+this.iva+","+this.total+",'"+this.observaciones+"','-','"+this.estatus+"');";
+                + "'"+this.tipoTalla+"',"+this.precio+","+this.subtotal+","+this.iva+","+this.total+",'"+this.observaciones+"','-','"+this.estatus+"',"+this.noLiberado+");";
         System.out.println("Registro de Pedido: "+sql);
         if (BD.ejecutarSQL(sql)) {
             return true;
