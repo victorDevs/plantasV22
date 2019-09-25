@@ -447,4 +447,39 @@ public class Estilos {
             BD.cerrarConexion();
         }
     }
+    
+    public void getPrecioEstiloById(String estilo){
+        try {
+            BD.conectarBD();
+            String sql = "select * from estilos where estilo = '"+estilo+"';";
+            rs = BD.ejecutarSQLSelect(sql);
+            rsm = rs.getMetaData();
+            while (rs.next()) {
+                this.precio = Double.parseDouble(rs.getString("precio"));
+            }
+            //BD.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Excepción: "+e);
+            JOptionPane.showMessageDialog(null, "Error al intentar recuperar el precio del Estilo "+this.estilo,
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            BD.cerrarConexion();
+        }
+//        try {
+//            BD.conectarBD();
+//            String sql = "select precio from estilos where estilo = '"+this.estilo+"';";
+//            System.out.println(sql);
+//            rs = BD.ejecutarSQLSelect(sql);
+//            rsm = rs.getMetaData();
+//            while (rs.next()) {
+//                this.idEstilo = Integer.parseInt(rs.getString("idEstilo"));
+//                this.precio = Integer.parseInt(rs.getString("precio"));
+//            }
+////            BD.cerrarConexion();
+//        } catch (Exception e) {
+//            System.out.println("Excepción: "+e);
+//            JOptionPane.showMessageDialog(null, "Error al intentar recuperar el precio del Estilo "+this.estilo,
+//                    "Error",JOptionPane.ERROR_MESSAGE);
+//            BD.cerrarConexion();
+//        }
+    }
 }
