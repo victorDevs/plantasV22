@@ -76,6 +76,8 @@ public class Usuarios {
     String usuConsultar="";
     String usuEliminar="";
     String usuPermisos="";
+    //PERMISO PARA ASIGNAR PEDIDOS
+    int asigPedido;// 0 = no puede asignar pedidos - 1 = puede asignar pedidos
     
     ResultSet rs;
     ResultSetMetaData rsm;
@@ -427,8 +429,14 @@ public class Usuarios {
     public void setUsuPermisos(String usuPermisos) {
         this.usuPermisos = usuPermisos;
     }
-    
-    
+
+    public int getAsigPedido() {
+        return asigPedido;
+    }
+
+    public void setAsigPedido(int asigPedido) {
+        this.asigPedido = asigPedido;
+    } 
     
     public void TablaConsultaUsuarios(){
         try {
@@ -550,12 +558,12 @@ public class Usuarios {
     }
    
     public boolean RegistraUsuario(){
-        String sql = "insert into usuarios (nombre,usuario,contrasena,correo,perfil,materialPermiso,proveedorPermiso,clientesPermiso,personalPermiso,pedidosPermiso,estilosPermiso,usuariosPermiso) "
+        String sql = "insert into usuarios (nombre,usuario,contrasena,correo,perfil,materialPermiso,proveedorPermiso,clientesPermiso,personalPermiso,pedidosPermiso,estilosPermiso,usuariosPermiso,asignaPedidos) "
                 + "values ('"+MetodosGlobales.aceptarComillaSimple(this.nombre)+"', '"+MetodosGlobales.aceptarComillaSimple(this.Usuario)+"','"
                 +MetodosGlobales.aceptarComillaSimple(this.contrasena)+"','"+this.correo+"','"+this.perfil+"','"+this.matConsultar+this.matRegistrar+this.matEditar+this.matEliminar+"','"+
                 this.proConsultar+this.proRegistrar+this.proEditar+this.proEliminar+"','"+this.cliConsultar+this.cliRegistrar+this.cliEditar+this.cliEliminar+"','"+
                 this.perConsultar+this.perRegistrar+this.perEditar+this.perEliminar+"','"+this.pedConsultar+this.pedRegistrar+this.pedEditar+this.pedEliminar+"','"+
-                this.estConsultar+this.estRegistrar+this.estEditar+this.estEliminar+"','"+this.usuConsultar+this.usuRegistrar+this.usuEditar+this.usuEliminar+"')";
+                this.estConsultar+this.estRegistrar+this.estEditar+this.estEliminar+"','"+this.usuConsultar+this.usuRegistrar+this.usuEditar+this.usuEliminar+"',"+this.asigPedido+")";
         System.out.println("Registro de usuario: "+sql);
         if (BD.ejecutarSQL(sql)) {
             return true;
@@ -571,7 +579,7 @@ public class Usuarios {
                 "materialPermiso='"+this.matConsultar+this.matRegistrar+this.matEditar+this.matEliminar+"',proveedorPermiso='"+this.proConsultar+this.proRegistrar+this.proEditar+this.proEliminar+"',"+
                 "clientesPermiso='"+this.cliConsultar+this.cliRegistrar+this.cliEditar+this.cliEliminar+"',personalPermiso='"+this.perConsultar+this.perRegistrar+this.perEditar+this.perEliminar+"',"+
                 "pedidosPermiso='"+this.pedConsultar+this.pedRegistrar+this.pedEditar+this.pedEliminar+"',estilosPermiso='"+this.estConsultar+this.estRegistrar+this.estEditar+this.estEliminar+"',"+
-                "usuariosPermiso='"+this.usuConsultar+this.usuRegistrar+this.usuEditar+this.usuEliminar+"' where idUsuario= "+tabla.getValueAt(fila, 0);
+                "usuariosPermiso='"+this.usuConsultar+this.usuRegistrar+this.usuEditar+this.usuEliminar+"',asignaPedidos="+this.asigPedido+" where idUsuario= "+tabla.getValueAt(fila, 0);
         System.out.println("consulta: "+sql);
         if (BD.ejecutarSQL(sql)) {            
             return true;

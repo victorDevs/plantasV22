@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -66,6 +67,16 @@ public class CatalogoPedido extends javax.swing.JDialog {
         jDCFecha1.setText(currentDate);
         jDCFecha1.setEditable(false);
         jTxtPrecio1.setEditable(false);
+        
+        //MUESTRA NÚMERO DE SEMANA
+        Date fecha = new Date();
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek( Calendar.WEDNESDAY);
+       // calendar.setMinimalDaysInFirstWeek( 4 );
+        calendar.setTime(fecha);
+        int numberWeekOfYear = calendar.get(Calendar.WEEK_OF_YEAR); 
+        jlblNumSemana.setText(Integer.toString(numberWeekOfYear));
     }
 
     public void llamaDatosPedido(){
@@ -121,6 +132,8 @@ public class CatalogoPedido extends javax.swing.JDialog {
         jcbPersonal = new javax.swing.JComboBox<>();
         jTxtPrecio1 = new javax.swing.JTextField();
         jCBLiberado = new javax.swing.JCheckBox();
+        jLabel2 = new javax.swing.JLabel();
+        jlblNumSemana = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Catálogo de Pedidos");
@@ -272,6 +285,12 @@ public class CatalogoPedido extends javax.swing.JDialog {
             }
         });
 
+        jLabel2.setText("Estamos en la semana ");
+        jLabel2.setEnabled(false);
+
+        jlblNumSemana.setText("Mostrar número de semana");
+        jlblNumSemana.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -343,11 +362,21 @@ public class CatalogoPedido extends javax.swing.JDialog {
                                 .addComponent(jCBLiberado)))
                         .addGap(0, 42, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(428, 428, 428)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlblNumSemana)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jlblNumSemana))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
@@ -454,6 +483,7 @@ public class CatalogoPedido extends javax.swing.JDialog {
                 ped.setObservaciones(jTxtObservaciones.getText());
                 ped.setEstatus("Proceso");
                 ped.setNoLiberado(jCBLiberado.isSelected() ? 0 : 1);
+                ped.setNumSemana(Integer.parseInt(jlblNumSemana.getText()));
                 
                 try {
                     ped.RegistraPedido(per.getIdPersonal());
@@ -465,9 +495,10 @@ public class CatalogoPedido extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(rootPane, "Registro exitoso",
                         "Aviso",JOptionPane.INFORMATION_MESSAGE);
 
-                    //                        LimpiaCampos();
-                    //                        LimpiaTablaClientes();
-                    //                        cli.TablaConsultaClientes();
+                    LimpiaCampos();
+                    MetodosGlobales.LimpiaTabla(AdministrarPedidos.jTableAdminPedidos);
+                    ped.TablaConsultaPedidos();
+                    
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(rootPane, "No se registro el pedido",
                         "Error",JOptionPane.ERROR_MESSAGE);
@@ -630,12 +661,18 @@ public class CatalogoPedido extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jCBEstilosItemStateChanged
 
-       public static void LimpiaCampos(){
-//        jTxtNombreCliente.setText(null);
-//        jTxtDomicilio.setText(null);
-//        jTxtTel.setText(null);
-//        jTxtContacto.setText(null);
-//        jTxtCorreo.setText(null);
+       public void LimpiaCampos(){
+        cli.llenaComboClientes(jCBClientes);
+        est.llenaComboEstilos(jCBEstilos);
+        jDCFechaInterna.setDate(null);
+        jDCFechaCliente.setDate(null);
+        jTxtPrecio1.setText(null);
+        jTxtSubTotal.setText(null);
+        jTxtIva.setText(null);
+        jTxtTotal.setText(null);
+        jCBTipoTallas.setSelectedIndex(0);
+        jCBLiberado.setSelected(false);
+        jTxtObservaciones.setText(null);
     }
        
     public static void main(String args[]) {
@@ -695,6 +732,7 @@ public class CatalogoPedido extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -709,5 +747,6 @@ public class CatalogoPedido extends javax.swing.JDialog {
     public static javax.swing.JTextField jTxtSubTotal;
     public static javax.swing.JTextField jTxtTotal;
     public static javax.swing.JComboBox<String> jcbPersonal;
+    private javax.swing.JLabel jlblNumSemana;
     // End of variables declaration//GEN-END:variables
 }

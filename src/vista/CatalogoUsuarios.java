@@ -1152,7 +1152,16 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
     }
     
     private void jbtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAgregarActionPerformed
-        int poderRegistrar=0;
+        int poderRegistrar=0;//PARA VALIDAR QUE EL USUARIO HAYA SELECCIONADO ALGÚN CHECK BOX
+        int asignaPedidos=0;//PARA VALIDAR SI EL USUARIO SELECCIONO EL ITEM DE "Encargado de Área"
+        
+        if(jCBPerfil.getSelectedItem().equals("Encargado de Área")){
+            usuarios.setAsigPedido(1);
+            poderRegistrar=1;
+        }else{
+            usuarios.setAsigPedido(0);
+        }
+        
        //PERMISOS MATERIALES
         if(jcbMaterialRegistrar.isSelected()){usuarios.setMatRegistrar("R"); poderRegistrar=1;}else{usuarios.setMatRegistrar("");}
         if(jcbMaterialEditar.isSelected()){usuarios.setMatEditar("U");poderRegistrar=1;}else{usuarios.setMatEditar("");}
@@ -1251,7 +1260,15 @@ public class CatalogoUsuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbtnAgregarActionPerformed
 
     private void jbtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnModificarActionPerformed
-         int poderRegistrar=0;
+         int poderRegistrar=0;//PARA VALIDAR QUE EL USUARIO HAYA SELECCIONADO ALGÚN CHECK BOX
+         int asignaPedidos=0;//PARA VALIDAR SI EL USUARIO SELECCIONO EL ITEM DE "Encargado de Área"
+        
+        if(jCBPerfil.getSelectedItem().equals("Encargado de Área")){
+            usuarios.setAsigPedido(1);
+            poderRegistrar=1;
+        }else{
+            usuarios.setAsigPedido(0);
+        }
         //PERMISOS MATERIALES
         if(jcbMaterialRegistrar.isSelected()){usuarios.setMatRegistrar("R"); poderRegistrar=1;}else{usuarios.setMatRegistrar("");}
         if(jcbMaterialEditar.isSelected()){usuarios.setMatEditar("U");poderRegistrar=1;}else{usuarios.setMatEditar("");}

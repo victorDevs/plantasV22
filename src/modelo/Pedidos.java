@@ -59,6 +59,7 @@ public class Pedidos {
     String parameter;
     String nomCliente;
     int noLiberado; // 1: liberado - 0: No Liberado
+    int numSemana;
 
     public static List<JTextField> txtFieldTallas;
     
@@ -162,6 +163,10 @@ public class Pedidos {
         return noLiberado;
     }
 
+    public int getNumSemana() {
+        return numSemana;
+    }
+
     public void setIdPedido(int idPedido) {
         this.idPedido = idPedido;
     }
@@ -245,6 +250,10 @@ public class Pedidos {
     public void setNoLiberado(int noLiberado) {
         this.noLiberado = noLiberado;
     }
+
+    public void setNumSemana(int numSemana) {
+        this.numSemana = numSemana;
+    }
     
     public void llenaPanelTallas(String src, JPanel panel,List<JTextField> txtFieldTallas,List<JLabel> labelTallas){
         try {
@@ -325,9 +334,9 @@ public class Pedidos {
         getIdClienteFromBD(this.nombreCliente);
         System.out.println("idCliente: "+this.idCliente);
         String sql = "insert into pedidos (idPersonal,idCliente,idEstilo,fecha,fechaCliente,fechaInterna,tipoTalla,"
-                + "precio,subtotal,iva,total,observaciones,codigoBarras,estatus,liberado) "
+                + "precio,subtotal,iva,total,observaciones,codigoBarras,estatus,liberado,numeroSemana) "
                 + "values ("+idPersonal+","+this.idCliente+", "+this.idEstilo+",'"+this.fecha+"','"+this.fechaCliente+"', '"+this.fechaInterna+"', "
-                + "'"+this.tipoTalla+"',"+this.precio+","+this.subtotal+","+this.iva+","+this.total+",'"+this.observaciones+"','-','"+this.estatus+"',"+this.noLiberado+");";
+                + "'"+this.tipoTalla+"',"+this.precio+","+this.subtotal+","+this.iva+","+this.total+",'"+this.observaciones+"','-','"+this.estatus+"',"+this.noLiberado+","+this.numSemana+");";
         System.out.println("Registro de Pedido: "+sql);
         if (BD.ejecutarSQL(sql)) {
             return true;
@@ -362,12 +371,12 @@ public class Pedidos {
             btnEliminar.setName("elimi");
             
             if (BD.conectarBD()) {
-                String sql = "select idPedido,fecha,fechaInterna,fechacliente,CONCAT('$ ',round(precio,2))as precio,CONCAT('$ ',round(subtotal,2)) as subtotal,CONCAT('$ ',round(iva,2)) as iva,CONCAT('$ ',round(total,2)) as total,observaciones,estatus from pedidos";
+                String sql = "select pedidos.idPedido,pedidos.fecha,clientes.nombre,clientes.idCliente,estilos.estilo,sum(tallas.cantidad) as totalTallas,pedidos.fechaInterna,pedidos.fechacliente,CONCAT('$ ',round(pedidos.precio,2))as precio,CONCAT('$ ',round(pedidos.subtotal,2)) as subtotal,CONCAT('$ ',round(pedidos.iva,2)) as iva,CONCAT('$ ',round(pedidos.total,2)) as total,pedidos.observaciones,pedidos.estatus from pedidos inner join clientes on clientes.idCliente=pedidos.idCliente inner join estilos on estilos.idEstilo=pedidos.idEstilo inner join tallas on tallas.idPedido=pedidos.idPedido group by pedidos.idPedido";
                 rs = BD.ejecutarSQLSelect(sql);
                 rsm = rs.getMetaData();
                 
                 while (rs.next()) {                
-                    Object nuev[] =  {rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),btnModificar,btnEliminar};
+                    Object nuev[] =  {rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),rs.getString(12),rs.getString(13),rs.getString(14),btnModificar,btnEliminar};
                     dtm.addRow(nuev);
                 }
             } else {
