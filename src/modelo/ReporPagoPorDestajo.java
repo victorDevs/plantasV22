@@ -34,6 +34,7 @@ public class ReporPagoPorDestajo {
     int idPersonal;
     double destajo;
     int idPedido;
+    int numSemana;
 
     public String getProceso() {
         return proceso;
@@ -98,6 +99,14 @@ public class ReporPagoPorDestajo {
     public void setIdPedido(int idPedido) {
         this.idPedido = idPedido;
     }
+
+    public int getNumSemana() {
+        return numSemana;
+    }
+
+    public void setNumSemana(int numSemana) {
+        this.numSemana = numSemana;
+    }
     
     
     public void TablaPrincipalConsultaPagoPorDestajo(){
@@ -136,7 +145,7 @@ public class ReporPagoPorDestajo {
             dtm = (DefaultTableModel)DetallesPagoPorDestajo.jTableDetallePagoDestajo.getModel();
             if (BD.conectarBD()) {
                 String sql = "select concat(personal.nombre,' ',personal.apellidoPaterno,' ',personal.apellidoMaterno) as nombre, estilos.estilo,"+
-                        "procesos.nombre,procesos.destajo,tallas.talla, tallas.cantidad, pedidos.tipoTalla from tallas inner join pedidos on tallas.idPedido=pedidos.idPedido "+
+                        "procesos.nombre,procesos.destajo,tallas.talla, tallas.cantidad, pedidos.tipoTalla,pedidos.numeroSemana from tallas inner join pedidos on tallas.idPedido=pedidos.idPedido "+
                         "inner join personal on pedidos.idPersonal=personal.idPersonal inner join estilos on pedidos.idEstilo=estilos.idEstilo inner join procesos "+
                         "on personal.proceso=procesos.nombre where pedidos.idPedido = "+this.idPedido+" group by tallas.talla";
                 rs = BD.ejecutarSQLSelect(sql);
@@ -149,7 +158,7 @@ public class ReporPagoPorDestajo {
                     this.destajo = rs.getDouble(4);
                     System.out.println("destajo "+rs.getDouble(4));
                     this.tipoTalla = rs.getString(7);
-                    Object muestraDatos[] = {rs.getString(5),rs.getShort(6)};
+                    Object muestraDatos[] = {rs.getString(5),rs.getString(6),rs.getString(8)};
                     dtm.addRow(muestraDatos);
                     
 //                    Object[] filas = new Object[rsm.getColumnCount()];
@@ -185,7 +194,7 @@ public class ReporPagoPorDestajo {
                         "inner join personal on pedidos.idPersonal=personal.idPersonal WHERE personal.proceso=procesos.nombre and (personal.nombre like '"+this.nombreTrabajador+"%' "+
                         "or personal.apellidoPaterno like '"+this.nombreTrabajador+"%' or personal.apellidoMaterno like '"+this.nombreTrabajador+"%' or concat(personal.nombre,' ',personal.apellidoPaterno) "+
                         "like '"+this.nombreTrabajador+"%' or concat(personal.nombre,' ',personal.apellidoMaterno) like '"+this.nombreTrabajador+"%' or concat(personal.nombre,' ',personal.apellidoPaterno,' ',"+
-                        "personal.apellidoMaterno) like '"+this.nombreTrabajador+"%') group by estilos.idEstilo";
+                        "personal.apellidoMaterno) like '"+this.nombreTrabajador+"%') and pedidos.numeroSemana="+this.numSemana+" group by estilos.idEstilo";
                 rs = BD.ejecutarSQLSelect(sql);
                 rsm = rs.getMetaData();
                 List<Object[]> datos = new ArrayList<Object[]>();

@@ -9,6 +9,9 @@ import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import modelo.Pedidos;
+import modelo.Personal;
+import persistencia.MetodosGlobales;
 
 /**
  *
@@ -17,6 +20,8 @@ import java.util.Date;
 public class AsignarPedidos extends javax.swing.JInternalFrame {
 
     private static AsignarPedidos asignarPedidos;
+    Pedidos pedidos = new Pedidos();
+    Personal personal = new Personal();
     
     public static AsignarPedidos getInstancia(){
         if(asignarPedidos == null){
@@ -28,9 +33,10 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
     public AsignarPedidos() {
         initComponents();
         
-        java.util.Date fecha = new Date();
+        MetodosGlobales.LimpiaTabla(jtableAsignarPedidos);
+        pedidos.TablaConsultaAsignarPedidos();
         
-        
+        personal.llenaComboPersonal(jcbPersonal);
     }
 
     /**
@@ -42,70 +48,104 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtableAsignarPedidos = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jcbPersonal = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
 
-        jLabel1.setText("jLabel1");
+        setClosable(true);
+        setTitle("Asignar Pedidos");
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jtableAsignarPedidos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Folio Pedido", "Estilo", "Estatus"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
+        jtableAsignarPedidos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtableAsignarPedidosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jtableAsignarPedidos);
+        if (jtableAsignarPedidos.getColumnModel().getColumnCount() > 0) {
+            jtableAsignarPedidos.getColumnModel().getColumn(0).setMinWidth(80);
+            jtableAsignarPedidos.getColumnModel().getColumn(0).setMaxWidth(80);
+            jtableAsignarPedidos.getColumnModel().getColumn(2).setMinWidth(150);
+            jtableAsignarPedidos.getColumnModel().getColumn(2).setMaxWidth(150);
+        }
+
+        jLabel2.setText("Asignar a:");
+
+        jcbPersonal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar16.png"))); // NOI18N
+        jButton2.setText("Guardar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(132, 132, 132)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jcbPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(268, 268, 268)
+                        .addComponent(jButton2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(114, 114, 114)
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addGap(25, 25, 25)
-                .addComponent(jLabel1)
-                .addContainerGap(187, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jcbPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Date dateprueba =jDateChooser1.getDate();
-        
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-         //fecha = sdf.format(dateprueba);
-        
-        Calendar calendar = Calendar.getInstance();
-        calendar.setFirstDayOfWeek( Calendar.WEDNESDAY);
-       // calendar.setMinimalDaysInFirstWeek( 4 );
-
-        calendar.setTime(dateprueba);
-        int numberWeekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
-        
-        jLabel1.setText(Integer.toString(numberWeekOfYear));
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jtableAsignarPedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtableAsignarPedidosMouseClicked
+       int fila = jtableAsignarPedidos.getSelectedRow();
+        if(evt.getClickCount()==1){
+            personal.setEstilo(jtableAsignarPedidos.getValueAt(fila, 1).toString());
+            personal.llenaComboPersonal(jcbPersonal);
+       }
+    }//GEN-LAST:event_jtableAsignarPedidosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> jcbPersonal;
+    public static javax.swing.JTable jtableAsignarPedidos;
     // End of variables declaration//GEN-END:variables
 }

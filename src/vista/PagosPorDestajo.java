@@ -146,6 +146,7 @@ public class PagosPorDestajo extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         reporPagoDesta.setNombreTrabajador(jtxtNombreTrabajador.getText());
+        reporPagoDesta.setNumSemana(Integer.parseInt(jcbNumSemana.getSelectedItem().toString()));
         
         MetodosGlobales.LimpiaTabla(jTablePrincipalPagosDestajo);
         reporPagoDesta.buscarEstilosPorPersonal();
@@ -154,7 +155,8 @@ public class PagosPorDestajo extends javax.swing.JDialog {
     private void jtxtNombreTrabajadorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtNombreTrabajadorKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             reporPagoDesta.setNombreTrabajador(jtxtNombreTrabajador.getText());
-        
+            reporPagoDesta.setNumSemana(Integer.parseInt(jcbNumSemana.getSelectedItem().toString()));
+            
             MetodosGlobales.LimpiaTabla(jTablePrincipalPagosDestajo);
             reporPagoDesta.buscarEstilosPorPersonal();
         }

@@ -286,7 +286,7 @@ public class Materiales {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"No se pudo mostrar este proveedor, vuelve a intentarlo: "+e, 
+            JOptionPane.showMessageDialog(null,"No se pudo mostrar este material, vuelve a intentarlo: "+e, 
                     "Aviso",JOptionPane.WARNING_MESSAGE);
         }
     }

@@ -30,6 +30,7 @@ import persistencia.BD;
 import persistencia.IconCellRenderer;
 import persistencia.MetodosGlobales;
 import vista.AdministrarPedidos;
+import vista.AsignarPedidos;
 import vista.CatalogoEstilos;
 
 
@@ -332,6 +333,8 @@ public class Pedidos {
     
     public boolean RegistraPedido(int idPersonal){
         getIdClienteFromBD(this.nombreCliente);
+        getIdEstiloFromBD(this.nombreEstilo);
+        
         System.out.println("idCliente: "+this.idCliente);
         String sql = "insert into pedidos (idPersonal,idCliente,idEstilo,fecha,fechaCliente,fechaInterna,tipoTalla,"
                 + "precio,subtotal,iva,total,observaciones,codigoBarras,estatus,liberado,numeroSemana) "
@@ -449,6 +452,58 @@ public class Pedidos {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"No se pudo mostrar la consulta de pedidos en catalogo pedido, vuelve a intentarlo: "+e, 
                     "Aviso",JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    public String getIdEstiloFromBD(String estilo){
+        String sql = "";
+        try {
+             BD.conectarBD();
+             sql = "select idEstilo from estilos where estilo='"+estilo+"'";
+             rs = BD.ejecutarSQLSelect(sql);
+             rsm = rs.getMetaData();
+
+             while (rs.next()) {
+                 this.idEstilo = Integer.parseInt(rs.getString("idEstilo"));
+             }
+            // BD.cerrarConexion();
+        } catch (Exception e) {
+            System.out.println("Excepción obtenerIdEstilo de la clase pedidos: "+e);
+         JOptionPane.showMessageDialog(null, "Error al mostrar el listado de idEstilo en pedidos",
+                 "Error",JOptionPane.ERROR_MESSAGE);
+         BD.cerrarConexion();
+        }
+
+        return sql;
+    }
+    
+    public void TablaConsultaAsignarPedidos(){
+       try {
+            if (BD.conectarBD()) {
+                String sql = "select pedidos.idPedido,estilos.estilo,pedidos.estatus from pedidos inner join estilos on estilos.idEstilo=pedidos.idEstilo order by pedidos.fecha";
+                rs = BD.ejecutarSQLSelect(sql);
+                rsm = rs.getMetaData();
+                List<Object[]> datos = new ArrayList<Object[]>();
+                while (rs.next()) {                
+                    Object[] filas = new Object[rsm.getColumnCount()];
+                    for (int i = 0; i < filas.length; i++) {
+                        filas[i] = rs.getObject(i+1);
+                    }
+                    datos.add(filas);
+                }
+                dtm = (DefaultTableModel)AsignarPedidos.jtableAsignarPedidos.getModel();
+                for (int i = 0; i < datos.size(); i++) {
+                    dtm.addRow(datos.get(i));
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos plantasbd",
+                        "Error de conexión",JOptionPane.ERROR_MESSAGE);
+                BD.cerrarConexion();
+            }            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error al mostrar lo datos en la tabla asignar pedidos: "+e, 
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            BD.cerrarConexion();
         }
     }
 }
