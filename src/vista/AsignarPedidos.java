@@ -53,6 +53,10 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jcbPersonal = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Asignar Pedidos");
@@ -96,6 +100,39 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar16.png"))); // NOI18N
         jButton2.setText("Guardar");
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel1.setText("Pedidos");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Folio", "Proceso", "Id Trabjador", "Trabajador"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMinWidth(60);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(60);
+            jTable1.getColumnModel().getColumn(2).setMinWidth(85);
+            jTable1.getColumnModel().getColumn(2).setMaxWidth(85);
+        }
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel3.setText("Procesos que pertenecen al pedido seleccionado");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -106,27 +143,42 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(276, 276, 276)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jcbPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(268, 268, 268)
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(225, 225, 225)
                         .addComponent(jButton2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jcbPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
                 .addComponent(jButton2)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
@@ -143,8 +195,12 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JComboBox<String> jcbPersonal;
     public static javax.swing.JTable jtableAsignarPedidos;
     // End of variables declaration//GEN-END:variables

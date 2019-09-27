@@ -84,25 +84,30 @@ public class EliminarPerfilInternal extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(rootPane, "Selecciona un peril para eliminarlo",
                         "Aviso",JOptionPane.WARNING_MESSAGE);
         }else{
-            if (JOptionPane.showConfirmDialog(rootPane, "Se eliminará el perfil, ¿Desea continuar?",
-            "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){    
-                if(BD.conectarBD()){
-                    try {
-                        perfilesUsuario.setNombre((String)jCbPerfil.getSelectedItem());
-                        perfilesUsuario.EliminaPerfil();
-                        JOptionPane.showMessageDialog(rootPane, "Perfil eliminado con éxito",
-                            "Aviso",JOptionPane.INFORMATION_MESSAGE);
-                        this.dispose();
-                        usuarios.ListadoComboPerfil(CatalogoUsuarios.jCBPerfil, "agregar");
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(rootPane, "No se eliminó el perfil: "+e,
-                            "Aviso",JOptionPane.WARNING_MESSAGE);
+            if(jCbPerfil.getSelectedItem().equals("Encargado de Área")){
+                JOptionPane.showMessageDialog(rootPane, "Lo sentimos!! No puedes eliminar este perfil",
+                        "Aviso",JOptionPane.WARNING_MESSAGE);
+            }else{
+                if (JOptionPane.showConfirmDialog(rootPane, "Se eliminará el perfil, ¿Desea continuar?",
+                "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){    
+                    if(BD.conectarBD()){
+                        try {
+                            perfilesUsuario.setNombre((String)jCbPerfil.getSelectedItem());
+                            perfilesUsuario.EliminaPerfil();
+                            JOptionPane.showMessageDialog(rootPane, "Perfil eliminado con éxito",
+                                "Aviso",JOptionPane.INFORMATION_MESSAGE);
+                            this.dispose();
+                            usuarios.ListadoComboPerfil(CatalogoUsuarios.jCBPerfil, "agregar");
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(rootPane, "No se eliminó el perfil: "+e,
+                                "Aviso",JOptionPane.WARNING_MESSAGE);
+                            BD.cerrarConexion();
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(rootPane, "Error de conexión",
+                                "Error",JOptionPane.ERROR_MESSAGE);
                         BD.cerrarConexion();
                     }
-                }else{
-                    JOptionPane.showMessageDialog(rootPane, "Error de conexión",
-                            "Error",JOptionPane.ERROR_MESSAGE);
-                    BD.cerrarConexion();
                 }
             }
         }

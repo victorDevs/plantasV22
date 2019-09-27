@@ -309,7 +309,8 @@ public class Personal {
         
         try {
             BD.conectarBD();
-            String sql = "select idPersonal,CONCAT(nombre,' ',apellidoPaterno) as nombre from personal where proceso = '"+this.proceso+"'";
+            String sql = "select personal.idPersonal,personal.nombre,personal.proceso from personal inner join estilos_procesos on estilos_procesos.proceso=personal.proceso "+
+                    "where estilos_procesos.idEstilo="+this.idEstilo+" group by personal.nombre ";
             rs = BD.ejecutarSQLSelect(sql);
             rsm = rs.getMetaData();
             //combo.setModel(comboPersonal);
@@ -317,10 +318,11 @@ public class Personal {
             comboPersonal.addElement("--Seleccione Trabajador--");
             this.nombre = null;//para reiniciar el nombre y pueda se validado posteriormente para mostrar la leyenda "No hay trabajador"
             while (rs.next()) {                   
-                    this.idPersonal = Integer.parseInt(rs.getString("idPersonal"));
-                    this.nombre = rs.getString("nombre");
+                    this.idPersonal = Integer.parseInt(rs.getString("personal.idPersonal"));
+                    this.nombre = rs.getString("personal.nombre");
+
                     System.out.println("el nombre del personal devuelve: "+this.nombre);
-                    comboPersonal.addElement(rs.getObject("nombre"));
+                    comboPersonal.addElement(rs.getObject("nombre")+" ("+rs.getObject("proceso")+")");
                     
             }
             if(this.nombre == null){
@@ -349,7 +351,7 @@ public class Personal {
                 while (rs.next()) {
                     this.idEstilo = Integer.parseInt(rs.getString("idEstilo"));
                 }
-                obtenerProcesoEstilo();//LLAMA AL MÉTODO PARA PODER OBTENER EL NOMBRE DEL PROCESO
+//                obtenerProcesoEstilo();//LLAMA AL MÉTODO PARA PODER OBTENER EL NOMBRE DEL PROCESO
                 BD.cerrarConexion();
            } catch (Exception e) {
                System.out.println("Excepción obtenerEstilo: "+e);
@@ -361,23 +363,23 @@ public class Personal {
            return sql;
        }
        
-       public void obtenerProcesoEstilo(){
-            String sql="";
-           try {
-                BD.conectarBD();
-                sql = "select idEstilo,proceso from estilos_procesos where idEstilo="+this.idEstilo;
-                rs = BD.ejecutarSQLSelect(sql);
-                rsm = rs.getMetaData();
-                while (rs.next()) {
-                    this.proceso = rs.getString("proceso");
-                }
-           } catch (Exception e) {
-               System.out.println("Excepción obtenerEstilo: "+e);
-                JOptionPane.showMessageDialog(null, "Error al mostrar el listado de procesos en personal",
-                        "Error",JOptionPane.ERROR_MESSAGE);
-                BD.cerrarConexion();
-           }
-       }
+//       public void obtenerProcesoEstilo(){
+//            String sql="";
+//           try {
+//                BD.conectarBD();
+//                sql = "select idEstilo,proceso from estilos_procesos where idEstilo="+this.idEstilo;
+//                rs = BD.ejecutarSQLSelect(sql);
+//                rsm = rs.getMetaData();
+//                while (rs.next()) {
+//                    this.proceso = rs.getString("proceso");
+//                }
+//           } catch (Exception e) {
+//               System.out.println("Excepción obtenerEstilo: "+e);
+//                JOptionPane.showMessageDialog(null, "Error al mostrar el listado de procesos en personal",
+//                        "Error",JOptionPane.ERROR_MESSAGE);
+//                BD.cerrarConexion();
+//           }
+//       }
        
        public void obtieneIdPersonalCombo(){//AL MOMENTO DE SELECCIONAR EL COMBO DEL PERSONAL DEVUELVE EL ID DEL PERSONAL SELECCIONADO
         
@@ -391,7 +393,7 @@ public class Personal {
                     this.idPersonal = Integer.parseInt(rs.getString("idPersonal"));
                     System.out.println("Id personal seleccionado: "+this.idPersonal);
                 }
-                obtenerProcesoEstilo();//LLAMA AL MÉTODO PARA PODER OBTENER EL NOMBRE DEL PROCESO
+                //obtenerProcesoEstilo();//LLAMA AL MÉTODO PARA PODER OBTENER EL NOMBRE DEL PROCESO
                 BD.cerrarConexion();
            } catch (Exception e) {
                System.out.println("Excepción obtenerEstilo: "+e);
