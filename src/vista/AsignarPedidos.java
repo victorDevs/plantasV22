@@ -55,7 +55,7 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtableMuestraProcesos = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
 
         setClosable(true);
@@ -103,31 +103,33 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel1.setText("Pedidos");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtableMuestraProcesos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Folio", "Proceso", "Id Trabjador", "Trabajador"
+                "Proceso", "Id Trabjador", "Trabajador", "Ediar", "Eliminar"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(60);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(60);
-            jTable1.getColumnModel().getColumn(2).setMinWidth(85);
-            jTable1.getColumnModel().getColumn(2).setMaxWidth(85);
+        jScrollPane2.setViewportView(jtableMuestraProcesos);
+        if (jtableMuestraProcesos.getColumnModel().getColumnCount() > 0) {
+            jtableMuestraProcesos.getColumnModel().getColumn(1).setMinWidth(85);
+            jtableMuestraProcesos.getColumnModel().getColumn(1).setMaxWidth(85);
+            jtableMuestraProcesos.getColumnModel().getColumn(3).setMinWidth(50);
+            jtableMuestraProcesos.getColumnModel().getColumn(3).setMaxWidth(50);
+            jtableMuestraProcesos.getColumnModel().getColumn(4).setMinWidth(60);
+            jtableMuestraProcesos.getColumnModel().getColumn(4).setMaxWidth(60);
         }
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -151,14 +153,14 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jcbPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(225, 225, 225)
-                        .addComponent(jButton2)))
+                        .addComponent(jButton2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addComponent(jLabel3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -189,6 +191,8 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
         if(evt.getClickCount()==1){
             personal.setEstilo(jtableAsignarPedidos.getValueAt(fila, 1).toString());
             personal.llenaComboPersonal(jcbPersonal);
+            MetodosGlobales.LimpiaTabla(jtableMuestraProcesos);
+            personal.tablaConsultaProcesoPorEstiloSeleccionado();
        }
     }//GEN-LAST:event_jtableAsignarPedidosMouseClicked
 
@@ -200,8 +204,8 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JComboBox<String> jcbPersonal;
     public static javax.swing.JTable jtableAsignarPedidos;
+    public static javax.swing.JTable jtableMuestraProcesos;
     // End of variables declaration//GEN-END:variables
 }

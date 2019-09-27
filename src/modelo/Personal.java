@@ -18,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import persistencia.BD;
 import persistencia.MetodosGlobales;
+import vista.AsignarPedidos;
 import vista.CatalogoPedido;
 import vista.CatalogoPersonal;
 
@@ -308,6 +309,8 @@ public class Personal {
         DefaultComboBoxModel comboPersonal = new DefaultComboBoxModel();
         
         try {
+            
+            
             BD.conectarBD();
             String sql = "select personal.idPersonal,personal.nombre,personal.proceso from personal inner join estilos_procesos on estilos_procesos.proceso=personal.proceso "+
                     "where estilos_procesos.idEstilo="+this.idEstilo+" group by personal.nombre ";
@@ -322,8 +325,7 @@ public class Personal {
                     this.nombre = rs.getString("personal.nombre");
 
                     System.out.println("el nombre del personal devuelve: "+this.nombre);
-                    comboPersonal.addElement(rs.getObject("nombre")+" ("+rs.getObject("proceso")+")");
-                    
+                    comboPersonal.addElement(rs.getObject("nombre")+" ("+rs.getObject("proceso")+")");   
             }
             if(this.nombre == null){
                 comboPersonal.addElement("No hay trabajador");
@@ -401,5 +403,41 @@ public class Personal {
                     "Error",JOptionPane.ERROR_MESSAGE);
             BD.cerrarConexion();
            } 
+    }
+       
+    public void tablaConsultaProcesoPorEstiloSeleccionado(){
+        try {
+            dtm=(DefaultTableModel)AsignarPedidos.jtableMuestraProcesos.getModel();
+            
+            if (BD.conectarBD()) {
+                String sql = "select idEstiloProceso,proceso,idEstilo from estilos_procesos where idEstilo = "+this.idEstilo;
+                rs = BD.ejecutarSQLSelect(sql);
+                rsm = rs.getMetaData();
+
+                while (rs.next()) { 
+                    Object muestraDatos[] = {rs.getString("proceso")};
+                    dtm.addRow(muestraDatos);
+                    
+//                    Object[] filas = new Object[rsm.getColumnCount()];
+//                    for (int i = 0; i < filas.length; i++) {
+//                        filas[i] = rs.getObject(i+1);
+//                    }
+//                    datos.add(filas);
+                }
+//                dtm = (DefaultTableModel)DetallesPagoPorDestajo.jTableDetallePagoDestajo.getModel();
+//                for (int i = 0; i < datos.size(); i++) {
+//                    Object muestraDatos[] = {rs.getString(1)};
+//                    dtm.addRow(muestraDatos);
+//                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos plantasbd",
+                        "Error de conexión",JOptionPane.ERROR_MESSAGE);
+                BD.cerrarConexion();
+            }            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error al mostrar lo datos DetallesPagosPorDestajo(en tabla tallas): "+e, 
+                    "Error",JOptionPane.ERROR_MESSAGE);
+            BD.cerrarConexion();
+        }
     }
 }
