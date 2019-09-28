@@ -6,17 +6,21 @@
 package modelo;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import persistencia.BD;
+import persistencia.IconCellRenderer;
 import persistencia.MetodosGlobales;
 import vista.AsignarPedidos;
 import vista.CatalogoPedido;
@@ -46,8 +50,17 @@ public class Personal {
     ResultSet rs;
     ResultSetMetaData rsm;
     DefaultTableModel dtm; 
+    
+    //PARA LOS BOTONES DE LA TABLA MOSTRARPROCESOS 
+    ImageIcon iconElimina = new ImageIcon(getClass().getResource("/imagenes/borrar10px.png"));
+    
+    //CREAMOS ESTOS BOTONES PARA ANEXARLOS A LA TABLA DE MOSTRARPROCESOS
+     JButton btnEliminar = new JButton(iconElimina);
 
-
+     List<Integer> listaId = new ArrayList<Integer>();
+     List<String> listaPersonal = new ArrayList<String>();
+     List<String> listaProceso = new ArrayList<String>();
+     
     public int getIdPersonal() {
         return idPersonal;
     }
@@ -308,26 +321,59 @@ public class Personal {
         obtieneIdEstilo(this.estilo);//LLAMA EL MÉTODO PARA ENVIAR EL NOMBRE DEL ESTILO Y PODER OBTENER SU IDESTILO
         DefaultComboBoxModel comboPersonal = new DefaultComboBoxModel();
         
+        String[] registros = new String[2];
+        
         try {
             
             
             BD.conectarBD();
-            String sql = "select personal.idPersonal,personal.nombre,personal.proceso from personal inner join estilos_procesos on estilos_procesos.proceso=personal.proceso "+
+            String sql = "select personal.idPersonal,concat(personal.nombre,' ',personal.apellidoPaterno) as nombrePersonal,personal.proceso from personal inner join estilos_procesos on estilos_procesos.proceso=personal.proceso "+
                     "where estilos_procesos.idEstilo="+this.idEstilo+" group by personal.nombre ";
             rs = BD.ejecutarSQLSelect(sql);
             rsm = rs.getMetaData();
             //combo.setModel(comboPersonal);
             
+            //listaId =
+            
             comboPersonal.addElement("--Seleccione Trabajador--");
             this.nombre = null;//para reiniciar el nombre y pueda se validado posteriormente para mostrar la leyenda "No hay trabajador"
             while (rs.next()) {                   
                     this.idPersonal = Integer.parseInt(rs.getString("personal.idPersonal"));
-                    this.nombre = rs.getString("personal.nombre");
-
-                    System.out.println("el nombre del personal devuelve: "+this.nombre);
-                    comboPersonal.addElement(rs.getObject("nombre")+" ("+rs.getObject("proceso")+")");   
+                    this.nombre = rs.getString("nombrePersonal");
+                    
+                    registros[0] = rs.getString("personal.idPersonal");                    
+                    registros[1] = rs.getString("nombrePersonal");
+                    
+                    //combo.addItem(rs.getString("nombrePersonal"));
+                    listaProceso.add(rs.getString("personal.proceso"));
+                    listaId.add(rs.getInt("personal.idPersonal"));
+                    listaPersonal.add(rs.getString("nombrePersonal"));
+                    
+                     System.out.println("el nombre del personal devuelve: "+this.nombre);
+                    comboPersonal.addElement(rs.getString("nombrePersonal")+" ("+rs.getString("personal.proceso")+")");         
             }
-            if(this.nombre == null){
+           
+            
+            //combo = new JComboBox<String>();
+                    combo.addActionListener(new ActionListener() {
+                        //@Override
+                        public void actionPerformed(ActionEvent ae) {  
+                            //String contenido = combo.getSelectedItem().toString();
+//                            int id = Integer.parseInt(registros[0]);
+//                            tomaId(id);
+                            int indice = combo.getSelectedIndex();
+                            String dato = (String)combo.getSelectedItem();
+                            for(int i=0; i<AsignarPedidos.jtableMuestraProcesos.getRowCount(); i++){
+                                if(AsignarPedidos.jtableMuestraProcesos.getValueAt(i, 0).equals(listaProceso.get(indice-1))){
+                                    AsignarPedidos.jtableMuestraProcesos.setValueAt(listaId.get(indice-1), i, 1);
+                                    AsignarPedidos.jtableMuestraProcesos.setValueAt(listaPersonal.get(indice-1), i, 2);
+                                }
+                                System.out.println(dato+" Posición " + indice + " id de la lista "+listaId.get(indice-1));
+                            }
+                        }
+                    });
+
+             if(this.nombre == null){
                 comboPersonal.addElement("No hay trabajador");
             }
             
@@ -340,6 +386,9 @@ public class Personal {
                     "Error",JOptionPane.ERROR_MESSAGE);
             BD.cerrarConexion();
         }
+    }
+    public void tomaId(int id){
+        System.err.println("se selecciono el id" + id);
     }
        
        public String obtieneIdEstilo(String estilo){
@@ -405,9 +454,11 @@ public class Personal {
            } 
     }
        
-    public void tablaConsultaProcesoPorEstiloSeleccionado(){
+    public void tablaConsultaProcesoPorEstiloSeleccionado( JTable table){
         try {
-            dtm=(DefaultTableModel)AsignarPedidos.jtableMuestraProcesos.getModel();
+            dtm=(DefaultTableModel)table.getModel();
+            table.setDefaultRenderer(Object.class,new IconCellRenderer());
+            btnEliminar.setName("elimi");
             
             if (BD.conectarBD()) {
                 String sql = "select idEstiloProceso,proceso,idEstilo from estilos_procesos where idEstilo = "+this.idEstilo;
@@ -415,20 +466,22 @@ public class Personal {
                 rsm = rs.getMetaData();
 
                 while (rs.next()) { 
-                    Object muestraDatos[] = {rs.getString("proceso")};
-                    dtm.addRow(muestraDatos);
-                    
-//                    Object[] filas = new Object[rsm.getColumnCount()];
-//                    for (int i = 0; i < filas.length; i++) {
-//                        filas[i] = rs.getObject(i+1);
-//                    }
-//                    datos.add(filas);
+                    Object muestraDatos[] = {rs.getString("proceso"),"","",btnEliminar};
+                    dtm.addRow(muestraDatos);  
                 }
-//                dtm = (DefaultTableModel)DetallesPagoPorDestajo.jTableDetallePagoDestajo.getModel();
-//                for (int i = 0; i < datos.size(); i++) {
-//                    Object muestraDatos[] = {rs.getString(1)};
-//                    dtm.addRow(muestraDatos);
-//                }
+                //INICIO PARA VALIDAR SI EL CAMPO DEl ID Y DEL TRABAJADOR ESTA VACÍO
+                for(int i=0; i<table.getRowCount(); i++){
+                    //PARA ID TRABAJADOR
+                    if(table.getValueAt(i, 1).equals("")){
+                        table.setValueAt("-", i, 1);
+                    }
+                    // PARA TRABAJADOR
+                    if(table.getValueAt(i, 2).equals("")){
+                        table.setValueAt("Sin Asignar", i, 2);
+                    }
+                    
+                }
+                //FIN DEL CICLO
             } else {
                 JOptionPane.showMessageDialog(null, "Error al intentar conectar con la base de datos plantasbd",
                         "Error de conexión",JOptionPane.ERROR_MESSAGE);

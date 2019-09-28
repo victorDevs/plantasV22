@@ -36,7 +36,7 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
         MetodosGlobales.LimpiaTabla(jtableAsignarPedidos);
         pedidos.TablaConsultaAsignarPedidos();
         
-        personal.llenaComboPersonal(jcbPersonal);
+        //personal.llenaComboPersonal(jcbPersonal);
     }
 
     /**
@@ -95,7 +95,12 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Asignar a:");
 
-        jcbPersonal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbPersonal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione Trabajador--" }));
+        jcbPersonal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbPersonalMouseClicked(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar16.png"))); // NOI18N
         jButton2.setText("Guardar");
@@ -105,17 +110,14 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
 
         jtableMuestraProcesos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Proceso", "Id Trabjador", "Trabajador", "Ediar", "Eliminar"
+                "Proceso", "Id Trabjador", "Trabajador", "Borrar"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -128,8 +130,6 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
             jtableMuestraProcesos.getColumnModel().getColumn(1).setMaxWidth(85);
             jtableMuestraProcesos.getColumnModel().getColumn(3).setMinWidth(50);
             jtableMuestraProcesos.getColumnModel().getColumn(3).setMaxWidth(50);
-            jtableMuestraProcesos.getColumnModel().getColumn(4).setMinWidth(60);
-            jtableMuestraProcesos.getColumnModel().getColumn(4).setMaxWidth(60);
         }
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -156,11 +156,11 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
                         .addGap(225, 225, 225)
                         .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(87, 87, 87)
-                        .addComponent(jLabel3)))
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -192,9 +192,16 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
             personal.setEstilo(jtableAsignarPedidos.getValueAt(fila, 1).toString());
             personal.llenaComboPersonal(jcbPersonal);
             MetodosGlobales.LimpiaTabla(jtableMuestraProcesos);
-            personal.tablaConsultaProcesoPorEstiloSeleccionado();
+            personal.tablaConsultaProcesoPorEstiloSeleccionado(jtableMuestraProcesos);
        }
     }//GEN-LAST:event_jtableAsignarPedidosMouseClicked
+
+    private void jcbPersonalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbPersonalMouseClicked
+        for(int i=0; i<jtableMuestraProcesos.getRowCount(); i++){
+            //if(jcbPersonal)
+        }
+        
+    }//GEN-LAST:event_jcbPersonalMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
