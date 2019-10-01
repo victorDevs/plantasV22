@@ -50,7 +50,7 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
         MetodosGlobales.LimpiaTabla(jTableMateriales);
         materiales.TablaConsultaMateriales(); 
         
-        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("C")){
+        if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("C")){
             jbtnEliminarMaterial.setVisible(false);
             jbtnModificarMaterial.setVisible(false);
             jbtnAgregarMaterial.setVisible(false);
@@ -62,13 +62,13 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
             jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setMinWidth(0);
             jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setMaxWidth(0);
         }
-        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("R")){
+        if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("R")){
             jBtnBuscarMaterial.setVisible(false);
             jbtnEliminarMaterial.setVisible(false);
             jbtnModificarMaterial.setVisible(false);
             
         }
-        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("U")){
+        if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("U")){
             jBtnBuscarMaterial.setVisible(false);
             jbtnEliminarMaterial.setVisible(false);
             jbtnModificarMaterial.setVisible(true);
@@ -78,7 +78,7 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
             jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setMinWidth(0);
             jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setMaxWidth(0);
         }
-        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("D")){
+        if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("D")){
             jBtnBuscarMaterial.setVisible(false);
             jbtnModificarMaterial.setVisible(false);
             jbtnAgregarMaterial.setVisible(false);
@@ -87,11 +87,11 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
             jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setMinWidth(0);
             jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setMaxWidth(0);
         }
-        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CR")){
+        if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("CR")){
             jbtnEliminarMaterial.setVisible(false);
             jbtnModificarMaterial.setVisible(false);
         }
-        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CU")){
+        if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("CU")){
             jbtnEliminarMaterial.setVisible(false);
             jbtnAgregarMaterial.setVisible(false);
             jbtnAgregarProveedorMaterial.setVisible(false);
@@ -99,38 +99,37 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
             jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setMinWidth(0);
             jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(6)).setMaxWidth(0);
         }
-        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CD")){
+        if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("CD")){
             jbtnAgregarMaterial.setVisible(false);
             jbtnModificarMaterial.setVisible(false);
             jbtnAgregarProveedorMaterial.setVisible(false);
-            jBtnBuscarMaterial.setVisible(false);
             jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setWidth(0);
             jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setMinWidth(0);
             jTableProveedoresMaterial.getColumn(jTableProveedoresMaterial.getColumnName(5)).setMaxWidth(0);
         }
-         if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("RD")){
+         if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("RD")){
             jbtnModificarMaterial.setVisible(false);
             jBtnBuscarMaterial.setVisible(false);
         }
-        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("RU")){
+        if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("RU")){
             jbtnEliminarMaterial.setVisible(false);
             jBtnBuscarMaterial.setVisible(false);
         }
-        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("UD")){
+        if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("UD")){
             jbtnAgregarMaterial.setVisible(false);
             jBtnBuscarMaterial.setVisible(false);
         }
-        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CRU")){
+        if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("CRU")){
             jbtnEliminarMaterial.setVisible(false);
         }
-        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CUD")){
+        if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("CUD")){
             jbtnAgregarMaterial.setVisible(false);
             jbtnAgregarProveedorMaterial.setVisible(false);
         }
-        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("RUD")){
+        if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("RUD")){
             jBtnBuscarMaterial.setVisible(false);
         }
-        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CRD")){
+        if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("CRD")){
             jbtnModificarMaterial.setVisible(false);
         }
         
@@ -513,8 +512,8 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbtnAgregarProveedorMaterialActionPerformed
 
     private void jTableMaterialesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMaterialesMouseClicked
-        if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("R") || login.validaPermisos(Main.menuNomUsuario.getText()).equals("RD") || 
-                login.validaPermisos(Main.menuNomUsuario.getText()).equals("RU")){
+        if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("R") || login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("RD") || 
+                login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("RU")){
             JOptionPane.showMessageDialog(rootPane, "Lo sentimos, no tienes los permisos para consultar la información",
                                 "Aviso",JOptionPane.INFORMATION_MESSAGE);
             jbtnEliminarMaterial.setEnabled(true);
@@ -527,7 +526,7 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
             jbtnLimpiarMaterial.setEnabled(true);
 
             if (evt.getClickCount() == 1) {
-                if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("UD") || login.validaPermisos(Main.menuNomUsuario.getText()).equals("RUD"))JOptionPane.showMessageDialog(rootPane, "Lo sentimos, no tienes los permisos para consultar la información","Aviso",JOptionPane.INFORMATION_MESSAGE);
+                if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("UD") || login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("RUD"))JOptionPane.showMessageDialog(rootPane, "Lo sentimos, no tienes los permisos para consultar la información","Aviso",JOptionPane.INFORMATION_MESSAGE);
                 materiales.ApuntaMaterial();
                 jTxtNombreMaterial.setText(materiales.getNombre());
                 jCBUnidad.setSelectedItem(materiales.getUnidad());
@@ -536,7 +535,7 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
                 jTxtDescripciónBM.setText(materiales.getDescripcionBM());
                 
                 int cuentaFilas = jTableProveedoresMaterial.getRowCount();
-                if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CR")){//VALIDA PERMISOS
+                if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("CR")){//VALIDA PERMISOS
                     for(int i=0; i<cuentaFilas; i++){
                         Object value = jTableProveedoresMaterial.getValueAt(i, 5);//BOTÓN EDITAR
                         Object value2 = jTableProveedoresMaterial.getValueAt(i, 6);//BOTÓN ELIMINAR
@@ -558,7 +557,7 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
                         }
                     }
                 }
-                if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CRU")){//VALIDA PERMISOS
+                if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("CRU")){//VALIDA PERMISOS
                     for(int i=0; i<cuentaFilas; i++){
                         Object value2 = jTableProveedoresMaterial.getValueAt(i, 6);//BOTÓN ELIMINAR
                         if(value2 instanceof JButton){
@@ -571,7 +570,7 @@ public class CatalogoMateriales extends javax.swing.JInternalFrame {
                         }
                     }
                 }
-                if(login.validaPermisos(Main.menuNomUsuario.getText()).equals("CRD")){//VALIDA PERMISOS
+                if(login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("CRD")){//VALIDA PERMISOS
                     for(int i=0; i<cuentaFilas; i++){
                         Object value = jTableProveedoresMaterial.getValueAt(i, 5);//BOTÓN EDITAR
                         if(value instanceof JButton){

@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.LoginModel;
 import modelo.Proveedores;
 import persistencia.ProveedoresPersistencia;
 import persistencia.BD;
@@ -35,6 +36,8 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
     Proveedores prov = new Proveedores();
     ProveedoresPersistencia proveePersi = new ProveedoresPersistencia();
     MetodosGlobales metodosGlobales = new MetodosGlobales();
+    LoginModel login = new LoginModel();
+    
     
      static int clics=0;//para habiitar y deshabilitar el teléfono2
      //VARIABLES PARA CAMBIAR LA IMAGEN DEL BOTÓN QUITAR O AGREGAR TELÉFONO 2
@@ -56,7 +59,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
      
     public CatalogoProveedores() {
         initComponents();
-        btnElimianr.setEnabled(false);
+        btnEliminar.setEnabled(false);
         btnModifyProveedor.setEnabled(false);
         MetodosGlobales.LimpiaTabla(jTableProveedores);
         prov.TablaConsultaProveedores();
@@ -99,6 +102,32 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
             }
         });
         
+        //VALIDACIÓN DE PERMISOS
+        if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("C")){
+            btnEliminar.setVisible(false);
+            btnModifyProveedor.setVisible(false);
+            btnAddProveedor.setVisible(false);
+        }
+        if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("R")){
+            btnEliminar.setVisible(false);
+            btnModifyProveedor.setVisible(false);
+            bntBuscar.setVisible(false);
+        }
+        if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("U")){
+            btnEliminar.setVisible(false);
+            btnAddProveedor.setVisible(false);
+            bntBuscar.setVisible(false);
+        }
+        if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("D")){
+            btnModifyProveedor.setVisible(false);
+            btnAddProveedor.setVisible(false);
+            bntBuscar.setVisible(false);
+        }
+        if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("CR")){
+            btnModifyProveedor.setVisible(false);
+            btnEliminar.setVisible(false);
+        }
+        
     }
 
     /**
@@ -116,7 +145,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableProveedores = new javax.swing.JTable();
         btnAddProveedor = new javax.swing.JButton();
-        btnElimianr = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         jTxtTel = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -129,7 +158,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
         btnAgregarTel = new javax.swing.JButton();
         jTxtTel2 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        bntBuscar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Catálogo de Proveedores");
@@ -183,11 +212,11 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
             }
         });
 
-        btnElimianr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basura.png"))); // NOI18N
-        btnElimianr.setText("Eliminar");
-        btnElimianr.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/basura.png"))); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnElimianrActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -228,12 +257,12 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Teléfono 2");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/busqueda.png"))); // NOI18N
-        jButton1.setText("Búsqueda");
-        jButton1.setFocusable(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bntBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/busqueda.png"))); // NOI18N
+        bntBuscar.setText("Búsqueda");
+        bntBuscar.setFocusable(false);
+        bntBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bntBuscarActionPerformed(evt);
             }
         });
 
@@ -247,7 +276,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
                 .addGap(42, 42, 42)
                 .addComponent(btnModifyProveedor)
                 .addGap(45, 45, 45)
-                .addComponent(btnElimianr)
+                .addComponent(btnEliminar)
                 .addGap(46, 46, 46)
                 .addComponent(btnLimpiar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -282,7 +311,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
                         .addGap(0, 354, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))
+                        .addComponent(bntBuscar))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1)))
@@ -292,7 +321,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addComponent(jButton1)
+                .addComponent(bntBuscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -319,7 +348,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
                     .addComponent(jTxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnElimianr)
+                    .addComponent(btnEliminar)
                     .addComponent(btnLimpiar)
                     .addComponent(btnModifyProveedor)
                     .addComponent(btnAddProveedor))
@@ -378,33 +407,43 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
 
     private void jTableProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProveedoresMouseClicked
         // TODO add your handling code here:
-        btnAddProveedor.setEnabled(false);
-        btnElimianr.setEnabled(true);
-        btnModifyProveedor.setEnabled(true);
-        btnLimpiar.setEnabled(true);
+        
+        
         
         if (evt.getClickCount() == 1) {
-            prov.ApuntaProveedor();
-            Date date = null;
-            jTxtNombreProveedor.setText(prov.getNombre());
-            jTxtDomicilio.setText(prov.getDomicilio());
-            jTxtTel.setText(prov.getTel());
-            jTxtTel2.setText(prov.getTel2());
-            jTxtContacto.setText(prov.getContacto());
-            jTxtCorreo.setText(prov.getCorreo());
-            //VALIDA SI EL CAMPO DEL TELÉFONO 2 TIENE NÚMERO
-            if(jTxtTel2.getText().equals("")){
-                jTxtTel2.setEnabled(false);
-                jLabel6.setEnabled(false);
-                btnAgregarTel.setIcon(iconoBtnAnadir);
-                clics = 0;//significa que no ha dado clic
+            if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("R")){
+                
+                btnEliminar.setEnabled(true);
+                btnModifyProveedor.setEnabled(true);
+                btnLimpiar.setEnabled(true);
             }else{
-                jTxtTel2.setEnabled(true);
-                jLabel6.setEnabled(true);
-                btnAgregarTel.setIcon(iconoBtnQuitar);
-                clics = 1;//sifnifica que ha dado un clic
+                btnAddProveedor.setEnabled(false);
+                btnEliminar.setEnabled(true);
+                btnModifyProveedor.setEnabled(true);
+                btnLimpiar.setEnabled(true);
+                
+                prov.ApuntaProveedor();
+                Date date = null;
+                jTxtNombreProveedor.setText(prov.getNombre());
+                jTxtDomicilio.setText(prov.getDomicilio());
+                jTxtTel.setText(prov.getTel());
+                jTxtTel2.setText(prov.getTel2());
+                jTxtContacto.setText(prov.getContacto());
+                jTxtCorreo.setText(prov.getCorreo());
+                //VALIDA SI EL CAMPO DEL TELÉFONO 2 TIENE NÚMERO
+                if(jTxtTel2.getText().equals("")){
+                    jTxtTel2.setEnabled(false);
+                    jLabel6.setEnabled(false);
+                    btnAgregarTel.setIcon(iconoBtnAnadir);
+                    clics = 0;//significa que no ha dado clic
+                }else{
+                    jTxtTel2.setEnabled(true);
+                    jLabel6.setEnabled(true);
+                    btnAgregarTel.setIcon(iconoBtnQuitar);
+                    clics = 1;//sifnifica que ha dado un clic
+                }
+                //FIN DE LA VALIDACIÓN TELÉFONO 2
             }
-            //FIN DE LA VALIDACIÓN TELÉFONO 2
         }
         
     }//GEN-LAST:event_jTableProveedoresMouseClicked
@@ -418,7 +457,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
             if (JOptionPane.showConfirmDialog(rootPane, "Se modificará el proveedor, ¿Desea continuar?",
                 "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){ 
                 btnModifyProveedor.setEnabled(false);
-                btnElimianr.setEnabled(false);
+                btnEliminar.setEnabled(false);
                 btnAddProveedor.setEnabled(true);
                 if (jTxtNombreProveedor.getText().equals("") || jTxtDomicilio.getText().equals("")
                         || jTxtContacto.getText().equals("") || jTxtTel.getText().equals("") || jTxtCorreo.equals("")) {
@@ -462,7 +501,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
         prov.TablaConsultaProveedores();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
-    private void btnElimianrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElimianrActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         if(prov.validaProveedorMaterial(jTableProveedores) == 1){
             JOptionPane.showMessageDialog(rootPane, "No es posible eliminar el proveedor.\n Este proveedor esta ligado a uno o más materiales.",
@@ -472,7 +511,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
             if (JOptionPane.showConfirmDialog(rootPane, "Se eliminará el proveedor, ¿Desea continuar?",
                 "Aviso", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){    
                 btnModifyProveedor.setEnabled(false);
-                btnElimianr.setEnabled(false);
+                btnEliminar.setEnabled(false);
                 btnAddProveedor.setEnabled(true);
                 if(BD.conectarBD()){
                     try {
@@ -492,7 +531,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
                 BD.cerrarConexion();
             }
         }
-    }//GEN-LAST:event_btnElimianrActionPerformed
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAgregarTelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarTelActionPerformed
        
@@ -517,7 +556,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_btnAgregarTelActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void bntBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntBuscarActionPerformed
 //        BuscadorProveedor miVentanaBuscar = null;
 //        
 //        miVentanaBuscar = new BuscadorProveedor(miVentanaBuscar,true);
@@ -540,7 +579,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
         buscaProveedor.show();
         
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_bntBuscarActionPerformed
 
     public void LimpiaTablaProveedores(){
         try {
@@ -572,17 +611,17 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
         jTxtNombreProveedor.requestFocusInWindow();//PARA QUE EL PUNTERO SIEMPRE APUNTE AL TEXTBOX DEL NOMBRE DEL PROVEEDOR
         
         btnAddProveedor.setEnabled(true);
-        btnElimianr.setEnabled(false);
+        btnEliminar.setEnabled(false);
         btnModifyProveedor.setEnabled(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntBuscar;
     public static javax.swing.JButton btnAddProveedor;
     public static javax.swing.JButton btnAgregarTel;
-    public static javax.swing.JButton btnElimianr;
+    public static javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     public static javax.swing.JButton btnModifyProveedor;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

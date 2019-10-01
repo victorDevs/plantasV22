@@ -280,7 +280,7 @@ public class Materiales {
                 this.rendimiento = rs.getString(3);
                 this.descripcionBM = rs.getString(4);
                 this.precio = rs.getDouble(5);
-                if(!login.validaPermisos(Main.menuNomUsuario.getText()).equals("UD") && !login.validaPermisos(Main.menuNomUsuario.getText()).equals("RUD")){
+                if(!login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("UD") && !login.validaPermisos("materiales",Main.menuNomUsuario.getText()).equals("RUD")){
                     MetodosGlobales.LimpiaTabla(CatalogoMateriales.jTableProveedoresMaterial);
                     TablaConsultaProveedoresMateriales((int) CatalogoMateriales.jTableMateriales.getValueAt(fila, 0));
                 }
