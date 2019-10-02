@@ -111,21 +111,33 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
         if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("R")){
             btnEliminar.setVisible(false);
             btnModifyProveedor.setVisible(false);
-            bntBuscar.setVisible(false);
+            btnBuscar.setVisible(false);
         }
         if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("U")){
             btnEliminar.setVisible(false);
             btnAddProveedor.setVisible(false);
-            bntBuscar.setVisible(false);
+            btnBuscar.setVisible(false);
         }
         if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("D")){
             btnModifyProveedor.setVisible(false);
             btnAddProveedor.setVisible(false);
-            bntBuscar.setVisible(false);
+            btnBuscar.setVisible(false);
         }
         if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("CR")){
             btnModifyProveedor.setVisible(false);
             btnEliminar.setVisible(false);
+        }
+        if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("CU")){
+            btnAddProveedor.setVisible(false);
+            btnEliminar.setVisible(false);
+        }
+        if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("CD")){
+            btnAddProveedor.setVisible(false);
+            btnModifyProveedor.setVisible(false);
+        }
+        if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("RD")){
+            btnModifyProveedor.setVisible(false);
+            btnBuscar.setVisible(false);
         }
         
     }
@@ -158,7 +170,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
         btnAgregarTel = new javax.swing.JButton();
         jTxtTel2 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        bntBuscar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Catálogo de Proveedores");
@@ -257,12 +269,12 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Teléfono 2");
 
-        bntBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/busqueda.png"))); // NOI18N
-        bntBuscar.setText("Búsqueda");
-        bntBuscar.setFocusable(false);
-        bntBuscar.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/busqueda.png"))); // NOI18N
+        btnBuscar.setText("Búsqueda");
+        btnBuscar.setFocusable(false);
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntBuscarActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -311,7 +323,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
                         .addGap(0, 354, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bntBuscar))
+                        .addComponent(btnBuscar))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1)))
@@ -321,7 +333,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addComponent(bntBuscar)
+                .addComponent(btnBuscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -411,8 +423,9 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
         
         
         if (evt.getClickCount() == 1) {
-            if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("R")){
+            if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("R") || login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("RD")){
                 
+                btnAddProveedor.setEnabled(false);
                 btnEliminar.setEnabled(true);
                 btnModifyProveedor.setEnabled(true);
                 btnLimpiar.setEnabled(true);
@@ -556,7 +569,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_btnAgregarTelActionPerformed
 
-    private void bntBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntBuscarActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 //        BuscadorProveedor miVentanaBuscar = null;
 //        
 //        miVentanaBuscar = new BuscadorProveedor(miVentanaBuscar,true);
@@ -579,7 +592,7 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
         buscaProveedor.show();
         
         
-    }//GEN-LAST:event_bntBuscarActionPerformed
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     public void LimpiaTablaProveedores(){
         try {
@@ -616,9 +629,9 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bntBuscar;
     public static javax.swing.JButton btnAddProveedor;
     public static javax.swing.JButton btnAgregarTel;
+    private javax.swing.JButton btnBuscar;
     public static javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     public static javax.swing.JButton btnModifyProveedor;
