@@ -86,13 +86,15 @@ public class LoginModel {
     public String validaPermisos(String acceso,String usuario){
         try {
             BD.conectarBD();
-            String sql = "select idUsuario,nombre,materialPermiso,proveedorPermiso from usuarios "
+            String sql = "select idUsuario,nombre,materialPermiso,proveedorPermiso,clientesPermiso,personalPermiso from usuarios "
                 + "where usuario = '"+usuario+"'";
             rs = BD.ejecutarSQLSelect(sql);
             rsm = rs.getMetaData();
             if (rs.next()) {
                 if(acceso.equals("materiales")){this.permiso = rs.getString(3);}
                 if(acceso.equals("proveedores")){this.permiso = rs.getString(4);}
+                if(acceso.equals("clientes")){this.permiso = rs.getString(5);}
+                if(acceso.equals("personal")){this.permiso = rs.getString(6);}
             }
         } catch (SQLException ex) {
              JOptionPane.showMessageDialog(null,"No se pudo consultar este usuario, vuelve a intentarlo: "+ex, 

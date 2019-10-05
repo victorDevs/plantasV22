@@ -126,9 +126,9 @@ public class validaJframeAbreUnaVez {
             jInternalFrame.show();
             
             //LIMPIAR CAMPOS AL VOLVER ABRIR LA VENTANA
-            catPersonal.LimpiaCampos();
-            MetodosGlobales.LimpiaTabla(CatalogoPersonal.jTablePersonal);
-            personal.TablaConsultaPersonal();
+//            catPersonal.LimpiaCampos();
+//            MetodosGlobales.LimpiaTabla(CatalogoPersonal.jTablePersonal);
+//            personal.TablaConsultaPersonal();
         }
     }
     

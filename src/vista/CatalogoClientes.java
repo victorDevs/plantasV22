@@ -21,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Clientes;
+import modelo.LoginModel;
 import modelo.Proveedores;
 import persistencia.BD;
 import persistencia.MetodosGlobales;
@@ -34,10 +35,9 @@ public class CatalogoClientes extends javax.swing.JInternalFrame {
 
     Clientes cli = new Clientes();
     MetodosGlobales metodosGlobales = new MetodosGlobales();
-
-    /**
-     * Creates new form CatalogoMateriales
-     */
+    LoginModel login = new LoginModel();
+    
+    
      
      private static CatalogoClientes catalogoProveedores;
      
@@ -70,6 +70,64 @@ public class CatalogoClientes extends javax.swing.JInternalFrame {
             }
         });
         
+        //VALIDACIÓN DE PERMISOS
+        if(login.validaPermisos("clientes", Main.menuNomUsuario.getText()).equals("C")){
+            btnEliminar.setVisible(false);
+            btnModifyCliente.setVisible(false);
+            btnAddCliente.setVisible(false);
+        }
+        if(login.validaPermisos("clientes", Main.menuNomUsuario.getText()).equals("R")){
+            btnEliminar.setVisible(false);
+            btnModifyCliente.setVisible(false);
+            btnBuscar.setVisible(false);
+        }
+        if(login.validaPermisos("clientes", Main.menuNomUsuario.getText()).equals("U")){
+            btnEliminar.setVisible(false);
+            btnAddCliente.setVisible(false);
+            btnBuscar.setVisible(false);
+        }
+        if(login.validaPermisos("clientes", Main.menuNomUsuario.getText()).equals("D")){
+            btnModifyCliente.setVisible(false);
+            btnAddCliente.setVisible(false);
+            btnBuscar.setVisible(false);
+        }
+        if(login.validaPermisos("clientes", Main.menuNomUsuario.getText()).equals("CR")){
+            btnModifyCliente.setVisible(false);
+            btnEliminar.setVisible(false);
+        }
+        if(login.validaPermisos("clientes", Main.menuNomUsuario.getText()).equals("CU")){
+            btnAddCliente.setVisible(false);
+            btnEliminar.setVisible(false);
+        }
+        if(login.validaPermisos("clientes", Main.menuNomUsuario.getText()).equals("CD")){
+            btnAddCliente.setVisible(false);
+            btnModifyCliente.setVisible(false);
+        }
+        if(login.validaPermisos("clientes", Main.menuNomUsuario.getText()).equals("RD")){
+            btnModifyCliente.setVisible(false);
+            btnBuscar.setVisible(false);
+        }
+        if(login.validaPermisos("clientes", Main.menuNomUsuario.getText()).equals("RU")){
+            btnEliminar.setVisible(false);
+            btnBuscar.setVisible(false);
+        }
+        if(login.validaPermisos("clientes", Main.menuNomUsuario.getText()).equals("UD")){
+            btnAddCliente.setVisible(false);
+            btnBuscar.setVisible(false);
+        }
+        if(login.validaPermisos("clientes", Main.menuNomUsuario.getText()).equals("CRU")){
+            btnEliminar.setVisible(false);
+        }
+        if(login.validaPermisos("clientes", Main.menuNomUsuario.getText()).equals("CUD")){
+            btnAddCliente.setVisible(false);
+        }
+        if(login.validaPermisos("clientes", Main.menuNomUsuario.getText()).equals("RUD")){
+            btnBuscar.setVisible(false);
+        }
+        if(login.validaPermisos("clientes", Main.menuNomUsuario.getText()).equals("CRD")){
+            btnModifyCliente.setVisible(false);
+        }
+        
     }
 
     /**
@@ -97,7 +155,7 @@ public class CatalogoClientes extends javax.swing.JInternalFrame {
         jTxtCorreo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         btnModifyCliente = new javax.swing.JButton();
-        jBuscar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Catálogo de Clientes");
@@ -187,12 +245,12 @@ public class CatalogoClientes extends javax.swing.JInternalFrame {
             }
         });
 
-        jBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/busqueda.png"))); // NOI18N
-        jBuscar.setText("Búsqueda");
-        jBuscar.setFocusable(false);
-        jBuscar.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/busqueda.png"))); // NOI18N
+        btnBuscar.setText("Búsqueda");
+        btnBuscar.setFocusable(false);
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBuscarActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -236,14 +294,14 @@ public class CatalogoClientes extends javax.swing.JInternalFrame {
                 .addGap(173, 173, 173))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jBuscar)
+                .addComponent(btnBuscar)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addComponent(jBuscar)
+                .addComponent(btnBuscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -323,20 +381,27 @@ public class CatalogoClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAddClienteActionPerformed
 
     private void jTableClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableClientesMouseClicked
-        // TODO add your handling code here:
-        btnAddCliente.setEnabled(false);
-        btnEliminar.setEnabled(true);
-        btnModifyCliente.setEnabled(true);
-        btnLimpiar.setEnabled(true);
         
-        if (evt.getClickCount() == 1) {
-            cli.ApuntaCliente();
-            Date date = null;
-            jTxtNombreCliente.setText(cli.getNombre());
-            jTxtDomicilio.setText(cli.getDomicilio());
-            jTxtTel.setText(cli.getTelefono());
-            jTxtContacto.setText(cli.getContacto());
-            jTxtCorreo.setText(cli.getCorreo());
+
+        if(login.validaPermisos("clientes", Main.menuNomUsuario.getText()).equals("R") || login.validaPermisos("clientes", Main.menuNomUsuario.getText()).equals("RD") 
+            || login.validaPermisos("clientes", Main.menuNomUsuario.getText()).equals("CRD")){
+                btnEliminar.setEnabled(true);
+                btnLimpiar.setEnabled(true);
+        }else{
+            btnAddCliente.setEnabled(false);
+            btnEliminar.setEnabled(true);
+            btnModifyCliente.setEnabled(true);
+            btnLimpiar.setEnabled(true);
+
+            if (evt.getClickCount() == 1) {
+                cli.ApuntaCliente();
+                Date date = null;
+                jTxtNombreCliente.setText(cli.getNombre());
+                jTxtDomicilio.setText(cli.getDomicilio());
+                jTxtTel.setText(cli.getTelefono());
+                jTxtContacto.setText(cli.getContacto());
+                jTxtCorreo.setText(cli.getCorreo());
+            }
         }
         
     }//GEN-LAST:event_jTableClientesMouseClicked
@@ -420,7 +485,7 @@ public class CatalogoClientes extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void jBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuscarActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 //        BuscadorProveedor miVentanaBuscar = null;
 //        
 //        miVentanaBuscar = new BuscadorProveedor(miVentanaBuscar,true);
@@ -441,7 +506,7 @@ public class CatalogoClientes extends javax.swing.JInternalFrame {
         Dimension FrameSize = buscaCliente.getSize();
         buscaCliente.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
         buscaCliente.show();
-    }//GEN-LAST:event_jBuscarActionPerformed
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     public void LimpiaTablaClientes(){
         try {
@@ -471,10 +536,10 @@ public class CatalogoClientes extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton btnAddCliente;
+    private javax.swing.JButton btnBuscar;
     public static javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     public static javax.swing.JButton btnModifyCliente;
-    private javax.swing.JButton jBuscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

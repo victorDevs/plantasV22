@@ -26,6 +26,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Clientes;
+import modelo.LoginModel;
 import modelo.Personal;
 import modelo.Procesos;
 import modelo.Proveedores;
@@ -45,12 +46,13 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
 
     Personal per = new Personal();
     Procesos pro = new Procesos();
+    LoginModel login = new LoginModel();
     
     String strFileName = "";
 
     MetodosGlobales metodosGlobales = new MetodosGlobales();
      
-     private static CatalogoPersonal catalogoProveedores;
+     private static CatalogoPersonal catalogoPersonal;
      
      public class Imagen extends javax.swing.JPanel {
         public Imagen() {
@@ -58,7 +60,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
         }
         
         //Se crea un método cuyo parámetro debe ser un objeto Graphics
-        public void paint(Graphics grafico) {
+    public void paint(Graphics grafico) {
             Dimension height = getSize();
 
             //Se selecciona la imagen que tenemos en el paquete de la //ruta del programa
@@ -73,10 +75,10 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
     }
      
      public static CatalogoPersonal getInstancia(){
-         if (catalogoProveedores == null) {
-             catalogoProveedores = new CatalogoPersonal();
+         if (catalogoPersonal == null) {
+             catalogoPersonal = new CatalogoPersonal();
          }
-         return catalogoProveedores;
+         return catalogoPersonal;
      }
      
     public CatalogoPersonal() {
@@ -112,7 +114,65 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
          jLblMuestraFechaRegistro.setVisible(false);
          jLblHoraRegistro.setVisible(false);
          jLblMuestraHoraRegistro.setVisible(false);
+         
         
+         //VALIDACIÓN DE PERMISOS
+//        if(login.validaPermisos("personal", Main.menuNomUsuario.getText()).equals("C")){
+//            btnEliminar.setVisible(false);
+//            btnModifyPersonal.setVisible(false);
+//            btnAddPersonal.setVisible(false);
+//        }
+//        if(login.validaPermisos("personal", Main.menuNomUsuario.getText()).equals("R")){
+//            btnEliminar.setVisible(false);
+//            btnModifyPersonal.setVisible(false);
+//            btnBuscar.setVisible(false);
+//        }
+//        if(login.validaPermisos("personal", Main.menuNomUsuario.getText()).equals("U")){
+//            btnEliminar.setVisible(false);
+//            btnAddPersonal.setVisible(false);
+//            btnBuscar.setVisible(false);
+//        }
+//        if(login.validaPermisos("personal", Main.menuNomUsuario.getText()).equals("D")){
+//            btnModifyPersonal.setVisible(false);
+//            btnAddPersonal.setVisible(false);
+//            btnBuscar.setVisible(false);
+//        }
+//        if(login.validaPermisos("personal", Main.menuNomUsuario.getText()).equals("CR")){
+//            btnModifyPersonal.setVisible(false);
+//            btnEliminar.setVisible(false);
+//        }
+//        if(login.validaPermisos("personal", Main.menuNomUsuario.getText()).equals("CU")){
+//            btnAddPersonal.setVisible(false);
+//            btnEliminar.setVisible(false);
+//        }
+//        if(login.validaPermisos("personal", Main.menuNomUsuario.getText()).equals("CD")){
+//            btnAddPersonal.setVisible(false);
+//            btnModifyPersonal.setVisible(false);
+//        }
+//        if(login.validaPermisos("personal", Main.menuNomUsuario.getText()).equals("RD")){
+//            btnModifyPersonal.setVisible(false);
+//            btnBuscar.setVisible(false);
+//        }
+//        if(login.validaPermisos("personal", Main.menuNomUsuario.getText()).equals("RU")){
+//            btnEliminar.setVisible(false);
+//            btnBuscar.setVisible(false);
+//        }
+//        if(login.validaPermisos("personal", Main.menuNomUsuario.getText()).equals("UD")){
+//            btnAddPersonal.setVisible(false);
+//            btnBuscar.setVisible(false);
+//        }
+//        if(login.validaPermisos("personal", Main.menuNomUsuario.getText()).equals("CRU")){
+//            btnEliminar.setVisible(false);
+//        }
+//        if(login.validaPermisos("personal", Main.menuNomUsuario.getText()).equals("CUD")){
+//            btnAddPersonal.setVisible(false);
+//        }
+//        if(login.validaPermisos("personal", Main.menuNomUsuario.getText()).equals("RUD")){
+//            btnBuscar.setVisible(false);
+//        }
+//        if(login.validaPermisos("personal", Main.menuNomUsuario.getText()).equals("CRD")){
+//            btnModifyPersonal.setVisible(false);
+//        }
     }
 
     /**
@@ -139,7 +199,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
         jTxtDomicilio = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         btnModifyPersonal = new javax.swing.JButton();
-        jBuscar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jTxtTelefono = new javax.swing.JTextField();
         jTxtCorreo = new javax.swing.JTextField();
@@ -245,12 +305,12 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
             }
         });
 
-        jBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/busqueda.png"))); // NOI18N
-        jBuscar.setText("Búsqueda");
-        jBuscar.setFocusable(false);
-        jBuscar.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/busqueda.png"))); // NOI18N
+        btnBuscar.setText("Búsqueda");
+        btnBuscar.setFocusable(false);
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBuscarActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -360,7 +420,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLblMuestraHoraRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(71, 71, 71)
-                        .addComponent(jBuscar)))
+                        .addComponent(btnBuscar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -368,7 +428,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jBuscar)
+                    .addComponent(btnBuscar)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLblMuestraFechaRegistro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLblMuestraHoraRegistro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -526,51 +586,56 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         DefaultComboBoxModel comboProceso = new DefaultComboBoxModel();
         
-        btnAddPersonal.setEnabled(false);
-        btnEliminar.setEnabled(true);
-        btnModifyPersonal.setEnabled(true);
-        btnLimpiar.setEnabled(true);
+//        if(login.validaPermisos("personal", Main.menuNomUsuario.getText()).equals("R") || login.validaPermisos("personal", Main.menuNomUsuario.getText()).equals("RD") 
+//                    || login.validaPermisos("personal", Main.menuNomUsuario.getText()).equals("CRD")){
+//                btnEliminar.setEnabled(true);
+//                btnLimpiar.setEnabled(true);
+//        }else{
+            btnAddPersonal.setEnabled(false);
+            btnEliminar.setEnabled(true);
+            btnModifyPersonal.setEnabled(true);
+            btnLimpiar.setEnabled(true);
         
-        if (evt.getClickCount() == 1) {
-            jLblFechaRegistro.setVisible(true);
-            jLblMuestraFechaRegistro.setVisible(true);
-            jLblHoraRegistro.setVisible(true);
-            jLblMuestraHoraRegistro.setVisible(true);
-            per.ApuntaPersonal();
-            jTxtNombre.setText(per.getNombre());
-            jTxtAptPaterno.setText(per.getApellidoPaterno());
-            jTxtAptMaterno.setText(per.getApellidoMaterno());
-            Date date = null;
-            String textFecha = per.getFechaNacimiento();
-            DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-            df.setTimeZone(TimeZone.getTimeZone("America/Mexico_City"));
-            try {
-                date = new java.sql.Date(df.parse(textFecha).getTime());
-            } catch (ParseException ex) {
-                Logger.getLogger(CatalogoPersonal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            jDCFechaNacimiento.setDate(date);
-            jTxtDomicilio.setText(per.getDomicilio());
-            jTxtTelefono.setText(per.getTelefono());
-            jTxtCorreo.setText(per.getCorreo());
-            comboProceso.addElement(per.getProceso());
-            jCbProceso.setModel(comboProceso);
-            txtObservaciones.setText(per.getObservaciones());
-            jLblMuestraFechaRegistro.setText(per.getFechaRegistro());
-            jLblMuestraHoraRegistro.setText(per.getHoraRegistro());
-            
-            File codeBarFile = new File("C:\\Users\\vikto\\OneDrive\\Documentos\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+per.getIdPersonal()+".JPEG");
-//            strFileName = "C:\\Users\\alber\\Documents\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+per.getIdPersonal()+".JPEG";
-            if(codeBarFile.exists()){
-                Imagen Imagen = new Imagen();
-                jPanelCodeBarras.add(Imagen);
-                jPanelCodeBarras.repaint();
-            }else{
-                jPanelCodeBarras.removeAll();
-                jPanelCodeBarras.repaint();
-            }
+            if (evt.getClickCount() == 1) {
+                jLblFechaRegistro.setVisible(true);
+                jLblMuestraFechaRegistro.setVisible(true);
+                jLblHoraRegistro.setVisible(true);
+                jLblMuestraHoraRegistro.setVisible(true);
+                per.ApuntaPersonal();
+                jTxtNombre.setText(per.getNombre());
+                jTxtAptPaterno.setText(per.getApellidoPaterno());
+                jTxtAptMaterno.setText(per.getApellidoMaterno());
+                Date date = null;
+                String textFecha = per.getFechaNacimiento();
+                DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                df.setTimeZone(TimeZone.getTimeZone("America/Mexico_City"));
+                try {
+                    date = new java.sql.Date(df.parse(textFecha).getTime());
+                } catch (ParseException ex) {
+                    Logger.getLogger(CatalogoPersonal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                jDCFechaNacimiento.setDate(date);
+                jTxtDomicilio.setText(per.getDomicilio());
+                jTxtTelefono.setText(per.getTelefono());
+                jTxtCorreo.setText(per.getCorreo());
+                comboProceso.addElement(per.getProceso());
+                jCbProceso.setModel(comboProceso);
+                txtObservaciones.setText(per.getObservaciones());
+                jLblMuestraFechaRegistro.setText(per.getFechaRegistro());
+                jLblMuestraHoraRegistro.setText(per.getHoraRegistro());
+
+                File codeBarFile = new File("C:\\Users\\vikto\\OneDrive\\Documentos\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+per.getIdPersonal()+".JPEG");
+    //            strFileName = "C:\\Users\\alber\\Documents\\NetBeansProjects\\plantasV2\\src\\codes\\BarCode_"+per.getIdPersonal()+".JPEG";
+                if(codeBarFile.exists()){
+                    Imagen Imagen = new Imagen();
+                    jPanelCodeBarras.add(Imagen);
+                    jPanelCodeBarras.repaint();
+                }else{
+                    jPanelCodeBarras.removeAll();
+                    jPanelCodeBarras.repaint();
+                }
+//            }
         }
-        
     }//GEN-LAST:event_jTablePersonalMouseClicked
 
     private void btnModifyPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyPersonalActionPerformed
@@ -663,7 +728,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void jBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBuscarActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 //        BuscadorProveedor miVentanaBuscar = null;
 //        
 //        miVentanaBuscar = new BuscadorProveedor(miVentanaBuscar,true);
@@ -675,7 +740,7 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
         Dimension FrameSize = buscaPer.getSize();
         buscaPer.setLocation((desktopSize.width - FrameSize.width)/2, (desktopSize.height- FrameSize.height)/2);
         buscaPer.show();
-    }//GEN-LAST:event_jBuscarActionPerformed
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     public void LimpiaTablaPersonal(){
         try {
@@ -712,10 +777,10 @@ public class CatalogoPersonal extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton btnAddPersonal;
+    private javax.swing.JButton btnBuscar;
     public static javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLimpiar;
     public static javax.swing.JButton btnModifyPersonal;
-    private javax.swing.JButton jBuscar;
     public static javax.swing.JComboBox<String> jCbProceso;
     public static com.toedter.calendar.JDateChooser jDCFechaNacimiento;
     private javax.swing.JLabel jLabel1;

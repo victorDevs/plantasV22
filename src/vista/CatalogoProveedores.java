@@ -139,7 +139,26 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
             btnModifyProveedor.setVisible(false);
             btnBuscar.setVisible(false);
         }
-        
+        if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("RU")){
+            btnEliminar.setVisible(false);
+            btnBuscar.setVisible(false);
+        }
+        if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("UD")){
+            btnAddProveedor.setVisible(false);
+            btnBuscar.setVisible(false);
+        }
+        if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("CRU")){
+            btnEliminar.setVisible(false);
+        }
+        if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("CUD")){
+            btnAddProveedor.setVisible(false);
+        }
+        if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("RUD")){
+            btnBuscar.setVisible(false);
+        }
+        if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("CRD")){
+            btnModifyProveedor.setVisible(false);
+        }
     }
 
     /**
@@ -423,11 +442,9 @@ public class CatalogoProveedores extends javax.swing.JInternalFrame {
         
         
         if (evt.getClickCount() == 1) {
-            if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("R") || login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("RD")){
-                
-                btnAddProveedor.setEnabled(false);
+            if(login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("R") || login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("RD") 
+                    || login.validaPermisos("proveedores", Main.menuNomUsuario.getText()).equals("CRD")){
                 btnEliminar.setEnabled(true);
-                btnModifyProveedor.setEnabled(true);
                 btnLimpiar.setEnabled(true);
             }else{
                 btnAddProveedor.setEnabled(false);
