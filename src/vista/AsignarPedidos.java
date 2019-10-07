@@ -101,6 +101,11 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
                 jcbPersonalMouseClicked(evt);
             }
         });
+        jcbPersonal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbPersonalActionPerformed(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar16.png"))); // NOI18N
         jButton2.setText("Guardar");
@@ -197,11 +202,24 @@ public class AsignarPedidos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jtableAsignarPedidosMouseClicked
 
     private void jcbPersonalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbPersonalMouseClicked
-        for(int i=0; i<jtableMuestraProcesos.getRowCount(); i++){
-            //if(jcbPersonal)
-        }
+           
         
     }//GEN-LAST:event_jcbPersonalMouseClicked
+
+    private void jcbPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbPersonalActionPerformed
+         String contenido = jcbPersonal.getSelectedItem().toString();
+                            //int id = Integer.parseInt(personal.getRegistros().toString());
+                            
+                            int indice = jcbPersonal.getSelectedIndex();
+                            String dato = (String)jcbPersonal.getSelectedItem();
+                            for(int i=0; i<AsignarPedidos.jtableMuestraProcesos.getRowCount(); i++){
+                                if(AsignarPedidos.jtableMuestraProcesos.getValueAt(i, 0).equals(personal.getListaProceso().get(indice))){
+                                    AsignarPedidos.jtableMuestraProcesos.setValueAt(personal.getListaId().get(indice), i, 1);
+                                    AsignarPedidos.jtableMuestraProcesos.setValueAt(personal.getListaPersonal().get(indice), i, 2);
+                                }
+                                System.out.println(dato+" Posición " + indice + " id de la lista "+personal.getListaId().get(indice));
+                            }
+    }//GEN-LAST:event_jcbPersonalActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

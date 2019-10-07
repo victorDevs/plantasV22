@@ -464,7 +464,7 @@ public class CatalogoPedido extends javax.swing.JDialog {
                 ped.setTotal(Double.parseDouble(jTxtTotal.getText().replace("$", "")));
                 ped.setTipoTalla(tipoTalla);
                 ped.setObservaciones(jTxtObservaciones.getText());
-                ped.setEstatus("Sin Asignar");
+                ped.setEstatus("Proceso");
                 ped.setNoLiberado(jCBLiberado.isSelected() ? 0 : 1);
                 ped.setNumSemana(Integer.parseInt(jlblNumSemana.getText()));
                 

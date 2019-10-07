@@ -5,8 +5,6 @@
  */
 package modelo;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.ResultSet;
@@ -22,8 +20,6 @@ import javax.swing.table.DefaultTableModel;
 import persistencia.BD;
 import persistencia.IconCellRenderer;
 import persistencia.MetodosGlobales;
-import vista.AsignarPedidos;
-import vista.CatalogoPedido;
 import vista.CatalogoPersonal;
 
 /**
@@ -43,6 +39,7 @@ public class Personal {
     String observaciones;
     String FechaRegistro;
     String horaRegistro;
+    String[] registros = new String[2];
     
     int idEstilo;
     String estilo;
@@ -59,7 +56,7 @@ public class Personal {
 
      List<Integer> listaId = new ArrayList<Integer>();
      List<String> listaPersonal = new ArrayList<String>();
-     List<String> listaProceso = new ArrayList<String>();
+     List<String> listaProceso ;
      
     public int getIdPersonal() {
         return idPersonal;
@@ -115,6 +112,22 @@ public class Personal {
 
     public String getEstilo() {
         return estilo;
+    }
+
+    public List<String> getListaPersonal() {
+        return listaPersonal;
+    }
+
+    public List<String> getListaProceso() {
+        return listaProceso;
+    }
+
+    public List<Integer> getListaId() {
+        return listaId;
+    }
+
+    public String[] getRegistros() {
+        return registros;
     }
     
     
@@ -172,6 +185,22 @@ public class Personal {
 
     public void setEstilo(String estilo) {
         this.estilo = estilo;
+    }
+
+    public void setListaId(List<Integer> listaId) {
+        this.listaId = listaId;
+    }
+
+    public void setListaPersonal(List<String> listaPersonal) {
+        this.listaPersonal = listaPersonal;
+    }
+
+    public void setListaProceso(List<String> listaProceso) {
+        this.listaProceso = listaProceso;
+    }
+
+    public void setRegistros(String[] registros) {
+        this.registros = registros;
     }
     
     
@@ -321,8 +350,9 @@ public class Personal {
         obtieneIdEstilo(this.estilo);//LLAMA EL MÉTODO PARA ENVIAR EL NOMBRE DEL ESTILO Y PODER OBTENER SU IDESTILO
         DefaultComboBoxModel comboPersonal = new DefaultComboBoxModel();
         
-        String[] registros = new String[2];
         
+        //listaProceso = null;
+        this.listaProceso = new ArrayList<String>();
         try {
             
             
@@ -341,13 +371,13 @@ public class Personal {
                     this.idPersonal = Integer.parseInt(rs.getString("personal.idPersonal"));
                     this.nombre = rs.getString("nombrePersonal");
                     
-                    registros[0] = rs.getString("personal.idPersonal");                    
-                    registros[1] = rs.getString("nombrePersonal");
+                    this.registros[0] = rs.getString("personal.idPersonal");                    
+                    //this.registros[1] = rs.getString("nombrePersonal");
                     
                     //combo.addItem(rs.getString("nombrePersonal"));
-                    listaProceso.add(rs.getString("personal.proceso"));
-                    listaId.add(rs.getInt("personal.idPersonal"));
-                    listaPersonal.add(rs.getString("nombrePersonal"));
+                    this.listaProceso.add(rs.getString("personal.proceso"));
+                    this.listaId.add(rs.getInt("personal.idPersonal"));
+                    this.listaPersonal.add(rs.getString("nombrePersonal"));
                     
                      System.out.println("el nombre del personal devuelve: "+this.nombre);
                     comboPersonal.addElement(rs.getString("nombrePersonal")+" ("+rs.getString("personal.proceso")+")");         
@@ -355,23 +385,25 @@ public class Personal {
            
             
             //combo = new JComboBox<String>();
-                    combo.addActionListener(new ActionListener() {
-                        //@Override
-                        public void actionPerformed(ActionEvent ae) {  
-                            //String contenido = combo.getSelectedItem().toString();
+//                    combo.addActionListener(new ActionListener() {
+//                        @Override
+//                        
+//                        public void actionPerformed(ActionEvent ae) {  
+//                            String contenido = combo.getSelectedItem().toString();
 //                            int id = Integer.parseInt(registros[0]);
 //                            tomaId(id);
-                            int indice = combo.getSelectedIndex();
-                            String dato = (String)combo.getSelectedItem();
-                            for(int i=0; i<AsignarPedidos.jtableMuestraProcesos.getRowCount(); i++){
-                                if(AsignarPedidos.jtableMuestraProcesos.getValueAt(i, 0).equals(listaProceso.get(indice-1))){
-                                    AsignarPedidos.jtableMuestraProcesos.setValueAt(listaId.get(indice-1), i, 1);
-                                    AsignarPedidos.jtableMuestraProcesos.setValueAt(listaPersonal.get(indice-1), i, 2);
-                                }
-                                System.out.println(dato+" Posición " + indice + " id de la lista "+listaId.get(indice-1));
-                            }
-                        }
-                    });
+//                            
+//                            int indice = combo.getSelectedIndex();
+//                            String dato = (String)combo.getSelectedItem();
+//                            for(int i=0; i<AsignarPedidos.jtableMuestraProcesos.getRowCount(); i++){
+//                                if(AsignarPedidos.jtableMuestraProcesos.getValueAt(i, 0).equals(listaProceso.get(indice-1))){
+//                                    AsignarPedidos.jtableMuestraProcesos.setValueAt(listaId.get(indice-1), i, 1);
+//                                    AsignarPedidos.jtableMuestraProcesos.setValueAt(listaPersonal.get(indice-1), i, 2);
+//                                }
+//                                System.out.println(dato+" Posición " + indice + " id de la lista "+listaId.get(indice-1));
+//                            }
+//                        }
+//                    });
 
              if(this.nombre == null){
                 comboPersonal.addElement("No hay trabajador");
